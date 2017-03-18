@@ -46,7 +46,5 @@ public class DebateCategory extends Persistent {
 	public void setDescription(String description) {
 		this.description = description;
 	}
-	
-	
 
 }

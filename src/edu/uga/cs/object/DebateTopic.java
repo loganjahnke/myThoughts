@@ -114,7 +114,5 @@ public class DebateTopic extends Persistent {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
-	
 
 }

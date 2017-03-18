@@ -63,7 +63,5 @@ public class Comment extends Persistent {
 	public void setUser(User user) {
 		this.user = user;
 	}
-	
-	
 
 }
