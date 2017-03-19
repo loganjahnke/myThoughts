@@ -17,6 +17,7 @@ CREATE TABLE person (
     username        VARCHAR(255) NOT NULL UNIQUE,
     password        VARCHAR(255) NOT NULL,
     email           VARCHAR(255) NOT NULL,
+    created         DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     isAdmin         BOOLEAN NOT NULL,
     isModerator     BOOLEAN,
     karma           INT
@@ -38,6 +39,7 @@ CREATE TABLE debate_topic (
     id              INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     title           VARCHAR(255) NOT NULL,
     description     VARCHAR(1023),
+    created         DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     vote            INT NOT NULL,
     agrees          INT NOT NULL,
     disagrees       INT NOT NULL,
@@ -53,7 +55,11 @@ CREATE TABLE comment (
     id    	        INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     subject         VARCHAR(255) NOT NULL,
     argument        VARCHAR(2047) NOT NULL,
+    created         DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     user_id         INT UNSIGNED NOT NULL,
+    topic_id        INT UNSIGNED NOT NULL,
+    parent_id       INT UNSIGNED, # represents a reply if not null
 
-    FOREIGN KEY (user_id) REFERENCES user(id)
+    FOREIGN KEY (user_id) REFERENCES user(id),
+    FOREIGN KEY (topic_id) REFERENCES debate_topic(id)
 );

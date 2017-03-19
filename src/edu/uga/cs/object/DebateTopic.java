@@ -1,6 +1,7 @@
 package edu.uga.cs.object;
 
 import edu.uga.cs.persistence.Persistent;
+import java.util.Date;
 
 public class DebateTopic extends Persistent {
 
@@ -10,6 +11,7 @@ public class DebateTopic extends Persistent {
 	private int agrees;
 	private int disagrees;
 	private User user;
+	private Date created;
 
 	public DebateTopic() {
 		super();
@@ -19,9 +21,10 @@ public class DebateTopic extends Persistent {
 		this.agrees = 0;
 		this.disagrees = 0;
 		this.user = new User();
+		this.created = new Date();
 	}
 
-	public DebateTopic(String title, String description, int vote, int agrees, int disagrees, User user) {
+	public DebateTopic(String title, String description, int vote, int agrees, int disagrees, User user, Date created) {
 		super();
 		this.title = title;
 		this.description = description;
@@ -29,6 +32,7 @@ public class DebateTopic extends Persistent {
 		this.agrees = agrees;
 		this.disagrees = disagrees;
 		this.user = user;
+		this.created = created;
 	}
 
 	/**
@@ -113,6 +117,20 @@ public class DebateTopic extends Persistent {
 	 */
 	public void setUser(User user) {
 		this.user = user;
+	}
+
+	/**
+	 * @return the created date
+	 */
+	public Date getCreatedDate() {
+		return created;
+	}
+
+	/**
+	 * @param created the created date
+	 */
+	public void setCreatedDate(Date created) {
+		this.created = created;
 	}
 
 }

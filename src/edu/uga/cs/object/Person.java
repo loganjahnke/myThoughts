@@ -1,6 +1,7 @@
 package edu.uga.cs.object;
 
 import edu.uga.cs.persistence.Persistent;
+import java.util.Date;
 
 public abstract class Person extends Persistent {
 
@@ -8,13 +9,42 @@ public abstract class Person extends Persistent {
 	protected String lastname;
 	protected String username;
 	protected String email;
+	protected Date created;
 
 	public Person() {
 		super();
+		this.firstname = "";
+		this.lastname = "";
+		this.username = "";
+		this.email = "";
+		this.created = new Date();
 	}
 
 	public Person(int id) {
 		super(id);
+		this.firstname = "";
+		this.lastname = "";
+		this.username = "";
+		this.email = "";
+		this.created = new Date();
+	}
+
+	public Person(String firstname, String lastname, String username, String email, Date created) {
+		super();
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.username = username;
+		this.email = email;
+		this.created = created;
+	}
+
+	public Person(int id, String firstname, String lastname, String username, String email, Date created) {
+		super(id);
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.username = username;
+		this.email = email;
+		this.created = created;
 	}
 
 	/**
@@ -71,6 +101,20 @@ public abstract class Person extends Persistent {
 	 */
 	public void setEmail(String email) {
 		this.email = email;
+	}
+
+	/**
+	 * @return the created date
+	 */
+	public Date getCreatedDate() {
+		return created;
+	}
+
+	/**
+	 * @param created the created date
+	 */
+	public void setCreatedDate(Date created) {
+		this.created = created;
 	}
 
 }

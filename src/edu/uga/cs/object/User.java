@@ -1,5 +1,7 @@
 package edu.uga.cs.object;
 
+import java.util.Date;
+
 public class User extends Person {
 
 	private boolean isModerator;
@@ -10,10 +12,6 @@ public class User extends Person {
 	 */
 	public User() {
 		super();
-		this.firstname = "";
-		this.lastname = "";
-		this.username = "";
-		this.email = "";
 		this.isModerator = false;
 		this.karma = 0;
 	}
@@ -28,12 +26,8 @@ public class User extends Person {
 	 * @param isModerator
 	 * @param karma
 	 */
-	public User(String firstname, String lastname, String username, String email, boolean isModerator, int karma) {
-		super();
-		this.firstname = firstname;
-		this.lastname = lastname;
-		this.username = username;
-		this.email = email;
+	public User(String firstname, String lastname, String username, String email, boolean isModerator, int karma, Date created) {
+		super(firstname, lastname, username, email, created);
 		this.isModerator = isModerator;
 		this.karma = karma;
 	}
