@@ -95,18 +95,21 @@ public class PersonManager {
 				if (conditionLength > 0)
 					select += (" AND ");
 				select += ("firstname = \'" + person.getFirstname() + "\'");
+				conditionLength++;
 			}
 
 			if (person.getLastname() != null) {
 				if (conditionLength > 0)
 					select += (" AND ");
 				select += ("lastname = \'" + person.getLastname() + "\'");
+				conditionLength++;
 			}
 
 			if (person.getPassword() != null) {
 				if (conditionLength > 0)
 					select += (" AND ");
 				select += ("password = \'" + person.getPassword() + "\'");
+				conditionLength++;
 			}
 		}
 
