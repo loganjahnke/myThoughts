@@ -8,6 +8,7 @@ public abstract class Person extends Persistent {
 	protected String firstname;
 	protected String lastname;
 	protected String username;
+	protected String password;
 	protected String email;
 	protected Date created;
 
@@ -16,6 +17,7 @@ public abstract class Person extends Persistent {
 		this.firstname = "";
 		this.lastname = "";
 		this.username = "";
+		this.password = "";
 		this.email = "";
 		this.created = new Date();
 	}
@@ -25,24 +27,27 @@ public abstract class Person extends Persistent {
 		this.firstname = "";
 		this.lastname = "";
 		this.username = "";
+		this.password = "";
 		this.email = "";
 		this.created = new Date();
 	}
 
-	public Person(String firstname, String lastname, String username, String email, Date created) {
+	public Person(String firstname, String lastname, String username, String password, String email, Date created) {
 		super();
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.username = username;
+		this.password = password;
 		this.email = email;
 		this.created = created;
 	}
 
-	public Person(int id, String firstname, String lastname, String username, String email, Date created) {
+	public Person(int id, String firstname, String lastname, String username, String password, String email, Date created) {
 		super(id);
 		this.firstname = firstname;
 		this.lastname = lastname;
 		this.username = username;
+		this.password = password;
 		this.email = email;
 		this.created = created;
 	}
@@ -90,6 +95,20 @@ public abstract class Person extends Persistent {
 	}
 
 	/**
+	 * @return the password
+	 */
+	public String getPassword() {
+		return password;
+	}
+
+	/**
+	 * @param password the password to set
+	 */
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	/**
 	 * @return the email
 	 */
 	public String getEmail() {
@@ -115,6 +134,20 @@ public abstract class Person extends Persistent {
 	 */
 	public void setCreatedDate(Date created) {
 		this.created = created;
+	}
+
+	public boolean passesNullTest() {
+		if (this.firstname.length() == 0)
+			return false;
+		if (this.lastname.length() == 0)
+			return false;
+		if (this.username.length() == 0)
+			return false;
+		if (this.email.length() == 0)
+			return false;
+		if (this.password.length() == 0)
+			return false;
+		return true;
 	}
 
 }

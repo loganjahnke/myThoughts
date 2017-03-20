@@ -16,7 +16,7 @@ CREATE TABLE person (
     lastname        VARCHAR(255) NOT NULL,
     username        VARCHAR(255) NOT NULL UNIQUE,
     password        VARCHAR(255) NOT NULL,
-    email           VARCHAR(255) NOT NULL,
+    email           VARCHAR(255) NOT NULL UNIQUE,
     created         DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
     isAdmin         BOOLEAN NOT NULL,
     isModerator     BOOLEAN,
