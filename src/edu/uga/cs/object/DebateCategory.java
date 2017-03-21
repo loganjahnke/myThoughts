@@ -47,4 +47,10 @@ public class DebateCategory extends Persistent {
 		this.description = description;
 	}
 
+	public boolean passesNullTest() {
+		if (this.name == null)
+			return false;
+		return true;
+	}
+
 }
