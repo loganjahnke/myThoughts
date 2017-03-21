@@ -2,6 +2,7 @@ package edu.uga.cs.object;
 
 import edu.uga.cs.persistence.Persistent;
 import java.util.Date;
+import java.util.ArrayList;
 
 public class DebateTopic extends Persistent {
 
@@ -12,19 +13,21 @@ public class DebateTopic extends Persistent {
 	private int disagrees;
 	private User user;
 	private Date created;
+	private ArrayList<DebateCategory> categories;
 
 	public DebateTopic() {
 		super();
 		this.title = "";
 		this.description = "";
 		this.vote = 0;
-		this.agrees = 0;
-		this.disagrees = 0;
+		this.agrees = -1;
+		this.disagrees = -1;
 		this.user = new User();
 		this.created = new Date();
+		this.categories = new ArrayList<DebateCategory>();
 	}
 
-	public DebateTopic(String title, String description, int vote, int agrees, int disagrees, User user, Date created) {
+	public DebateTopic(String title, String description, int vote, int agrees, int disagrees, User user, Date created, ArrayList<DebateCategory> categories) {
 		super();
 		this.title = title;
 		this.description = description;
@@ -33,6 +36,7 @@ public class DebateTopic extends Persistent {
 		this.disagrees = disagrees;
 		this.user = user;
 		this.created = created;
+		this.categories = categories;
 	}
 
 	/**
@@ -131,6 +135,28 @@ public class DebateTopic extends Persistent {
 	 */
 	public void setCreatedDate(Date created) {
 		this.created = created;
+	}
+
+	/**
+	 * @return the categories date
+	 */
+	public ArrayList<DebateCategory> getCategories() {
+		return categories;
+	}
+
+	/**
+	 * @param categories the categories
+	 */
+	public void setCategories(ArrayList<DebateCategory> categories) {
+		this.categories = categories;
+	}
+
+	public boolean passesNullTest() {
+		if (this.title == null)
+			return false;
+		if (this.user == null)
+			return false;
+		return true;
 	}
 
 }

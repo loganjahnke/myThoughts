@@ -6,6 +6,7 @@
 DROP TABLE IF EXISTS person;
 DROP TABLE IF EXISTS debate_category;
 DROP TABLE IF EXISTS debate_topic;
+DROP TABLE IF EXISTS topic_category;
 DROP TABLE IF EXISTS comment;
 #
 # Table definition for table 'person'
@@ -45,7 +46,19 @@ CREATE TABLE debate_topic (
     disagrees       INT NOT NULL,
     user_id         INT UNSIGNED NOT NULL,
 
-    FOREIGN KEY (user_id) REFERENCES user(id)
+    FOREIGN KEY (user_id) REFERENCES person(id)
+);
+
+#
+# Table definition for many-to-many table 'topic_category'
+#
+CREATE TABLE topic_category (
+    category_id     INT UNSIGNED NOT NULL,
+    topic_id        INT UNSIGNED NOT NULL,
+
+    PRIMARY KEY (category_id, topic_id),
+    FOREIGN KEY (category_id) REFERENCES debate_category(id),
+    FOREIGN KEY (topic_id) REFERENCES debate_topic(id)
 );
 
 #
@@ -60,6 +73,6 @@ CREATE TABLE comment (
     topic_id        INT UNSIGNED NOT NULL,
     parent_id       INT UNSIGNED, # represents a reply if not null
 
-    FOREIGN KEY (user_id) REFERENCES user(id),
+    FOREIGN KEY (user_id) REFERENCES person(id),
     FOREIGN KEY (topic_id) REFERENCES debate_topic(id)
 );

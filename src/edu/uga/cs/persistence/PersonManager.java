@@ -79,7 +79,7 @@ public class PersonManager {
 	 * @throws MyThoughtsException
 	 */
 	public Person restore(Person person) throws MyThoughtsException {
-		String select = "SELECT id, firstname, lastname, username, email, password, isAdmin, isModerator, karma " +
+		String select = "SELECT id, firstname, lastname, username, email, password, created, isAdmin, isModerator, karma " +
 						"FROM person " +
 						"WHERE ";
 		int conditionLength = 0;
@@ -118,7 +118,7 @@ public class PersonManager {
 			stmt.execute(select);
 			ResultSet rs = stmt.getResultSet();
 			if (rs.next()) {
-				if (rs.getBoolean(7)) {
+				if (rs.getBoolean(8)) {
 					Administrator a = new Administrator();
 					a.setId(rs.getInt(1));
 					a.setFirstname(rs.getString(2));
@@ -126,6 +126,7 @@ public class PersonManager {
 					a.setUsername(rs.getString(4));
 					a.setEmail(rs.getString(5));
 					a.setPassword(rs.getString(6));
+					a.setCreated(rs.getDate(7));
 					return a;
 				} else {
 					User u = new User();
@@ -135,8 +136,9 @@ public class PersonManager {
 					u.setUsername(rs.getString(4));
 					u.setEmail(rs.getString(5));
 					u.setPassword(rs.getString(6));
-					u.setModerator(rs.getBoolean(8));
-					u.setKarma(rs.getInt(9));
+					u.setCreated(rs.getDate(7));
+					u.setModerator(rs.getBoolean(9));
+					u.setKarma(rs.getInt(10));
 					return u;
 				}
 			} else
