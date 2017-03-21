@@ -126,7 +126,7 @@ public class PersonManager {
 					a.setUsername(rs.getString(4));
 					a.setEmail(rs.getString(5));
 					a.setPassword(rs.getString(6));
-					a.setCreated(rs.getDate(7));
+					a.setCreatedDate(rs.getDate(7));
 					return a;
 				} else {
 					User u = new User();
@@ -136,7 +136,7 @@ public class PersonManager {
 					u.setUsername(rs.getString(4));
 					u.setEmail(rs.getString(5));
 					u.setPassword(rs.getString(6));
-					u.setCreated(rs.getDate(7));
+					u.setCreatedDate(rs.getDate(7));
 					u.setModerator(rs.getBoolean(9));
 					u.setKarma(rs.getInt(10));
 					return u;
