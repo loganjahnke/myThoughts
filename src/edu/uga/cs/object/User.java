@@ -32,6 +32,12 @@ public class User extends Person {
 		this.karma = karma;
 	}
 
+	public User(String firstname, String lastname, String username, String password, String email, boolean isModerator, int karma) {
+		super(firstname, lastname, username, password, email);
+		this.isModerator = isModerator;
+		this.karma = karma;
+	}
+
 	/**
 	 * @return the isModerator
 	 */

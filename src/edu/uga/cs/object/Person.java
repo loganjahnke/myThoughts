@@ -42,6 +42,16 @@ public abstract class Person extends Persistent {
 		this.created = created;
 	}
 
+	public Person(String firstname, String lastname, String username, String password, String email) {
+		super();
+		this.firstname = firstname;
+		this.lastname = lastname;
+		this.username = username;
+		this.password = password;
+		this.email = email;
+		this.created = new Date();
+	}
+
 	public Person(int id, String firstname, String lastname, String username, String password, String email, Date created) {
 		super(id);
 		this.firstname = firstname;

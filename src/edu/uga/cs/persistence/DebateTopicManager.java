@@ -204,7 +204,7 @@ public class DebateTopicManager {
 	 * @return the DebateTopic object
 	 * @throws MyThoughtsException
 	 */
-	public ArrayList<DebateTopic> restoreThoseCreatedAfter(Date date) throws MyThoughtsException {
+	public ArrayList<DebateTopic> restoreAfter(Date date) throws MyThoughtsException {
 		String select = "SELECT dt.id, dt.title, dt.description, dt.created, dt.vote, dt.agrees, dt.disagrees, " +
 						"p.id, p.firstname, p.lastname, p.username, p.password, p.email, p.created, p.isModerator, p.karma, " +
 						"dc.id, dc.name, dc.description " +

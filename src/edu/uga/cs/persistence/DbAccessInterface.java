@@ -56,7 +56,7 @@ public class DbAccessInterface {
      * Closes the connection object
      * @param con - the connection object to close
      */
-    public static void closeConnection(Connection con) {
+    public static void disconnect(Connection con) {
         try {
             if (con != null) {
                 con.close();

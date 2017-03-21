@@ -8,6 +8,10 @@ public class Administrator extends Person {
 		super();
 	}
 
+	public Administrator(String firstname, String lastname, String username, String password, String email) {
+		super(firstname, lastname, username, password, email);
+	}
+
 	public Administrator(String firstname, String lastname, String username, String password, String email, Date created) {
 		super(firstname, lastname, username, password, email, created);
 	}
