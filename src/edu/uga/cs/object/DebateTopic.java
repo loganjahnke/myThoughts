@@ -156,6 +156,12 @@ public class DebateTopic extends Persistent {
 		return this;
 	}
 
+	public DebateTopic addCategories(DebateCategory ... categories) {
+		for (DebateCategory dc : categories)
+			this.categories.add(dc);
+		return this;
+	}
+
 	public boolean passesNullTest() {
 		if (this.title == null)
 			return false;

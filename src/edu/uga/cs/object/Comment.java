@@ -9,6 +9,7 @@ public class Comment extends Persistent {
 	private String argument;
 	private User user;
 	private Date created;
+	private Comment parent;
 
 	public Comment() {
 		super();
@@ -16,14 +17,16 @@ public class Comment extends Persistent {
 		this.argument = "";
 		this.user = new User();
 		this.created = new Date();
+		this.parent = null;
 	}
 
-	public Comment(String subject, String argument, User user, Date created) {
+	public Comment(String subject, String argument, User user, Date created, Comment parent) {
 		super();
 		this.subject = subject;
 		this.argument = argument;
 		this.user = user;
 		this.created = created;
+		this.parent = parent;
 	}
 
 	/**
@@ -80,6 +83,20 @@ public class Comment extends Persistent {
 	 */
 	public void setCreatedDate(Date created) {
 		this.created = created;
+	}
+
+	/**
+	 * @return the parent Comment
+	 */
+	public Comment getParentComment() {
+		return this.parent;
+	}
+
+	/**
+	 * @param parent the parent Comment
+	 */
+	public void setParentComment(Comment parent) {
+		this.parent = parent;
 	}
 
 }

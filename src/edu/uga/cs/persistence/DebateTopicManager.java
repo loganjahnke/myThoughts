@@ -67,7 +67,36 @@ public class DebateTopicManager {
 		} catch (SQLException e) {
 			throw new MyThoughtsException("DebateTopicManager.save: failed to save DebateTopic: " + e.getMessage());
 		}
+		insertCategories(debateTopicID, debateTopic.getCategories());
 		return debateTopicID;
+	}
+
+	/**
+	 * Handles the INSERT or the UPDATE of a DebateTopic object
+	 * @param id - the ID of the debateTopic
+	 * @param debateTopic - the debateTopic to INSERT or UPDATE
+	 * @return the ID of the debateTopic
+	 * @throws MyThoughtsException
+	 */
+	public void insertCategories(int id, ArrayList<DebateCategory> debateCategories) throws MyThoughtsException {
+		String insert = "INSERT into topic_category " +
+					   	"(category_id, topic_id) " +
+					   	"VALUES (?, ?)";
+		PreparedStatement pstmt;
+		DebateCategoryManager dcManager = new DebateCategoryManager(con);
+
+		try {
+			pstmt = con.prepareStatement(insert);
+			for (DebateCategory dc : debateCategories) {
+				if (!dc.isPersistent())
+					dc = dcManager.restore(dc);
+				pstmt.setInt(1, dc.getId());
+				pstmt.setInt(2, id);
+				pstmt.executeUpdate();
+			}
+		} catch (SQLException e) {
+			throw new MyThoughtsException("DebateTopicManager.insertCategories: failed to save many-to-many relationship: " + e.getMessage());
+		}
 	}
 
 	/**
