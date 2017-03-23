@@ -36,6 +36,10 @@ public class DebateCategoryManager {
 		int debateCategoryID = debateCategory.getId();
 
 		try {
+			DebateCategory dc = restore(debateCategory);
+			if (dc != null)
+				debateCategory = dc;
+			debateCategoryID = debateCategory.getId();
 			if (debateCategory.isPersistent())
 				pstmt = con.prepareStatement(update);
 			else
@@ -75,9 +79,9 @@ public class DebateCategoryManager {
 		if (debateCategory.isPersistent())
 			select += "id = " + debateCategory.getId();
 		else if (debateCategory.getName() != null)
-			select += "name = " + debateCategory.getName();
+			select += "name = \'" + debateCategory.getName() + "\'";
 		else if (debateCategory.getDescription() != null)
-			select += "description = " + debateCategory.getDescription();
+			select += "description = \'" + debateCategory.getDescription() + "\'";
 		else
 			throw new MyThoughtsException("DebateCategoryManager: cannot SELECT specific category without any information given!");
 

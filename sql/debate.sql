@@ -3,11 +3,11 @@
 #
 # remove the existing tables
 #
+DROP TABLE IF EXISTS comment;
+DROP TABLE IF EXISTS topic_category;
+DROP TABLE IF EXISTS debate_topic;
 DROP TABLE IF EXISTS person;
 DROP TABLE IF EXISTS debate_category;
-DROP TABLE IF EXISTS debate_topic;
-DROP TABLE IF EXISTS topic_category;
-DROP TABLE IF EXISTS comment;
 #
 # Table definition for table 'person'
 #
@@ -57,8 +57,8 @@ CREATE TABLE topic_category (
     topic_id        INT UNSIGNED NOT NULL,
 
     PRIMARY KEY (category_id, topic_id),
-    FOREIGN KEY (category_id) REFERENCES debate_category(id),
-    FOREIGN KEY (topic_id) REFERENCES debate_topic(id)
+    FOREIGN KEY (category_id) REFERENCES debate_category(id) ON DELETE CASCADE,
+    FOREIGN KEY (topic_id) REFERENCES debate_topic(id) ON DELETE CASCADE
 );
 
 #
@@ -74,5 +74,5 @@ CREATE TABLE comment (
     parent_id       INT UNSIGNED, # represents a reply if not null
 
     FOREIGN KEY (user_id) REFERENCES person(id),
-    FOREIGN KEY (topic_id) REFERENCES debate_topic(id)
+    FOREIGN KEY (topic_id) REFERENCES debate_topic(id) ON DELETE CASCADE
 );

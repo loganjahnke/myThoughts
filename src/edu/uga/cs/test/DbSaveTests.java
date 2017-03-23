@@ -11,7 +11,7 @@ import edu.uga.cs.object.*;
 
 public class DbSaveTests {
 
-	public static void main() {
+	public static void main(String[] args) {
 		Connection con = DbAccessInterface.connect();
 		PersistenceManager pm = new PersistenceManager(con);
 

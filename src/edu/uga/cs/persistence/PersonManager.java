@@ -34,6 +34,10 @@ public class PersonManager {
 		int personID = person.getId();
 
 		try {
+			Person p = restore(person);
+			if (p != null)
+				person = p;
+			personID = person.getId();
 			if (person.isPersistent())
 				pstmt = con.prepareStatement(update);
 			else
@@ -87,9 +91,9 @@ public class PersonManager {
 		if (person.isPersistent())
 			select += "id = " + person.getId();
 		else if (person.getUsername() != null)
-			select += "username = " + person.getUsername();
+			select += "username = \'" + person.getUsername() + "\'";
 		else if (person.getEmail() != null)
-			select += "email = " + person.getEmail();
+			select += "email = \'" + person.getEmail() + "\'";
 		else {
 			if (person.getFirstname() != null) {
 				if (conditionLength > 0)
@@ -142,7 +146,7 @@ public class PersonManager {
 					return u;
 				}
 			} else
-				throw new MyThoughtsException("PersonManager.restore: cannot find specified Person in database");
+				return null;
 		} catch (SQLException e) {
 			throw new MyThoughtsException("PersonManager.restore: failed to restore Person: " + e.getMessage());
 		}

@@ -33,10 +33,14 @@ public class DebateTopicManager {
 					   	"SET title = ?, description = ?, vote = ?, agrees = ?, disagrees = ?, user_id = ? " +
 					   	"WHERE id = ?";
 		PreparedStatement pstmt;
-		int debateTopicID = debateTopic.getId();
+		int debateTopicID = -1;
 		PersonManager pManager = new PersonManager(con);
 
 		try {
+			DebateTopic dt = restore(debateTopic);
+			if (dt != null)
+				debateTopic = dt;
+			debateTopicID = debateTopic.getId();
 			if (debateTopic.isPersistent())
 				pstmt = con.prepareStatement(update);
 			else
@@ -67,7 +71,8 @@ public class DebateTopicManager {
 		} catch (SQLException e) {
 			throw new MyThoughtsException("DebateTopicManager.save: failed to save DebateTopic: " + e.getMessage());
 		}
-		insertCategories(debateTopicID, debateTopic.getCategories());
+		if (debateTopicID != -1)
+			insertCategories(debateTopicID, debateTopic.getCategories());
 		return debateTopicID;
 	}
 
@@ -90,10 +95,35 @@ public class DebateTopicManager {
 			for (DebateCategory dc : debateCategories) {
 				if (!dc.isPersistent())
 					dc = dcManager.restore(dc);
-				pstmt.setInt(1, dc.getId());
-				pstmt.setInt(2, id);
-				pstmt.executeUpdate();
+				if (!relationIsInDatabase(dc.getId(), id)) {
+					pstmt.setInt(1, dc.getId());
+					pstmt.setInt(2, id);
+					pstmt.executeUpdate();
+				}
 			}
+		} catch (SQLException e) {
+			throw new MyThoughtsException("DebateTopicManager.insertCategories: failed to save many-to-many relationship: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Sees if the many-to-many relationship already exists
+	 * @param categoryID - the ID of the category
+	 * @param topicID - the ID of the topic
+	 * @return true if it exists in database
+	 * @throws MyThoughtsException
+	 */
+	public boolean relationIsInDatabase(int categoryID, int topicID) throws MyThoughtsException {
+		String select = "SELECT COUNT(*) FROM topic_category WHERE ";
+
+		select += "category_id = " + categoryID;
+		select += " AND topic_id = " + topicID;
+
+		try {
+			Statement stmt = con.createStatement();
+			stmt.execute(select);
+			ResultSet rs = stmt.getResultSet();
+			return rs.next();
 		} catch (SQLException e) {
 			throw new MyThoughtsException("DebateTopicManager.insertCategories: failed to save many-to-many relationship: " + e.getMessage());
 		}
@@ -123,14 +153,14 @@ public class DebateTopicManager {
 			select += " dt.id = " + debateTopic.getId();
 		else {
 			if (debateTopic.getTitle() != null) {
-				select += " dt.title = " + debateTopic.getTitle();
+				select += " dt.title = \'" + debateTopic.getTitle() + "\'";
 				conditionLength++;
 			}
 
 			if (debateTopic.getDescription() != null) {
 				if (conditionLength > 0)
 					select += " AND";
-				select += " dt.description = " + debateTopic.getDescription();
+				select += " dt.description = \'" + debateTopic.getDescription() + "\'";
 				conditionLength++;
 			}
 
@@ -191,9 +221,9 @@ public class DebateTopicManager {
 		if (person.isPersistent())
 			select += " p.id = " + person.getId();
 		else if (person.getUsername() != null)
-			select += " p.username = " + person.getUsername();
+			select += " p.username = \'" + person.getUsername() + "\'";
 		else if (person.getEmail() != null)
-			select += " p.email = " + person.getEmail();
+			select += " p.email = \'" + person.getEmail() + "\'";
 		else {
 			if (person.getFirstname() != null) {
 				if (conditionLength > 0)
@@ -280,9 +310,9 @@ public class DebateTopicManager {
 		if (debateCategory.isPersistent())
 			select += " dc.id = " + debateCategory.getId();
 		else if (debateCategory.getName() != null)
-			select += " dc.name = " + debateCategory.getName();
+			select += " dc.name = \'" + debateCategory.getName() + "\'";
 		else if (debateCategory.getDescription() != null)
-			select += " dc.description = " + debateCategory.getDescription();
+			select += " dc.description = \'" + debateCategory.getDescription() + "\'";
 		else
 			throw new MyThoughtsException("DebateTopicManager.restore: cannot restore topic without proper category");
 

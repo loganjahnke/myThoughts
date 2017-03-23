@@ -11,7 +11,7 @@ import edu.uga.cs.object.*;
 
 public class DbDeleteTests {
 
-	public static void main() {
+	public static void main(String[] args) {
 		Connection con = DbAccessInterface.connect();
 		PersistenceManager pm = new PersistenceManager(con);
 
@@ -33,34 +33,46 @@ public class DbDeleteTests {
 		}
 		System.out.println("success");
 
-		// INSERT users
+		// INSERT DEBATE TOPICS
 
-		System.out.print("Deleting Users: ");
-		User user1 = new User("Phillip",
-							  "Rodgers",
-							  "rodgers",
-							  "password",
-							  "rodgers@phillip.com",
-							  false,
-							  0);
-		User user2 = new User("Darth",
-							  "Vader",
-							  "vader",
-							  "password",
-							  "darth.vader@deathstar.com",
-							  true,
-							  82);
-		User user3 = new User("Simon",
-							  "Sayz",
-							  "sayz",
-							  "password",
-							  "simon@sayz.com",
-							  false,
-							  6);
+		System.out.print("Deleting Debate Topics: ");
+		DebateTopic dt1 = new DebateTopic("Women should be allowed to Pastor a church.",
+										  "",
+										  0,
+										  0,
+										  0,
+										  null,
+										  new Date(),
+										  new ArrayList<DebateCategory>());
+		DebateTopic dt2 = new DebateTopic("The North Dakota Pipeline should not be built.",
+										  "",
+										  0,
+										  0,
+										  0,
+										  null,
+										  new Date(),
+										  new ArrayList<DebateCategory>());
+		DebateTopic dt3 = new DebateTopic("The border wall will be good for Mexico-United States relations.",
+										  "",
+										  0,
+										  0,
+										  0,
+										  null,
+										  new Date(),
+										  new ArrayList<DebateCategory>());
+		DebateTopic dt4 = new DebateTopic("The Beatles are the best rock band.",
+										  "",
+										  0,
+										  0,
+										  0,
+										  null,
+										  new Date(),
+										  new ArrayList<DebateCategory>());
 		try {
-			pm.deletePerson(user1);
-			pm.deletePerson(user2);
-			pm.deletePerson(user3);
+			pm.deleteDebateTopic(dt1);
+			pm.deleteDebateTopic(dt2);
+			pm.deleteDebateTopic(dt3);
+			pm.deleteDebateTopic(dt4);
 		} catch (MyThoughtsException e) {
 			System.out.println("FAILED");
 			e.printStackTrace();
@@ -68,7 +80,7 @@ public class DbDeleteTests {
 			return;
 		}
 		System.out.println("success");
-
+		
 		// INSERT DEBATE CATEGORIES
 
 		System.out.print("Deleting Debate Categories: ");
@@ -92,58 +104,42 @@ public class DbDeleteTests {
 			return;
 		}
 		System.out.println("success");
+		
+		// INSERT users
 
-		// INSERT DEBATE TOPICS
-
-		System.out.print("Deleting Debate Topics: ");
-		DebateTopic dt1 = new DebateTopic("Women should be allowed to Pastor a church.",
-										  "",
-										  0,
-										  0,
-										  0,
-										  user2,
-										  new Date(),
-										  new ArrayList<DebateCategory>());
-		dt1.addCategories(dc2);
-		DebateTopic dt2 = new DebateTopic("The North Dakota Pipeline should not be built.",
-										  "",
-										  0,
-										  0,
-										  0,
-										  user2,
-										  new Date(),
-										  new ArrayList<DebateCategory>());
-		dt2.addCategories(dc1, dc3);
-		DebateTopic dt3 = new DebateTopic("The border wall will be good for Mexico-United States relations.",
-										  "",
-										  0,
-										  0,
-										  0,
-										  user3,
-										  new Date(),
-										  new ArrayList<DebateCategory>());
-		dt3.addCategories(dc1);
-		DebateTopic dt4 = new DebateTopic("The Beatles are the best rock band.",
-										  "",
-										  0,
-										  0,
-										  0,
-										  user1,
-										  new Date(),
-										  new ArrayList<DebateCategory>());
-		dt4.addCategories(dc4);
-		try {
-			pm.deleteDebateTopic(dt1);
-			pm.deleteDebateTopic(dt2);
-			pm.deleteDebateTopic(dt3);
-			pm.deleteDebateTopic(dt4);
-		} catch (MyThoughtsException e) {
-			System.out.println("FAILED");
-			e.printStackTrace();
-			DbAccessInterface.disconnect(con);
-			return;
-		}
-		System.out.println("success");
+				System.out.print("Deleting Users: ");
+				User user1 = new User("Phillip",
+									  "Rodgers",
+									  "rodgers",
+									  "password",
+									  "rodgers@phillip.com",
+									  false,
+									  0);
+				User user2 = new User("Darth",
+									  "Vader",
+									  "vader",
+									  "password",
+									  "darth.vader@deathstar.com",
+									  true,
+									  82);
+				User user3 = new User("Simon",
+									  "Sayz",
+									  "sayz",
+									  "password",
+									  "simon@sayz.com",
+									  false,
+									  6);
+				try {
+					pm.deletePerson(user1);
+					pm.deletePerson(user2);
+					pm.deletePerson(user3);
+				} catch (MyThoughtsException e) {
+					System.out.println("FAILED");
+					e.printStackTrace();
+					DbAccessInterface.disconnect(con);
+					return;
+				}
+				System.out.println("success");
 
 		// INSERT COMMENTS (not coded yet)
 
