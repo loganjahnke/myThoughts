@@ -9,23 +9,26 @@ public class Comment extends Persistent {
 	private String argument;
 	private User user;
 	private Date created;
+	private DebateTopic topic;
 	private Comment parent;
 
 	public Comment() {
 		super();
 		this.subject = "";
 		this.argument = "";
-		this.user = new User();
+		this.user = null;
 		this.created = new Date();
+		this.topic = null;
 		this.parent = null;
 	}
 
-	public Comment(String subject, String argument, User user, Date created, Comment parent) {
+	public Comment(String subject, String argument, User user, Date created, Comment parent, DebateTopic topic) {
 		super();
 		this.subject = subject;
 		this.argument = argument;
 		this.user = user;
 		this.created = created;
+		this.topic = topic;
 		this.parent = parent;
 	}
 
@@ -86,6 +89,20 @@ public class Comment extends Persistent {
 	}
 
 	/**
+	 * @return the DebateTopic
+	 */
+	public DebateTopic getDebateTopic() {
+		return this.topic;
+	}
+
+	/**
+	 * @param debateTopic the DebateTopic
+	 */
+	public void setDebateTopic(DebateTopic debateTopic) {
+		this.topic = debateTopic;
+	}
+
+	/**
 	 * @return the parent Comment
 	 */
 	public Comment getParentComment() {
@@ -97,6 +114,18 @@ public class Comment extends Persistent {
 	 */
 	public void setParentComment(Comment parent) {
 		this.parent = parent;
+	}
+
+	public boolean passesNullTest() {
+		if (this.subject == null)
+			return false;
+		if (this.argument == null)
+			return false;
+		if (this.user == null)
+			return false;
+		if (this.topic == null)
+			return false;
+		return true;
 	}
 
 }

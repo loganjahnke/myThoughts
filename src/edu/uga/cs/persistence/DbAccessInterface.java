@@ -9,9 +9,10 @@ import java.sql.Statement;
 
 /**
  * DbAccessInterface
- *	@author Logan Jahnke
- * 810616891
- * March 18, 2017
+ * @author Logan Jahnke
+ * @editor Logan Jahnke
+ * @created March 18, 2017
+ * @updated March 18, 2017
  */
 public class DbAccessInterface {
 

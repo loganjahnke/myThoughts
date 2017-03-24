@@ -7,16 +7,25 @@ import java.util.Date;
 import edu.uga.cs.MyThoughtsException;
 import edu.uga.cs.object.*;
 
+/**
+ * PersistenceManager
+ * @author Logan Jahnke
+ * @editor Logan Jahnke
+ * @created March 22, 2017
+ * @updated March 23, 2017
+ */
 public class PersistenceManager {
 
 	PersonManager pm;
 	DebateTopicManager dtm;
 	DebateCategoryManager dcm;
+	CommentManager cm;
 
 	public PersistenceManager(Connection con) {
 		this.pm = new PersonManager(con);
 		this.dtm = new DebateTopicManager(con);
 		this.dcm = new DebateCategoryManager(con);
+		this.cm = new CommentManager(con);
 	}
 
 	// PERSON METHODS
@@ -149,6 +158,67 @@ public class PersistenceManager {
 	 */
 	public void deleteDebateCategory(DebateCategory debateCategory) throws MyThoughtsException {
 		dcm.delete(debateCategory);
+	}
+
+	// COMMENT METHODS
+
+	/**
+	 * INSERTs a Comment into the database
+	 * @param comment - the topic to INSERT
+	 * @return the new id
+	 * @throws MyThoughtsException
+	 */
+	public int saveComment(Comment comment) throws MyThoughtsException {
+		return cm.save(comment);
+	}
+
+	/**
+	 * SELECTs a Comment from the database
+	 * @param comment - the topic to SELECT
+	 * @return the Comment object
+	 * @throws MyThoughtsException
+	 */
+	public Comment restoreComment(Comment comment) throws MyThoughtsException {
+		return cm.restore(comment);
+	}
+
+	/**
+	 * SELECTs all Comments written by a Person
+	 * @param person - the author of the topics
+	 * @return all Comments in an ArrayList
+	 * @throws MyThoughtsException
+	 */
+	public ArrayList<Comment> restoreComment(Person person) throws MyThoughtsException {
+		return cm.restore(person);
+	}
+
+	/**
+	 * SELECTs all Comments under a certain DebateCategory
+	 * @param debateCategory - the category
+	 * @return all Comments in an ArrayList
+	 * @throws MyThoughtsException
+	 */
+	public ArrayList<Comment> restoreComment(DebateTopic debateTopic) throws MyThoughtsException {
+		return cm.restore(debateTopic);
+	}
+
+	/**
+	 * SELECTs all Comments after a certain Date
+	 * @param date - the date
+	 * @return all Comments in an ArrayList
+	 * @throws MyThoughtsException
+	 */
+	public ArrayList<Comment> restoreComment(Date date) throws MyThoughtsException {
+		return cm.restoreAfter(date);
+	}
+
+	/**
+	 * DELETEs a Comment from the database
+	 * @param comment - the comment to delete
+	 * @throws MyThoughtsException
+	 */
+	public void deleteComment(Comment comment) throws MyThoughtsException {
+		cm.delete(comment);
 	}
 
 }

@@ -2,13 +2,11 @@ package edu.uga.cs.persistence;
 
 
 /**
- * This interface is the root interface to be implemented by all entity classes.  It has methods to read/write
- * the persistent identifier of an entity object. Typically, it is a database key of the
- * row, representing the entity object. Initially, when a new entity object is created, the identifier is set
- * to -1 (which indicates that the entity object has not been stored in the persistent data store, yet).  However,
- * once the entity object has been stored in the persistent data store (using a suitable store operation), this
- * value is set to the actual identifier (persistent store key).
- *
+ * Persistent
+ * @author Logan Jahnke
+ * @editor Logan Jahnke
+ * @created March 18, 2017
+ * @updated March 18, 2017
  */
 public abstract class Persistent {
 
