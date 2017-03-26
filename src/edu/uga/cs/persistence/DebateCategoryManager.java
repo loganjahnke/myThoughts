@@ -43,10 +43,6 @@ public class DebateCategoryManager {
 		int debateCategoryID = debateCategory.getId();
 
 		try {
-			DebateCategory dc = restore(debateCategory);
-			if (dc != null)
-				debateCategory = dc;
-			debateCategoryID = debateCategory.getId();
 			if (debateCategory.isPersistent())
 				pstmt = con.prepareStatement(update);
 			else

@@ -162,6 +162,30 @@ public class DebateTopic extends Persistent {
 		return this;
 	}
 
+	public void incrementVote() {
+		this.vote++;
+	}
+
+	public void decrementVote() {
+		this.vote--;
+	}
+
+	public void incrementAgree() {
+		this.agrees++;
+	}
+
+	public void decrementAgree() {
+		this.agrees--;
+	}
+
+	public void incrementDisagree() {
+		this.disagrees++;
+	}
+
+	public void decrementDisagree() {
+		this.disagrees--;
+	}
+
 	public boolean passesNullTest() {
 		if (this.title == null)
 			return false;

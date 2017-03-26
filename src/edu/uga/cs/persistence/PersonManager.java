@@ -41,10 +41,6 @@ public class PersonManager {
 		int personID = person.getId();
 
 		try {
-			Person p = restore(person);
-			if (p != null)
-				person = p;
-			personID = person.getId();
 			if (person.isPersistent())
 				pstmt = con.prepareStatement(update);
 			else

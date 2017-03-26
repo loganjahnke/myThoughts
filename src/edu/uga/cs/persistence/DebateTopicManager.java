@@ -44,10 +44,6 @@ public class DebateTopicManager {
 		PersonManager pManager = new PersonManager(con);
 
 		try {
-			DebateTopic dt = restore(debateTopic);
-			if (dt != null)
-				debateTopic = dt;
-			debateTopicID = debateTopic.getId();
 			if (debateTopic.isPersistent())
 				pstmt = con.prepareStatement(update);
 			else
@@ -130,7 +126,10 @@ public class DebateTopicManager {
 			Statement stmt = con.createStatement();
 			stmt.execute(select);
 			ResultSet rs = stmt.getResultSet();
-			return rs.next();
+			if (rs.next())
+				return rs.getInt(1) > 0;
+			else
+				return false;
 		} catch (SQLException e) {
 			throw new MyThoughtsException("DebateTopicManager.insertCategories: failed to save many-to-many relationship: " + e.getMessage());
 		}
@@ -160,14 +159,14 @@ public class DebateTopicManager {
 			select += " dt.id = " + debateTopic.getId();
 		else {
 			if (debateTopic.getTitle() != null) {
-				select += " dt.title = \'" + debateTopic.getTitle() + "\'";
+				select += " dt.title = \"" + debateTopic.getTitle() + "\"";
 				conditionLength++;
 			}
 
 			if (debateTopic.getDescription() != null) {
 				if (conditionLength > 0)
 					select += " AND";
-				select += " dt.description = \'" + debateTopic.getDescription() + "\'";
+				select += " dt.description = \"" + debateTopic.getDescription() + "\"";
 				conditionLength++;
 			}
 
@@ -188,6 +187,14 @@ public class DebateTopicManager {
 					select += " AND";
 				select += " dt.disagrees = " + debateTopic.getDisagrees();
 				conditionLength++;
+			}
+
+			if (debateTopic.getUser() != null && !debateTopic.getUser().isPersistent()) {
+				PersonManager pm = new PersonManager(con);
+				debateTopic.setUser((User) pm.restore(debateTopic.getUser()));
+				if (conditionLength > 0)
+					select += " AND";
+				select += " dt.user_id = " + debateTopic.getUser().getId();
 			}
 		}
 
@@ -228,28 +235,28 @@ public class DebateTopicManager {
 		if (person.isPersistent())
 			select += " p.id = " + person.getId();
 		else if (person.getUsername() != null)
-			select += " p.username = \'" + person.getUsername() + "\'";
+			select += " p.username = \"" + person.getUsername() + "\"";
 		else if (person.getEmail() != null)
-			select += " p.email = \'" + person.getEmail() + "\'";
+			select += " p.email = \"" + person.getEmail() + "\"";
 		else {
 			if (person.getFirstname() != null) {
 				if (conditionLength > 0)
 					select += (" AND");
-				select += (" p.firstname = \'" + person.getFirstname() + "\'");
+				select += (" p.firstname = \"" + person.getFirstname() + "\"");
 				conditionLength++;
 			}
 
 			if (person.getLastname() != null) {
 				if (conditionLength > 0)
 					select += (" AND");
-				select += (" p.lastname = \'" + person.getLastname() + "\'");
+				select += (" p.lastname = \"" + person.getLastname() + "\"");
 				conditionLength++;
 			}
 
 			if (person.getPassword() != null) {
 				if (conditionLength > 0)
 					select += (" AND");
-				select += (" p.password = \'" + person.getPassword() + "\'");
+				select += (" p.password = \"" + person.getPassword() + "\"");
 				conditionLength++;
 			}
 		}
@@ -317,9 +324,9 @@ public class DebateTopicManager {
 		if (debateCategory.isPersistent())
 			select += " dc.id = " + debateCategory.getId();
 		else if (debateCategory.getName() != null)
-			select += " dc.name = \'" + debateCategory.getName() + "\'";
+			select += " dc.name = \"" + debateCategory.getName() + "\"";
 		else if (debateCategory.getDescription() != null)
-			select += " dc.description = \'" + debateCategory.getDescription() + "\'";
+			select += " dc.description = \"" + debateCategory.getDescription() + "\"";
 		else
 			throw new MyThoughtsException("DebateTopicManager.restore: cannot restore topic without proper category");
 

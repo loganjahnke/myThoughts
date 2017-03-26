@@ -146,7 +146,7 @@ public class DbDeleteTests {
 		System.out.print("Deleting Comments: ");
 		Comment c1 = new Comment("Absurd!",
 								 "The reason Pastors are men is laid out clearly in the Bible.",
-								 user3,
+								 user1,
 								 new Date(),
 								 null,
 								 dt1);
@@ -158,7 +158,7 @@ public class DbDeleteTests {
 								 dt1);
 		Comment c3 = new Comment("The Beatles Suck",
 								 "Give me 3 songs of their's that everyone loves, and I'll change my mind.",
-								 user1,
+								 user3,
 								 new Date(),
 								 null,
 								 dt4);

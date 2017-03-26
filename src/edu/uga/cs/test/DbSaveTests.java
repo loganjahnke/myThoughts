@@ -24,7 +24,7 @@ public class DbSaveTests {
 												"password",
 												"jerry@cowboys.com");
 		try {
-			pm.savePerson(admin);
+			admin.setId(pm.savePerson(admin));
 		} catch (MyThoughtsException e) {
 			System.out.println("FAILED");
 			e.printStackTrace();
@@ -58,9 +58,9 @@ public class DbSaveTests {
 							  false,
 							  6);
 		try {
-			pm.savePerson(user1);
-			pm.savePerson(user2);
-			pm.savePerson(user3);
+			user1.setId(pm.savePerson(user1));
+			user2.setId(pm.savePerson(user2));
+			user3.setId(pm.savePerson(user3));
 		} catch (MyThoughtsException e) {
 			System.out.println("FAILED");
 			e.printStackTrace();
@@ -81,10 +81,10 @@ public class DbSaveTests {
 		DebateCategory dc4 = new DebateCategory("Music",
 												"Where words fail, music speaks. - Hans Anderson");
 		try {
-			pm.saveDebateCategory(dc1);
-			pm.saveDebateCategory(dc2);
-			pm.saveDebateCategory(dc3);
-			pm.saveDebateCategory(dc4);
+			dc1.setId(pm.saveDebateCategory(dc1));
+			dc2.setId(pm.saveDebateCategory(dc2));
+			dc3.setId(pm.saveDebateCategory(dc3));
+			dc4.setId(pm.saveDebateCategory(dc4));
 		} catch (MyThoughtsException e) {
 			System.out.println("FAILED");
 			e.printStackTrace();
@@ -133,10 +133,10 @@ public class DbSaveTests {
 										  new ArrayList<DebateCategory>());
 		dt4.addCategories(dc4);
 		try {
-			pm.saveDebateTopic(dt1);
-			pm.saveDebateTopic(dt2);
-			pm.saveDebateTopic(dt3);
-			pm.saveDebateTopic(dt4);
+			dt1.setId(pm.saveDebateTopic(dt1));
+			dt2.setId(pm.saveDebateTopic(dt2));
+			dt3.setId(pm.saveDebateTopic(dt3));
+			dt4.setId(pm.saveDebateTopic(dt4));
 		} catch (MyThoughtsException e) {
 			System.out.println("FAILED");
 			e.printStackTrace();
@@ -150,7 +150,7 @@ public class DbSaveTests {
 		System.out.print("Saving Comments: ");
 		Comment c1 = new Comment("Absurd!",
 				 				 "The reason Pastors are men is laid out clearly in the Bible.",
-				 				 user3,
+				 				 user1,
 				 				 new Date(),
 				 				 null,
 				 				 dt1);
@@ -162,7 +162,7 @@ public class DbSaveTests {
 						 		 dt1);
 		Comment c3 = new Comment("The Beatles Suck",
 						 		 "Give me 3 songs of their's that everyone loves, and I'll change my mind.",
-						 		 user1,
+						 		 user3,
 						 		 new Date(),
 						 		 null,
 						 		 dt4);
@@ -173,10 +173,10 @@ public class DbSaveTests {
 						 		 null,
 						 		 dt4);
 		try {
-			pm.saveComment(c1);
-			pm.saveComment(c2);
-			pm.saveComment(c3);
-			pm.saveComment(c4);
+			c1.setId(pm.saveComment(c1));
+			c2.setId(pm.saveComment(c2));
+			c3.setId(pm.saveComment(c3));
+			c4.setId(pm.saveComment(c4));
 		} catch (MyThoughtsException e) {
 			System.out.println("FAILED");
 			e.printStackTrace();

@@ -40,16 +40,10 @@ public class CommentManager {
 					   	"SET subject = ?, argument = ?, user_id = ?, topic_id = ?, parent_id = ? " +
 					   	"WHERE id = ?";
 		PreparedStatement pstmt;
-		int commentID = -1;
+		int commentID = comment.getId();
 		PersistenceManager pm = new PersistenceManager(con);
 
 		try {
-			// See if the Comment is already in the database
-			Comment dt = restore(comment);
-			if (dt != null)
-				comment = dt;
-			commentID = comment.getId();
-
 			// Check for UPDATE vs INSERT
 			if (comment.isPersistent())
 				pstmt = con.prepareStatement(update);
@@ -71,13 +65,16 @@ public class CommentManager {
 					comment.setDebateTopic(pm.restoreDebateTopic(comment.getDebateTopic()));
 				pstmt.setInt(4, comment.getDebateTopic().getId());
 
-				// Retrieve user id
+				// Retrieve parent comment
 				if (comment.getParentComment() != null) {
-					if (!comment.getUser().isPersistent())
-						comment.setUser((User) pm.restorePerson(comment.getUser()));
-					pstmt.setInt(5, comment.getUser().getId());
+					if (!comment.getParentComment().isPersistent())
+						comment.setParentComment(restore(comment.getParentComment()));
+					if (comment.getParentComment().isPersistent())
+						pstmt.setInt(5, comment.getParentComment().getId());
+					else
+						pstmt.setNull(5, 1);
 				} else {
-					pstmt.setNull(5, 0);
+					pstmt.setNull(5, 1);
 				}
 
 				if (comment.isPersistent())
@@ -103,7 +100,7 @@ public class CommentManager {
 	 * @throws MyThoughtsException
 	 */
 	public Comment restore(Comment comment) throws MyThoughtsException {
-		String select = "SELECT c.subject, c.argument, c.created, c.parent_id, " +
+		String select = "SELECT c.id, c.subject, c.argument, c.created, c.parent_id, " +
 						"p.id, " +
 						"dt.id " +
 						"FROM comment c " +
@@ -172,7 +169,7 @@ public class CommentManager {
 	 * @throws MyThoughtsException
 	 */
 	public ArrayList<Comment> restore(Person person) throws MyThoughtsException {
-		String select = "SELECT c.subject, c.argument, c.created, c.parent_id, " +
+		String select = "SELECT c.id, c.subject, c.argument, c.created, c.parent_id, " +
 						"p.id, " +
 						"dt.id " +
 						"FROM comment c " +
@@ -229,7 +226,7 @@ public class CommentManager {
 	 * @throws MyThoughtsException
 	 */
 	public ArrayList<Comment> restoreAfter(Date date) throws MyThoughtsException {
-		String select = "SELECT c.subject, c.argument, c.created, c.parent_id, " +
+		String select = "SELECT c.id, c.subject, c.argument, c.created, c.parent_id, " +
 						"p.id, " +
 						"dt.id " +
 						"FROM comment c " +
@@ -258,7 +255,7 @@ public class CommentManager {
 	 * @throws MyThoughtsException
 	 */
 	public ArrayList<Comment> restore(DebateTopic debateTopic) throws MyThoughtsException {
-		String select = "SELECT c.subject, c.argument, c.created, c.parent_id, " +
+		String select = "SELECT c.id, c.subject, c.argument, c.created, c.parent_id, " +
 						"p.id, " +
 						"dt.id " +
 						"FROM comment c " +
@@ -326,21 +323,22 @@ public class CommentManager {
 			ArrayList<Comment> commentList = new ArrayList<Comment>();
 			while (rs.next()) {
 				Comment comment = new Comment();
-				comment.setSubject(rs.getString(1));
-				comment.setArgument(rs.getString(2));
-				comment.setCreatedDate(rs.getDate(3));
+				comment.setId(rs.getInt(1));
+				comment.setSubject(rs.getString(2));
+				comment.setArgument(rs.getString(3));
+				comment.setCreatedDate(rs.getDate(4));
 
 				User user = new User();
-				user.setId(rs.getInt(5));
+				user.setId(rs.getInt(6));
 				comment.setUser((User) pm.restorePerson(user));
 
 				DebateTopic topic = new DebateTopic();
-				topic.setId(rs.getInt(6));
+				topic.setId(rs.getInt(7));
 				comment.setDebateTopic(pm.restoreDebateTopic(topic));
 
 				if (rs.getInt(4) > 0) {
 					Comment parent = new Comment();
-					comment.setId(rs.getInt(4));
+					parent.setId(rs.getInt(5));
 					comment.setParentComment(restore(parent));
 				}
 
