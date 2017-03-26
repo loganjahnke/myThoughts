@@ -199,7 +199,7 @@ public class DebateTopicManager {
 			if (dtList.size() > 0)
 				return dtList.get(0);
 			else
-				return new DebateTopic();
+				return null;
 		} catch (SQLException e) {
 			throw new MyThoughtsException("DebateTopicManager.restore: failed to restore DebateTopic: " + e.getMessage());
 		}
@@ -398,13 +398,15 @@ public class DebateTopicManager {
 		if (!debateTopic.isPersistent())
 			debateTopic = restore(debateTopic);
 
-		delete += debateTopic.getId();
+		if (debateTopic != null) {
+			delete += debateTopic.getId();
 
-		try {
-			Statement stmt = con.createStatement();
-			stmt.execute(delete);
-		} catch (SQLException e) {
-			throw new MyThoughtsException("DebateTopicManager.delete: failed to delete DebateTopic: " + e.getMessage());
+			try {
+				Statement stmt = con.createStatement();
+				stmt.execute(delete);
+			} catch (SQLException e) {
+				throw new MyThoughtsException("DebateTopicManager.delete: failed to delete DebateTopic: " + e.getMessage());
+			}
 		}
 	}
 

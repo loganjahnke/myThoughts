@@ -118,14 +118,14 @@ public class CommentManager {
 			select += " c.id = " + comment.getId();
 		else {
 			if (comment.getSubject() != null) {
-				select += " c.subject = \'" + comment.getSubject() + "\'";
+				select += " c.subject = \"" + comment.getSubject() + "\"";
 				conditionLength++;
 			}
 
 			if (comment.getArgument() != null) {
 				if (conditionLength > 0)
 					select += " AND";
-				select += " c.argument = \'" + comment.getArgument() + "\'";
+				select += " c.argument = \"" + comment.getArgument() + "\"";
 				conditionLength++;
 			}
 
@@ -186,28 +186,28 @@ public class CommentManager {
 		if (person.isPersistent())
 			select += " p.id = " + person.getId();
 		else if (person.getUsername() != null)
-			select += " p.username = \'" + person.getUsername() + "\'";
+			select += " p.username = \"" + person.getUsername() + "\"";
 		else if (person.getEmail() != null)
-			select += " p.email = \'" + person.getEmail() + "\'";
+			select += " p.email = \"" + person.getEmail() + "\"";
 		else {
 			if (person.getFirstname() != null) {
 				if (conditionLength > 0)
 					select += (" AND");
-				select += (" p.firstname = \'" + person.getFirstname() + "\'");
+				select += (" p.firstname = \"" + person.getFirstname() + "\"");
 				conditionLength++;
 			}
 
 			if (person.getLastname() != null) {
 				if (conditionLength > 0)
 					select += (" AND");
-				select += (" p.lastname = \'" + person.getLastname() + "\'");
+				select += (" p.lastname = \"" + person.getLastname() + "\"");
 				conditionLength++;
 			}
 
 			if (person.getPassword() != null) {
 				if (conditionLength > 0)
 					select += (" AND");
-				select += (" p.password = \'" + person.getPassword() + "\'");
+				select += (" p.password = \"" + person.getPassword() + "\"");
 				conditionLength++;
 			}
 		}
@@ -273,14 +273,14 @@ public class CommentManager {
 			select += " dt.id = " + debateTopic.getId();
 		else {
 			if (debateTopic.getTitle() != null) {
-				select += " dt.title = \'" + debateTopic.getTitle() + "\'";
+				select += " dt.title = \"" + debateTopic.getTitle() + "\"";
 				conditionLength++;
 			}
 
 			if (debateTopic.getDescription() != null) {
 				if (conditionLength > 0)
 					select += " AND";
-				select += " dt.description = \'" + debateTopic.getDescription() + "\'";
+				select += " dt.description = \"" + debateTopic.getDescription() + "\"";
 				conditionLength++;
 			}
 

@@ -98,28 +98,28 @@ public class PersonManager {
 		if (person.isPersistent())
 			select += "id = " + person.getId();
 		else if (person.getUsername() != null)
-			select += "username = \'" + person.getUsername() + "\'";
+			select += "username = \"" + person.getUsername() + "\"";
 		else if (person.getEmail() != null)
-			select += "email = \'" + person.getEmail() + "\'";
+			select += "email = \"" + person.getEmail() + "\"";
 		else {
 			if (person.getFirstname() != null) {
 				if (conditionLength > 0)
 					select += (" AND ");
-				select += ("firstname = \'" + person.getFirstname() + "\'");
+				select += ("firstname = \"" + person.getFirstname() + "\"");
 				conditionLength++;
 			}
 
 			if (person.getLastname() != null) {
 				if (conditionLength > 0)
 					select += (" AND ");
-				select += ("lastname = \'" + person.getLastname() + "\'");
+				select += ("lastname = \"" + person.getLastname() + "\"");
 				conditionLength++;
 			}
 
 			if (person.getPassword() != null) {
 				if (conditionLength > 0)
 					select += (" AND ");
-				select += ("password = \'" + person.getPassword() + "\'");
+				select += ("password = \"" + person.getPassword() + "\"");
 				conditionLength++;
 			}
 		}

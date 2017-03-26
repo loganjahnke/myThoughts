@@ -86,9 +86,9 @@ public class DebateCategoryManager {
 		if (debateCategory.isPersistent())
 			select += "id = " + debateCategory.getId();
 		else if (debateCategory.getName() != null)
-			select += "name = \'" + debateCategory.getName() + "\'";
+			select += "name = \"" + debateCategory.getName() + "\"";
 		else if (debateCategory.getDescription() != null)
-			select += "description = \'" + debateCategory.getDescription() + "\'";
+			select += "description = \"" + debateCategory.getDescription() + "\"";
 		else
 			throw new MyThoughtsException("DebateCategoryManager: cannot SELECT specific category without any information given!");
 
@@ -103,7 +103,7 @@ public class DebateCategoryManager {
 				dc.setDescription(rs.getString(3));
 				return dc;
 			} else
-				throw new MyThoughtsException("DebateCategoryManager.restore: cannot find specified DebateCategory in database");
+				return null;
 		} catch (SQLException e) {
 			throw new MyThoughtsException("DebateCategoryManager.restore: failed to restore DebateCategory: " + e.getMessage());
 		}

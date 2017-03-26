@@ -145,41 +145,45 @@ public class DbSaveTests {
 		}
 		System.out.println("success");
 
-		// INSERT COMMENTS (not coded yet)
+		// INSERT COMMENTS
 
-//		System.out.print("Saving Comments: ");
-//		Comment c1 = new Comment("Absurd!",
-//								 "The reason Pastors are men is laid out clearly in the Bible.",
-//								 user3,
-//								 new Date(),
-//								 null);
-//		Comment c2 = new Comment("Humans have grown past this...",
-//								 "Women should be allowed to pastor!",
-//								 user2,
-//								 new Date(),
-//								 c1);
-//		Comment c3 = new Comment("The Beatles Suck",
-//								 "Give me 3 songs of their's that everyone loves, and I'll change my mind.",
-//								 user1,
-//								 new Date(),
-//								 null);
-//		Comment c4 = new Comment("Maybe the best oldies band, but not rock band",
-//								 "Get a grip America.",
-//								 user2,
-//								 new Date(),
-//								 null);
-//		try {
-//			pm.saveComment(c1);
-//			pm.saveComment(c2);
-//			pm.saveComment(c3);
-//			pm.saveComment(c4);
-//		} catch (MyThoughtsException e) {
-//			System.out.println("FAILED");
-//			e.printStackTrace();
-//			DbAccessInterface.disconnect(con);
-//			return;
-//		}
-//		System.out.println("success");
+		System.out.print("Saving Comments: ");
+		Comment c1 = new Comment("Absurd!",
+				 				 "The reason Pastors are men is laid out clearly in the Bible.",
+				 				 user3,
+				 				 new Date(),
+				 				 null,
+				 				 dt1);
+		Comment c2 = new Comment("Humans have grown past this...",
+						 		 "Women should be allowed to pastor!",
+						 		 user2,
+						 		 new Date(),
+						 		 c1,
+						 		 dt1);
+		Comment c3 = new Comment("The Beatles Suck",
+						 		 "Give me 3 songs of their's that everyone loves, and I'll change my mind.",
+						 		 user1,
+						 		 new Date(),
+						 		 null,
+						 		 dt4);
+		Comment c4 = new Comment("Maybe the best oldies band, but not rock band",
+						 		 "Get a grip America.",
+						 		 user2,
+						 		 new Date(),
+						 		 null,
+						 		 dt4);
+		try {
+			pm.saveComment(c1);
+			pm.saveComment(c2);
+			pm.saveComment(c3);
+			pm.saveComment(c4);
+		} catch (MyThoughtsException e) {
+			System.out.println("FAILED");
+			e.printStackTrace();
+			DbAccessInterface.disconnect(con);
+			return;
+		}
+		System.out.println("success");
 
 		System.out.println("Testing Completed!");
 		return;

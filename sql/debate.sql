@@ -46,7 +46,7 @@ CREATE TABLE debate_topic (
     disagrees       INT NOT NULL,
     user_id         INT UNSIGNED NOT NULL,
 
-    FOREIGN KEY (user_id) REFERENCES person(id)
+    FOREIGN KEY (user_id) REFERENCES person(id) ON DELETE CASCADE
 );
 
 #
@@ -73,6 +73,7 @@ CREATE TABLE comment (
     topic_id        INT UNSIGNED NOT NULL,
     parent_id       INT UNSIGNED, # represents a reply if not null
 
-    FOREIGN KEY (user_id) REFERENCES person(id),
-    FOREIGN KEY (topic_id) REFERENCES debate_topic(id) ON DELETE CASCADE
+    FOREIGN KEY (user_id) REFERENCES person(id) ON DELETE CASCADE,
+    FOREIGN KEY (topic_id) REFERENCES debate_topic(id) ON DELETE CASCADE,
+    FOREIGN KEY (parent_id) REFERENCES comment(id) ON DELETE CASCADE
 );

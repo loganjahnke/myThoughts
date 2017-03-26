@@ -160,4 +160,15 @@ public abstract class Person extends Persistent {
 		return true;
 	}
 
+	/* (non-Javadoc)
+	 * @see java.lang.Object#toString()
+	 */
+	@Override
+	public String toString() {
+		return "Person [firstname=" + firstname + ", lastname=" + lastname + ", username=" + username + ", password="
+				+ password + ", email=" + email + ", created=" + created + "]";
+	}
+	
+	
+
 }
