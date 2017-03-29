@@ -7,7 +7,6 @@ public class Comment extends Likeable {
 	private String subject;
 	private String argument;
 	private User user;
-	private Date created;
 	private DebateTopic topic;
 	private Comment parent;
 
@@ -16,27 +15,24 @@ public class Comment extends Likeable {
 		this.subject = "";
 		this.argument = "";
 		this.user = null;
-		this.created = new Date();
 		this.topic = null;
 		this.parent = null;
 	}
 
 	public Comment(String subject, String argument, User user, Date created, Comment parent, DebateTopic topic) {
-		super();
+		super(created);
 		this.subject = subject;
 		this.argument = argument;
 		this.user = user;
-		this.created = created;
 		this.topic = topic;
 		this.parent = parent;
 	}
 
 	public Comment(String subject, String argument, User user, Date created, Comment parent, DebateTopic topic, int vote, int agrees, int disagrees) {
-		super(vote, agrees, disagrees);
+		super(vote, agrees, disagrees, created);
 		this.subject = subject;
 		this.argument = argument;
 		this.user = user;
-		this.created = created;
 		this.topic = topic;
 		this.parent = parent;
 	}
@@ -46,7 +42,6 @@ public class Comment extends Likeable {
 		this.subject = "";
 		this.argument = "";
 		this.user = null;
-		this.created = new Date();
 		this.topic = null;
 		this.parent = null;
 	}
@@ -91,20 +86,6 @@ public class Comment extends Likeable {
 	 */
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	/**
-	 * @return the created date
-	 */
-	public Date getCreatedDate() {
-		return created;
-	}
-
-	/**
-	 * @param created the created date
-	 */
-	public void setCreatedDate(Date created) {
-		this.created = created;
 	}
 
 	/**

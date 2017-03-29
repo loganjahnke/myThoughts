@@ -1,25 +1,37 @@
 package edu.uga.cs.object;
 
 import edu.uga.cs.persistence.Persistent;
+import java.util.Date;
 
 public abstract class Likeable extends Persistent {
 
 	private int vote;
 	private int agrees;
 	private int disagrees;
+	private Date created;
 
 	public Likeable() {
 		super();
 		this.vote = 0;
 		this.agrees = -1;
 		this.disagrees = -1;
+		this.created = new Date();
+	}
+	
+	public Likeable(Date created) {
+		super();
+		this.vote = 0;
+		this.agrees = -1;
+		this.disagrees = -1;
+		this.created = created;
 	}
 
-	public Likeable(int vote, int agrees, int disagrees) {
+	public Likeable(int vote, int agrees, int disagrees, Date created) {
 		super();
 		this.vote = vote;
 		this.agrees = agrees;
 		this.disagrees = disagrees;
+		this.created = created;
 	}
 
 	public Likeable(int id) {
@@ -27,13 +39,15 @@ public abstract class Likeable extends Persistent {
 		this.vote = 0;
 		this.agrees = -1;
 		this.disagrees = -1;
+		this.created = new Date();
 	}
 
-	public Likeable(int id, int vote, int agrees, int disagrees) {
+	public Likeable(int id, int vote, int agrees, int disagrees, Date created) {
 		super(id);
 		this.vote = 0;
 		this.agrees = -1;
 		this.disagrees = -1;
+		this.created = created;
 	}
 
 	/**
@@ -100,6 +114,20 @@ public abstract class Likeable extends Persistent {
 
 	public void decrementDisagree() {
 		this.disagrees--;
+	}
+
+	/**
+	 * @return the created date
+	 */
+	public Date getCreatedDate() {
+		return created;
+	}
+
+	/**
+	 * @param created the created date
+	 */
+	public void setCreatedDate(Date created) {
+		this.created = created;
 	}
 
 }

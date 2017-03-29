@@ -8,7 +8,6 @@ public class DebateTopic extends Likeable {
 	private String title;
 	private String description;
 	private User user;
-	private Date created;
 	private ArrayList<DebateCategory> categories;
 
 	public DebateTopic() {
@@ -16,7 +15,6 @@ public class DebateTopic extends Likeable {
 		this.title = "";
 		this.description = "";
 		this.user = new User();
-		this.created = new Date();
 		this.categories = new ArrayList<DebateCategory>();
 	}
 
@@ -25,16 +23,14 @@ public class DebateTopic extends Likeable {
 		this.title = "";
 		this.description = "";
 		this.user = new User();
-		this.created = new Date();
 		this.categories = new ArrayList<DebateCategory>();
 	}
 
 	public DebateTopic(String title, String description, int vote, int agrees, int disagrees, User user, Date created, ArrayList<DebateCategory> categories) {
-		super(vote, agrees, disagrees);
+		super(vote, agrees, disagrees, created);
 		this.title = title;
 		this.description = description;
 		this.user = user;
-		this.created = created;
 		this.categories = categories;
 	}
 
@@ -78,20 +74,6 @@ public class DebateTopic extends Likeable {
 	 */
 	public void setUser(User user) {
 		this.user = user;
-	}
-
-	/**
-	 * @return the created date
-	 */
-	public Date getCreatedDate() {
-		return created;
-	}
-
-	/**
-	 * @param created the created date
-	 */
-	public void setCreatedDate(Date created) {
-		this.created = created;
 	}
 
 	/**
