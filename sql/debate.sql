@@ -108,3 +108,17 @@ CREATE TABLE comment_vote (
     FOREIGN KEY (user_id) REFERENCES person(id) ON DELETE CASCADE,
     FOREIGN KEY (comment_id) REFERENCES comment(id) ON DELETE CASCADE
 );
+
+# Insert Administrators
+
+INSERT INTO person (firstname, lastname, username, password, email, isAdmin)
+VALUES ("Logan", "Jahnke", "jahnke", "ljahnke", "jahnke@uga.edu", true);
+
+INSERT INTO person (firstname, lastname, username, password, email, isAdmin)
+VALUES ("Lucy", "Bradley", "bradley", "lbradley", "lbradley@uga.edu", true);
+
+INSERT INTO person (firstname, lastname, username, password, email, isAdmin)
+VALUES ("Shaban", "Samani", "samani", "ssamani", "samani24@uga.edu", true);
+
+INSERT INTO person (firstname, lastname, username, password, email, isAdmin)
+VALUES ("April", "Abbott", "abbott", "aabbott", "abbott5@uga.edu", true);
