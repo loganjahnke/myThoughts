@@ -114,21 +114,27 @@ public class DbDeleteTests {
 									  "password",
 									  "rodgers@phillip.com",
 									  false,
-									  0);
+									  0,
+									  null,
+									  null);
 				User user2 = new User("Darth",
 									  "Vader",
 									  "vader",
 									  "password",
 									  "darth.vader@deathstar.com",
 									  true,
-									  82);
+									  82,
+									  null,
+									  null);
 				User user3 = new User("Simon",
 									  "Sayz",
 									  "sayz",
 									  "password",
 									  "simon@sayz.com",
 									  false,
-									  6);
+									  6,
+									  null,
+									  null);
 				try {
 					pm.deletePerson(user1);
 					pm.deletePerson(user2);

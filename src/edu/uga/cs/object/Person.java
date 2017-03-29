@@ -5,12 +5,12 @@ import java.util.Date;
 
 public abstract class Person extends Persistent {
 
-	protected String firstname;
-	protected String lastname;
-	protected String username;
-	protected String password;
-	protected String email;
-	protected Date created;
+	private String firstname;
+	private String lastname;
+	private String username;
+	private String password;
+	private String email;
+	private Date created;
 
 	public Person() {
 		super();
@@ -168,7 +168,7 @@ public abstract class Person extends Persistent {
 		return "Person [firstname=" + firstname + ", lastname=" + lastname + ", username=" + username + ", password="
 				+ password + ", email=" + email + ", created=" + created + "]";
 	}
-	
-	
+
+
 
 }

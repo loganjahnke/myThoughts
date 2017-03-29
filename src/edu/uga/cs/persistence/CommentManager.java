@@ -102,12 +102,21 @@ public class CommentManager {
 	public Comment restore(Comment comment) throws MyThoughtsException {
 		String select = "SELECT c.id, c.subject, c.argument, c.created, c.parent_id, " +
 						"p.id, " +
-						"dt.id " +
+						"dt.id, " +
+						"COUNT(cv1.upvote), COUNT(cv2.downvote), COUNT(cv3.agrees), COUNT(cv4.disagrees) " +
 						"FROM comment c " +
 						"JOIN person p " +
 							"ON c.user_id = p.id " +
 						"JOIN debate_topic dt " +
 							"ON c.topic_id = dt.id " +
+						"LEFT OUTER JOIN comment_vote cv1 " +
+							"ON c.id = cv1.comment_id AND cv1.upvote = 1 " +
+						"LEFT OUTER JOIN comment_vote cv2 " +
+							"ON c.id = cv2.comment_id AND cv2.downvote = 1 " +
+						"LEFT OUTER JOIN comment_vote cv3 " +
+							"ON c.id = cv3.comment_id AND cv3.agrees = 1 " +
+						"LEFT OUTER JOIN comment_vote cv4 " +
+							"ON c.id = cv4.comment_id AND cv4.disagrees = 1 " +
 						"WHERE";
 		int conditionLength = 0;
 
@@ -171,12 +180,21 @@ public class CommentManager {
 	public ArrayList<Comment> restore(Person person) throws MyThoughtsException {
 		String select = "SELECT c.id, c.subject, c.argument, c.created, c.parent_id, " +
 						"p.id, " +
-						"dt.id " +
+						"dt.id, " +
+						"COUNT(cv1.upvote), COUNT(cv2.downvote), COUNT(cv3.agrees), COUNT(cv4.disagrees) " +
 						"FROM comment c " +
 						"JOIN person p " +
 							"ON c.user_id = p.id " +
 						"JOIN debate_topic dt " +
 							"ON c.topic_id = dt.id " +
+						"LEFT OUTER JOIN comment_vote cv1 " +
+							"ON c.id = cv1.comment_id AND cv1.upvote = 1 " +
+						"LEFT OUTER JOIN comment_vote cv2 " +
+							"ON c.id = cv2.comment_id AND cv2.downvote = 1 " +
+						"LEFT OUTER JOIN comment_vote cv3 " +
+							"ON c.id = cv3.comment_id AND cv3.agrees = 1 " +
+						"LEFT OUTER JOIN comment_vote cv4 " +
+							"ON c.id = cv4.comment_id AND cv4.disagrees = 1 " +
 						"WHERE";
 		int conditionLength = 0;
 
@@ -228,12 +246,21 @@ public class CommentManager {
 	public ArrayList<Comment> restoreAfter(Date date) throws MyThoughtsException {
 		String select = "SELECT c.id, c.subject, c.argument, c.created, c.parent_id, " +
 						"p.id, " +
-						"dt.id " +
+						"dt.id, " +
+						"COUNT(cv1.upvote), COUNT(cv2.downvote), COUNT(cv3.agrees), COUNT(cv4.disagrees) " +
 						"FROM comment c " +
 						"JOIN person p " +
 							"ON c.user_id = p.id " +
 						"JOIN debate_topic dt " +
 							"ON c.topic_id = dt.id " +
+						"LEFT OUTER JOIN comment_vote cv1 " +
+							"ON c.id = cv1.comment_id AND cv1.upvote = 1 " +
+						"LEFT OUTER JOIN comment_vote cv2 " +
+							"ON c.id = cv2.comment_id AND cv2.downvote = 1 " +
+						"LEFT OUTER JOIN comment_vote cv3 " +
+							"ON c.id = cv3.comment_id AND cv3.agrees = 1 " +
+						"LEFT OUTER JOIN comment_vote cv4 " +
+							"ON c.id = cv4.comment_id AND cv4.disagrees = 1 " +
 						"WHERE";
 
 		select += " comment.created > " + date;
@@ -257,12 +284,21 @@ public class CommentManager {
 	public ArrayList<Comment> restore(DebateTopic debateTopic) throws MyThoughtsException {
 		String select = "SELECT c.id, c.subject, c.argument, c.created, c.parent_id, " +
 						"p.id, " +
-						"dt.id " +
+						"dt.id, " +
+						"COUNT(cv1.upvote), COUNT(cv2.downvote), COUNT(cv3.agrees), COUNT(cv4.disagrees) " +
 						"FROM comment c " +
 						"JOIN person p " +
 							"ON c.user_id = p.id " +
 						"JOIN debate_topic dt " +
 							"ON c.topic_id = dt.id " +
+						"LEFT OUTER JOIN comment_vote cv1 " +
+							"ON c.id = cv1.comment_id AND cv1.upvote = 1 " +
+						"LEFT OUTER JOIN comment_vote cv2 " +
+							"ON c.id = cv2.comment_id AND cv2.downvote = 1 " +
+						"LEFT OUTER JOIN comment_vote cv3 " +
+							"ON c.id = cv3.comment_id AND cv3.agrees = 1 " +
+						"LEFT OUTER JOIN comment_vote cv4 " +
+							"ON c.id = cv4.comment_id AND cv4.disagrees = 1 " +
 						"WHERE";
 		int conditionLength = 0;
 
@@ -278,25 +314,6 @@ public class CommentManager {
 				if (conditionLength > 0)
 					select += " AND";
 				select += " dt.description = \"" + debateTopic.getDescription() + "\"";
-				conditionLength++;
-			}
-
-			if (conditionLength > 0)
-				select += " AND";
-			select += " dt.vote = " + debateTopic.getVote();
-			conditionLength++;
-
-			if (debateTopic.getAgrees() > -1) {
-				if (conditionLength > 0)
-					select += " AND";
-				select += " dt.agrees = " + debateTopic.getAgrees();
-				conditionLength++;
-			}
-
-			if (debateTopic.getDisagrees() > -1) {
-				if (conditionLength > 0)
-					select += " AND";
-				select += " dt.disagrees = " + debateTopic.getDisagrees();
 				conditionLength++;
 			}
 		}
@@ -327,6 +344,9 @@ public class CommentManager {
 				comment.setSubject(rs.getString(2));
 				comment.setArgument(rs.getString(3));
 				comment.setCreatedDate(rs.getDate(4));
+				comment.setVote(rs.getInt(8) - rs.getInt(9));
+				comment.setAgrees(rs.getInt(10));
+				comment.setDisagrees(rs.getInt(11));
 
 				User user = new User();
 				user.setId(rs.getInt(6));
@@ -356,7 +376,7 @@ public class CommentManager {
 	 * @throws MyThoughtsException
 	 */
 	public void delete(Comment comment) throws MyThoughtsException {
-		String delete = "DELETE from debate_topic " +
+		String delete = "DELETE from comment " +
 						"WHERE id = ";
 
 		if (!comment.isPersistent())

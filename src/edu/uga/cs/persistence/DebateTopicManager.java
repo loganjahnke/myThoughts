@@ -34,10 +34,10 @@ public class DebateTopicManager {
 	 */
 	public int save(DebateTopic debateTopic) throws MyThoughtsException {
 		String insert = "INSERT into debate_topic " +
-					   	"(title, description, vote, agrees, disagrees, user_id) " +
-					   	"VALUES (?, ?, ?, ?, ?, ?)";
+					   	"(title, description, user_id) " +
+					   	"VALUES (?, ?, ?)";
 		String update = "UPDATE debate_topic " +
-					   	"SET title = ?, description = ?, vote = ?, agrees = ?, disagrees = ?, user_id = ? " +
+					   	"SET title = ?, description = ?, user_id = ? " +
 					   	"WHERE id = ?";
 		PreparedStatement pstmt;
 		int debateTopicID = -1;
@@ -52,17 +52,14 @@ public class DebateTopicManager {
 			if (debateTopic.passesNullTest()) {
 				pstmt.setString(1, debateTopic.getTitle());
 				pstmt.setString(2, debateTopic.getDescription());
-				pstmt.setInt(3, debateTopic.getVote());
-				pstmt.setInt(4, debateTopic.getAgrees());
-				pstmt.setInt(5, debateTopic.getDisagrees());
 
 				if (!debateTopic.getUser().isPersistent())
 					debateTopic.setUser((User) pManager.restore(debateTopic.getUser()));
 
-				pstmt.setInt(6, debateTopic.getUser().getId());
+				pstmt.setInt(3, debateTopic.getUser().getId());
 
 				if (debateTopic.isPersistent())
-					pstmt.setInt(7, debateTopicID);
+					pstmt.setInt(4, debateTopicID);
 
 				pstmt.executeUpdate();
 
@@ -142,9 +139,10 @@ public class DebateTopicManager {
 	 * @throws MyThoughtsException
 	 */
 	public DebateTopic restore(DebateTopic debateTopic) throws MyThoughtsException {
-		String select = "SELECT dt.id, dt.title, dt.description, dt.created, dt.vote, dt.agrees, dt.disagrees, " +
+		String select = "SELECT dt.id, dt.title, dt.description, dt.created, " +
 						"p.id, p.firstname, p.lastname, p.username, p.password, p.email, p.created, p.isModerator, p.karma, " +
-						"dc.id, dc.name, dc.description " +
+						"dc.id, dc.name, dc.description, " +
+						"COUNT(tv1.upvote), COUNT(tv2.downvote), COUNT(tv3.agrees), COUNT(tv4.disagrees) " + // 17, 18, 19, 20
 						"FROM debate_topic dt " +
 						"JOIN person p " +
 							"ON dt.user_id = p.id " +
@@ -152,6 +150,14 @@ public class DebateTopicManager {
 							"ON dt.id = tc.topic_id " +
 						"JOIN debate_category dc " +
 							"ON tc.category_id = dc.id " +
+						"LEFT OUTER JOIN topic_vote tv1 " +
+							"ON dt.id = tv1.topic_id AND tv1.upvote = true " +
+						"LEFT OUTER JOIN topic_vote tv2 " +
+							"ON dt.id = tv2.topic_id AND tv2.downvote = true " +
+						"LEFT OUTER JOIN topic_vote tv3 " +
+							"ON dt.id = tv3.topic_id AND tv3.agrees = true " +
+						"LEFT OUTER JOIN topic_vote tv4 " +
+							"ON dt.id = tv4.topic_id AND tv4.disagrees = true " +
 						"WHERE";
 		int conditionLength = 0;
 
@@ -167,25 +173,6 @@ public class DebateTopicManager {
 				if (conditionLength > 0)
 					select += " AND";
 				select += " dt.description = \"" + debateTopic.getDescription() + "\"";
-				conditionLength++;
-			}
-
-			if (conditionLength > 0)
-				select += " AND";
-			select += " dt.vote = " + debateTopic.getVote();
-			conditionLength++;
-
-			if (debateTopic.getAgrees() > -1) {
-				if (conditionLength > 0)
-					select += " AND";
-				select += " dt.agrees = " + debateTopic.getAgrees();
-				conditionLength++;
-			}
-
-			if (debateTopic.getDisagrees() > -1) {
-				if (conditionLength > 0)
-					select += " AND";
-				select += " dt.disagrees = " + debateTopic.getDisagrees();
 				conditionLength++;
 			}
 
@@ -219,9 +206,10 @@ public class DebateTopicManager {
 	 * @throws MyThoughtsException
 	 */
 	public ArrayList<DebateTopic> restore(Person person) throws MyThoughtsException {
-		String select = "SELECT dt.id, dt.title, dt.description, dt.created, dt.vote, dt.agrees, dt.disagrees, " +
+		String select = "SELECT dt.id, dt.title, dt.description, dt.created, " +
 						"p.id, p.firstname, p.lastname, p.username, p.password, p.email, p.created, p.isModerator, p.karma, " +
-						"dc.id, dc.name, dc.description " +
+						"dc.id, dc.name, dc.description, " +
+						"COUNT(tv1.upvote), COUNT(tv2.downvote), COUNT(tv3.agrees), COUNT(tv4.disagrees) " + // 17, 18, 19, 20
 						"FROM debate_topic dt " +
 						"JOIN person p " +
 							"ON dt.user_id = p.id " +
@@ -229,6 +217,14 @@ public class DebateTopicManager {
 							"ON dt.id = tc.topic_id " +
 						"JOIN debate_category dc " +
 							"ON tc.category_id = dc.id " +
+						"LEFT OUTER JOIN topic_vote tv1 " +
+							"ON dt.id = tv1.topic_id AND tv1.upvote = true " +
+						"LEFT OUTER JOIN topic_vote tv2 " +
+							"ON dt.id = tv2.topic_id AND tv2.downvote = true " +
+						"LEFT OUTER JOIN topic_vote tv3 " +
+							"ON dt.id = tv3.topic_id AND tv3.agrees = true " +
+						"LEFT OUTER JOIN topic_vote tv4 " +
+							"ON dt.id = tv4.topic_id AND tv4.disagrees = true " +
 						"WHERE";
 		int conditionLength = 0;
 
@@ -278,9 +274,10 @@ public class DebateTopicManager {
 	 * @throws MyThoughtsException
 	 */
 	public ArrayList<DebateTopic> restoreAfter(Date date) throws MyThoughtsException {
-		String select = "SELECT dt.id, dt.title, dt.description, dt.created, dt.vote, dt.agrees, dt.disagrees, " +
+		String select = "SELECT dt.id, dt.title, dt.description, dt.created, " +
 						"p.id, p.firstname, p.lastname, p.username, p.password, p.email, p.created, p.isModerator, p.karma, " +
-						"dc.id, dc.name, dc.description " +
+						"dc.id, dc.name, dc.description, " +
+						"COUNT(tv1.upvote), COUNT(tv2.downvote), COUNT(tv3.agrees), COUNT(tv4.disagrees) " + // 17, 18, 19, 20
 						"FROM debate_topic dt " +
 						"JOIN person p " +
 							"ON dt.user_id = p.id " +
@@ -288,6 +285,14 @@ public class DebateTopicManager {
 							"ON dt.id = tc.topic_id " +
 						"JOIN debate_category dc " +
 							"ON tc.category_id = dc.id " +
+						"LEFT OUTER JOIN topic_vote tv1 " +
+							"ON dt.id = tv1.topic_id AND tv1.upvote = true " +
+						"LEFT OUTER JOIN topic_vote tv2 " +
+							"ON dt.id = tv2.topic_id AND tv2.downvote = true " +
+						"LEFT OUTER JOIN topic_vote tv3 " +
+							"ON dt.id = tv3.topic_id AND tv3.agrees = true " +
+						"LEFT OUTER JOIN topic_vote tv4 " +
+							"ON dt.id = tv4.topic_id AND tv4.disagrees = true " +
 						"WHERE";
 
 		select += " dt.created > " + date;
@@ -309,9 +314,10 @@ public class DebateTopicManager {
 	 * @throws MyThoughtsException
 	 */
 	public ArrayList<DebateTopic> restore(DebateCategory debateCategory) throws MyThoughtsException {
-		String select = "SELECT dt.id, dt.title, dt.description, dt.created, dt.vote, dt.agrees, dt.disagrees, " +
-						"p.id, p.firstname, p.lastname, p.username, p.password, p.email, p.created, p.isModerator, p.karma, " +
-						"dc.id, dc.name, dc.description " +
+		String select = "SELECT dt.id, dt.title, dt.description, dt.created, " + // 1, 2, 3, 4
+						"p.id, p.firstname, p.lastname, p.username, p.password, p.email, p.created, p.isModerator, p.karma, " + // 5, 6, 7, 8, 9, 10, 11, 12, 13
+						"dc.id, dc.name, dc.description, " + // 14, 15, 16
+						"COUNT(tv1.upvote), COUNT(tv2.downvote), COUNT(tv3.agrees), COUNT(tv4.disagrees) " + // 17, 18, 19, 20
 						"FROM debate_topic dt " +
 						"JOIN person p " +
 							"ON dt.user_id = p.id " +
@@ -319,6 +325,14 @@ public class DebateTopicManager {
 							"ON dt.id = tc.topic_id " +
 						"JOIN debate_category dc " +
 							"ON tc.category_id = dc.id " +
+						"LEFT OUTER JOIN topic_vote tv1 " +
+							"ON dt.id = tv1.topic_id AND tv1.upvote = true " +
+						"LEFT OUTER JOIN topic_vote tv2 " +
+							"ON dt.id = tv2.topic_id AND tv2.downvote = true " +
+						"LEFT OUTER JOIN topic_vote tv3 " +
+							"ON dt.id = tv3.topic_id AND tv3.agrees = true " +
+						"LEFT OUTER JOIN topic_vote tv4 " +
+							"ON dt.id = tv4.topic_id AND tv4.disagrees = true " +
 						"WHERE";
 
 		if (debateCategory.isPersistent())
@@ -358,21 +372,21 @@ public class DebateTopicManager {
 					dt.setTitle(rs.getString(2));
 					dt.setDescription(rs.getString(3));
 					dt.setCreatedDate(rs.getDate(4));
-					dt.setVote(rs.getInt(5));
-					dt.setAgrees(rs.getInt(6));
-					dt.setDisagrees(rs.getInt(7));
+					dt.setVote(rs.getInt(17) - rs.getInt(18));
+					dt.setAgrees(rs.getInt(19));
+					dt.setDisagrees(rs.getInt(20));
 
 					// Add User
 					User u = new User();
-					u.setId(rs.getInt(8));
-					u.setFirstname(rs.getString(9));
-					u.setLastname(rs.getString(10));
-					u.setUsername(rs.getString(11));
-					u.setEmail(rs.getString(12));
-					u.setPassword(rs.getString(13));
-					u.setCreatedDate(rs.getDate(14));
-					u.setModerator(rs.getBoolean(15));
-					u.setKarma(rs.getInt(16));
+					u.setId(rs.getInt(5));
+					u.setFirstname(rs.getString(6));
+					u.setLastname(rs.getString(7));
+					u.setUsername(rs.getString(8));
+					u.setEmail(rs.getString(9));
+					u.setPassword(rs.getString(10));
+					u.setCreatedDate(rs.getDate(11));
+					u.setModerator(rs.getBoolean(12));
+					u.setKarma(rs.getInt(13));
 					dt.setUser(u);
 
 					// Set ID and index
@@ -381,9 +395,9 @@ public class DebateTopicManager {
 					dtList.add(dt);
 				} else {
 					DebateCategory dc = new DebateCategory();
-					dc.setId(rs.getInt(17));
-					dc.setName(rs.getString(18));
-					dc.setDescription(rs.getString(19));
+					dc.setId(rs.getInt(14));
+					dc.setName(rs.getString(15));
+					dc.setDescription(rs.getString(16));
 					dtList.set(currentIndex, dtList.get(currentIndex).addCategory(dc));
 				}
 			}

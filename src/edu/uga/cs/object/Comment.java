@@ -1,9 +1,8 @@
 package edu.uga.cs.object;
 
-import edu.uga.cs.persistence.Persistent;
 import java.util.Date;
 
-public class Comment extends Persistent {
+public class Comment extends Likeable {
 
 	private String subject;
 	private String argument;
@@ -30,6 +29,26 @@ public class Comment extends Persistent {
 		this.created = created;
 		this.topic = topic;
 		this.parent = parent;
+	}
+
+	public Comment(String subject, String argument, User user, Date created, Comment parent, DebateTopic topic, int vote, int agrees, int disagrees) {
+		super(vote, agrees, disagrees);
+		this.subject = subject;
+		this.argument = argument;
+		this.user = user;
+		this.created = created;
+		this.topic = topic;
+		this.parent = parent;
+	}
+
+	public Comment(int id) {
+		super(id);
+		this.subject = "";
+		this.argument = "";
+		this.user = null;
+		this.created = new Date();
+		this.topic = null;
+		this.parent = null;
 	}
 
 	/**

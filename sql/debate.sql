@@ -3,8 +3,10 @@
 #
 # remove the existing tables
 #
+DROP TABLE IF EXISTS comment_vote;
 DROP TABLE IF EXISTS comment;
 DROP TABLE IF EXISTS topic_category;
+DROP TABLE IF EXISTS topic_vote;
 DROP TABLE IF EXISTS debate_topic;
 DROP TABLE IF EXISTS person;
 DROP TABLE IF EXISTS debate_category;
@@ -41,12 +43,25 @@ CREATE TABLE debate_topic (
     title           VARCHAR(255) NOT NULL,
     description     VARCHAR(1023),
     created         DATETIME DEFAULT CURRENT_TIMESTAMP NOT NULL,
-    vote            INT NOT NULL,
-    agrees          INT NOT NULL,
-    disagrees       INT NOT NULL,
     user_id         INT UNSIGNED NOT NULL,
 
     FOREIGN KEY (user_id) REFERENCES person(id) ON DELETE CASCADE
+);
+
+#
+# Table definition for table 'topic_vote'
+#
+CREATE TABLE topic_vote (
+    user_id         INT UNSIGNED NOT NULL,
+    topic_id        INT UNSIGNED NOT NULL,
+    upvote          BOOLEAN NOT NULL DEFAULT false,
+    downvote        BOOLEAN NOT NULL DEFAULT false,
+    agrees          BOOLEAN NOT NULL DEFAULT false,
+    disagrees       BOOLEAN NOT NULL DEFAULT false,
+
+    PRIMARY KEY (user_id, topic_id),
+    FOREIGN KEY (user_id) REFERENCES person(id) ON DELETE CASCADE,
+    FOREIGN KEY (topic_id) REFERENCES debate_topic(id) ON DELETE CASCADE
 );
 
 #
@@ -76,4 +91,20 @@ CREATE TABLE comment (
     FOREIGN KEY (user_id) REFERENCES person(id) ON DELETE CASCADE,
     FOREIGN KEY (topic_id) REFERENCES debate_topic(id) ON DELETE CASCADE,
     FOREIGN KEY (parent_id) REFERENCES comment(id) ON DELETE CASCADE
+);
+
+#
+# Table definition for table 'comment_vote'
+#
+CREATE TABLE comment_vote (
+    user_id         INT UNSIGNED NOT NULL,
+    comment_id      INT UNSIGNED NOT NULL,
+    upvote          BOOLEAN NOT NULL DEFAULT false,
+    downvote        BOOLEAN NOT NULL DEFAULT false,
+    agrees          BOOLEAN NOT NULL DEFAULT false,
+    disagrees       BOOLEAN NOT NULL DEFAULT false,
+
+    PRIMARY KEY (user_id, comment_id),
+    FOREIGN KEY (user_id) REFERENCES person(id) ON DELETE CASCADE,
+    FOREIGN KEY (comment_id) REFERENCES comment(id) ON DELETE CASCADE
 );

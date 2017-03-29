@@ -20,12 +20,14 @@ public class PersistenceManager {
 	DebateTopicManager dtm;
 	DebateCategoryManager dcm;
 	CommentManager cm;
+	VoteManager vm;
 
 	public PersistenceManager(Connection con) {
 		this.pm = new PersonManager(con);
 		this.dtm = new DebateTopicManager(con);
 		this.dcm = new DebateCategoryManager(con);
 		this.cm = new CommentManager(con);
+		this.vm = new VoteManager(con);
 	}
 
 	// PERSON METHODS
@@ -219,6 +221,58 @@ public class PersistenceManager {
 	 */
 	public void deleteComment(Comment comment) throws MyThoughtsException {
 		cm.delete(comment);
+	}
+
+	/**
+	 * Votes on a Comment in the database
+	 * @param person - the person voting
+	 * @param comment - the Comment being voted on
+	 * @param vote - the vote to cast
+	 * @throws MyThoughtsException
+	 */
+	public User castVote(User user, Comment comment, Boolean vote) throws MyThoughtsException {
+		vm.vote(user, comment, vote);
+		user.addVote(comment, vote);
+		return user;
+	}
+
+	/**
+	 * Agree/Disagree on a Comment in the database
+	 * @param person - the person voting
+	 * @param comment - the Comment being voted on
+	 * @param agree - the agree to cast
+	 * @throws MyThoughtsException
+	 */
+	public User castAgree(User user, Comment comment, Boolean agree) throws MyThoughtsException {
+		vm.agree(user, comment, agree);
+		user.addAgree(comment, agree);
+		return user;
+	}
+
+	/**
+	 * Votes on a DebateTopic in the database
+	 * @param person - the person voting
+	 * @param topic - the DebateTopic being voted on
+	 * @param vote - the vote to cast
+	 * @throws MyThoughtsException
+	 */
+	public User castVote(User user, DebateTopic topic, Boolean vote) throws MyThoughtsException {
+		vm.vote(user, topic, vote);
+		user.addVote(topic, vote);
+		return user;
+	}
+
+	/**
+	 * Agree/Disagree on a DebateTopic in the database
+	 * @param person - the person voting
+	 * @param topic - the DebateTopic being voted on
+	 * @param agree - the agree to cast
+	 * @throws MyThoughtsException
+	 */
+	public User castAgree(User user, DebateTopic topic, Boolean agree) throws MyThoughtsException {
+		vm.agree(user, topic, agree);
+		user.addAgree(topic, agree);
+		return user;
 	}
 
 }

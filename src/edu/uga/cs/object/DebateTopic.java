@@ -1,16 +1,12 @@
 package edu.uga.cs.object;
 
-import edu.uga.cs.persistence.Persistent;
 import java.util.Date;
 import java.util.ArrayList;
 
-public class DebateTopic extends Persistent {
+public class DebateTopic extends Likeable {
 
 	private String title;
 	private String description;
-	private int vote;
-	private int agrees;
-	private int disagrees;
 	private User user;
 	private Date created;
 	private ArrayList<DebateCategory> categories;
@@ -19,21 +15,24 @@ public class DebateTopic extends Persistent {
 		super();
 		this.title = "";
 		this.description = "";
-		this.vote = 0;
-		this.agrees = -1;
-		this.disagrees = -1;
+		this.user = new User();
+		this.created = new Date();
+		this.categories = new ArrayList<DebateCategory>();
+	}
+
+	public DebateTopic(int id) {
+		super(id);
+		this.title = "";
+		this.description = "";
 		this.user = new User();
 		this.created = new Date();
 		this.categories = new ArrayList<DebateCategory>();
 	}
 
 	public DebateTopic(String title, String description, int vote, int agrees, int disagrees, User user, Date created, ArrayList<DebateCategory> categories) {
-		super();
+		super(vote, agrees, disagrees);
 		this.title = title;
 		this.description = description;
-		this.vote = vote;
-		this.agrees = agrees;
-		this.disagrees = disagrees;
 		this.user = user;
 		this.created = created;
 		this.categories = categories;
@@ -65,48 +64,6 @@ public class DebateTopic extends Persistent {
 	 */
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	/**
-	 * @return the vote
-	 */
-	public int getVote() {
-		return vote;
-	}
-
-	/**
-	 * @param vote the vote to set
-	 */
-	public void setVote(int vote) {
-		this.vote = vote;
-	}
-
-	/**
-	 * @return the agrees
-	 */
-	public int getAgrees() {
-		return agrees;
-	}
-
-	/**
-	 * @param agrees the agrees to set
-	 */
-	public void setAgrees(int agrees) {
-		this.agrees = agrees;
-	}
-
-	/**
-	 * @return the disagrees
-	 */
-	public int getDisagrees() {
-		return disagrees;
-	}
-
-	/**
-	 * @param disagrees the disagrees to set
-	 */
-	public void setDisagrees(int disagrees) {
-		this.disagrees = disagrees;
 	}
 
 	/**
@@ -160,30 +117,6 @@ public class DebateTopic extends Persistent {
 		for (DebateCategory dc : categories)
 			this.categories.add(dc);
 		return this;
-	}
-
-	public void incrementVote() {
-		this.vote++;
-	}
-
-	public void decrementVote() {
-		this.vote--;
-	}
-
-	public void incrementAgree() {
-		this.agrees++;
-	}
-
-	public void decrementAgree() {
-		this.agrees--;
-	}
-
-	public void incrementDisagree() {
-		this.disagrees++;
-	}
-
-	public void decrementDisagree() {
-		this.disagrees--;
 	}
 
 	public boolean passesNullTest() {

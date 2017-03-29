@@ -42,21 +42,27 @@ public class DbSaveTests {
 							  "password",
 							  "rodgers@phillip.com",
 							  false,
-							  0);
+							  0,
+							  null,
+							  null);
 		User user2 = new User("Darth",
 							  "Vader",
 							  "vader",
 							  "password",
 							  "darth.vader@deathstar.com",
 							  true,
-							  82);
+							  82,
+							  null,
+							  null);
 		User user3 = new User("Simon",
 							  "Sayz",
 							  "sayz",
 							  "password",
 							  "simon@sayz.com",
 							  false,
-							  6);
+							  6,
+							  null,
+							  null);
 		try {
 			user1.setId(pm.savePerson(user1));
 			user2.setId(pm.savePerson(user2));
@@ -177,6 +183,23 @@ public class DbSaveTests {
 			c2.setId(pm.saveComment(c2));
 			c3.setId(pm.saveComment(c3));
 			c4.setId(pm.saveComment(c4));
+		} catch (MyThoughtsException e) {
+			System.out.println("FAILED");
+			e.printStackTrace();
+			DbAccessInterface.disconnect(con);
+			return;
+		}
+		System.out.println("success");
+		
+		// INSERTing likes
+		
+		System.out.print("Saving Likes: ");
+		
+		try {
+			pm.castVote(user1, c2, true);
+			pm.castAgree(user1, c2, true);
+			pm.castAgree(user1, dt1, false);
+			pm.castVote(user1, dt2, false);
 		} catch (MyThoughtsException e) {
 			System.out.println("FAILED");
 			e.printStackTrace();
