@@ -16,4 +16,8 @@ myThoughts is a web application that allows users to discuss their opinions on v
 ![diagram](https://raw.githubusercontent.com/loganjahnke/myThoughts/master/docs/Debate%20Class%20Diagram.png?token=AI62QBenWj8QYYDrjW0Ry6ANyUco3gEoks5Y5VyNwA%3D%3D)
 
 # Mockups
-![mockup](https://raw.githubusercontent.com/loganjahnke/myThoughts/master/mockups/myThoughtsMockup-01.png?token=AI62QDWMAJSXujtTl9oZcPNj5tea08Geks5Y5UgJwA%3D%3D)
+![homepage](https://raw.githubusercontent.com/loganjahnke/myThoughts/master/mockups/myThoughtsMockup-01.png?token=AI62QDWMAJSXujtTl9oZcPNj5tea08Geks5Y5UgJwA%3D%3D)
+
+![topic-neutral](https://raw.githubusercontent.com/loganjahnke/myThoughts/master/mockups/post-neutral.png?token=AI62QIHVphotWZfiV5rFF6kGe7W9PF9Iks5Y5kx5wA%3D%3D)
+
+![topic-agree](https://raw.githubusercontent.com/loganjahnke/myThoughts/master/mockups/post-agree.png?token=AI62QFo-Z6BBpUF0SQ51m_8MjnzIrD7Pks5Y5kx-wA%3D%3D)
