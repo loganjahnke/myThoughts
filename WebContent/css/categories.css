@@ -1,0 +1,36 @@
+#categories {
+	width: 100%;
+}
+
+#category-list {
+	list-style: none;
+	display: inline;
+}
+
+#category-list > li {
+	padding: 2%;
+	width: 28%;
+	text-align: center;
+	float: left;
+	border-top: 0.5px solid grey;
+}
+
+#category-list > li:nth-child(3n-1) {
+	border-left: 0.5px solid grey;
+	border-right: 0.5px solid grey;
+}
+
+#category-list > li > a > i {
+	font-size: 36px;
+	padding: 30px;
+	border-radius: 100%;
+}
+
+.author {
+	font-style: italic;
+	font-weight: 100;
+}
+
+a {
+	color: inherit;
+}

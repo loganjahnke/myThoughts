@@ -1,0 +1,79 @@
+body {
+	font-family: 'Nunito', sans-serif;
+}
+
+/*=====================
+		Header
+=======================*/
+
+#bar {
+    background: #222222;
+    color: white;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    width: 100%;
+    height: 20px;
+}
+
+.logo {
+	margin-left: 15px;
+}
+
+#name {
+	margin-right: 15px;
+}
+
+/*=====================
+		Colors
+=======================*/
+
+.blue {
+    background-color: rgba(41, 171, 226, 0.7);
+    color: #0082B9;
+}
+
+.green {
+    background-color: rgba(140, 198, 63, 0.7);
+    color: #639D16;
+}
+
+.red {
+    background-color: rgba(255, 0, 0, 0.7);
+    color: #D60000;
+}
+
+.blue > a:hover {
+    color: #0082B9;
+}
+
+.green > a:hover {
+    color: #639D16;
+}
+
+.red > a:hover {
+    color: #D60000;
+}
+
+.no-background {
+	background: none;
+}
+
+/*=====================
+		Font-Styles
+=======================*/
+
+.rightAlign {
+    float: right;
+}
+
+.leftAlign {
+    float: left;
+}
+
+.bold {
+    font-weight: 900;
+}
+
+.thin {
+    font-weight: 100;
+}

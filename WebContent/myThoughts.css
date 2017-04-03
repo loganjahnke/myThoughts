@@ -1,18 +1,5 @@
 body{
-	font-family: 'Nunito', sans-serif;
     margin-right: inherit;
-}
-#bar{
-    background: black; 
-    color: white;
-    padding-bottom: 10px; 
-    padding-top: 10px;
-    width: 100%;
-    
-}
-
-.rightAllign{
-    float: right;
 }
 
 ul {
@@ -21,7 +8,7 @@ ul {
     padding: 0;
     overflow: hidden;
     background-color: #333;
-    top:10;
+    top: 10;
     position: absolute;
     width: 100%;
 }
@@ -30,8 +17,6 @@ li {
     float:left;
     border-right:1px solid #bbb;
     width:14.2%;
-  
-    
 }
 
 li a {
@@ -40,30 +25,17 @@ li a {
     text-align: center;
     padding: 5px;
     text-decoration: none;
-   
-    
+
+
 }
 
 li a:hover:not(.active) {
     background-color: #111;
-   
+
 }
 
 .active {
     background-color: #4CAF50;
-}
-
-.blue{
-    background-color: skyblue;
-    
-}
-
-.green{
-    background-color: darkseagreen;
-}
-
-.red{
-    background-color: firebrick;
 }
 
 #debate{
@@ -85,18 +57,12 @@ li a:hover:not(.active) {
     width:27%;
     height:50%;
     padding: 40px;
-    
-}
 
-.bold{
-    font-weight: bold;
 }
 
 #ourModeration{
     border-left:1px solid grey;
     border-right: 1px solid grey;
-  
-
 }
 
 .clipart{
