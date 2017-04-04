@@ -70,6 +70,12 @@ body {
     float: left;
 }
 
+.centerAlign{
+    text-align: center;
+    padding-top: 10%;
+    font-size: 30pt;
+}
+
 .bold {
     font-weight: 900;
 }
