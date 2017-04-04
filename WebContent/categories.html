@@ -4,22 +4,43 @@
 <head>
     <meta charset="utf-8">
     <title>myThoughts</title>
+    <!-- Styling -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,400,700,900" rel="stylesheet">
     <link rel="stylesheet" href="css/font-awesome.min.css">
+    <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="css/categories.css">
+    <!-- Scripts -->
+    <script src="js/jquery.min.js"></script>
+    <script src="js/skel.min.js"></script>
+    <script src="js/header.js"></script>
 </head>
 
 <body>
-    <div id="bar">
-        <div class="leftAlign logo bold blue no-background"><i class="fa fa-bars"></i> <span class="thin">my</span>Thoughts</div>
-        <div class="rightAlign">
-            <form id="name">
-                Welcome, Logan
-                - <span class="green no-background">205<span class="bold">k</span></span>
-            </form>
-        </div>
-    </div>
+    <header id="header">
+        <h1>
+            <a href="index.html">
+                <span class="thin blue no-background"><i class="fa fa-bars"></i> my<span class="bold">Thoughts</span>
+                </span>
+            </a>
+        </h1>
+        <nav class="links">
+            <ul>
+                <li><a href="user.html">Welcome, Logan</a></li>
+                <li><a href="karma.html"><span class="green no-background">220<span class="bold">k</span></span></a></li>
+            </ul>
+        </nav>
+        <nav class="main">
+            <ul>
+                <li class="search">
+                    <a class="fa-search" href="#search">Search</a>
+                    <form id="search" method="get" action="#">
+                        <input type="text" name="query" placeholder="Search" />
+                    </form>
+                </li>
+            </ul>
+        </nav>
+    </header>
     <div id="categories">
         <ul id="category-list">
             <li>
@@ -73,3 +94,5 @@
         </ul>
     </div>
 </body>
+
+</html>
