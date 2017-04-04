@@ -2,7 +2,13 @@ body{
     margin-right: inherit;
 }
 
-ul {
+#topicsMenu {
+    position: relative;
+    top: 2.2em;
+    z-index: 1000;
+}
+
+#topicsMenu ul {
     list-style-type: none;
     margin: 0;
     padding: 0;
@@ -13,13 +19,13 @@ ul {
     width: 100%;
 }
 
-li {
+#topicsMenu li {
     float:left;
     border-right:1px solid #bbb;
     width:14.2%;
 }
 
-li a {
+#topicsMenu li a {
     display: block;
     color: white;
     text-align: center;
@@ -29,7 +35,7 @@ li a {
 
 }
 
-li a:hover:not(.active) {
+#topicsMenu li a:hover:not(.active) {
     background-color: #111;
 
 }
@@ -39,6 +45,8 @@ li a:hover:not(.active) {
 }
 
 #debate{
+    position: relative;
+    top: 3.5em;
     height:300px;
     background-size: 100% 100%;
     background-repeat: no-repeat;
