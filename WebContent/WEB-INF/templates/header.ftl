@@ -7,8 +7,8 @@
         </h1>
     <nav class="links">
         <ul>
-            <li><a href="user.html">Welcome, Logan</a></li>
-            <li><a href="karma.html"><span class="green no-background">220<span class="bold">k</span></span></a></li>
+            <li><a href="user.html">Welcome, ${user.getFirstname()}</a></li>
+            <li><a href="karma.html"><span class="green no-background">${user.getKarma()}<span class="bold">k</span></span></a></li>
         </ul>
     </nav>
     <nav class="main">
