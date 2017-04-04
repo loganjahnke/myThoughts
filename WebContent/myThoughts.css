@@ -38,11 +38,27 @@ li a:hover:not(.active) {
     background-color: #4CAF50;
 }
 
+<<<<<<< Updated upstream
+=======
+.blue{
+    background-color: skyblue;
+    
+}
+
+.green{
+    background-color: darkseagreen;
+}
+
+.red{
+    background-color: indianred;
+}
+
+>>>>>>> Stashed changes
 #debate{
     height:300px;
-    background-size: 100%;
+    background-size: 100% 100%;
     background-repeat: no-repeat;
-    background-image: url("");
+    background-image: url("http://www.serenitysecretgarden.com/wp-content/uploads/sites/1106/2016/01/field5.png");
     background-color: #cccccc;
 }
 #wrapper{
@@ -70,4 +86,10 @@ li a:hover:not(.active) {
     padding:20px;
     border-radius: 43.5%;
     border: 2px solid black;
+}
+
+.centerAllign{
+    text-align: center;
+    padding-top: 10%;
+    font-size: 30pt;
 }
