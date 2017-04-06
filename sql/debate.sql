@@ -1,6 +1,9 @@
+# @author Logan Jahnke
+# @created March 19, 2017
+# @updated April 5, 2017
+# @version 1.08
 #
 # this SQL file creates the schema for the myThoughts database
-#
 # remove the existing tables
 #
 DROP TABLE IF EXISTS comment_vote;
@@ -32,6 +35,8 @@ CREATE TABLE person (
 CREATE TABLE debate_category (
     id              INT UNSIGNED PRIMARY KEY AUTO_INCREMENT,
     name            VARCHAR(255) NOT NULL UNIQUE,
+    icon            VARCHAR(50) NOT NULL,
+    color           VARCHAR(30) NOT NULL,
     description     VARCHAR(511)
 );
 

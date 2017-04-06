@@ -91,10 +91,12 @@ public class DbUpdateTests {
 
 		System.out.print("Updating Debate Categories: ");
 		DebateCategory dc2 = new DebateCategory("Religion",
-				"When I admire the wonders of a sunset or the beauty of the moon, my soul expands in the worship of the creator. - Mahatma Gandhi");
+												"When I admire the wonders of a sunset or the beauty of the moon, my soul expands in the worship of the creator. - Mahatma Gandhi",
+												"book",
+												"blue");
 		try {
 			dc2 = pm.restoreDebateCategory(dc2);
-			dc2.setName("Religion");
+			dc2.setColor("green");
 			dc2.setId(pm.saveDebateCategory(dc2));
 		} catch (MyThoughtsException e) {
 			System.out.println("FAILED");

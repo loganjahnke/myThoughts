@@ -16,7 +16,7 @@ import edu.uga.cs.object.*;
  * @author Logan Jahnke
  * @editor Logan Jahnke
  * @created March 19, 2017
- * @updated March 23, 2017
+ * @updated April 5, 2017
  */
 public class DebateCategoryManager {
 
@@ -34,10 +34,10 @@ public class DebateCategoryManager {
 	 */
 	public int save(DebateCategory debateCategory) throws MyThoughtsException {
 		String insert = "INSERT into debate_category " +
-					   	"(name, description) " +
-					   	"VALUES (?, ?)";
+					   	"(name, description, icon, color) " +
+					   	"VALUES (?, ?, ?, ?)";
 		String update = "UPDATE debate_category " +
-					   	"SET name = ?, description = ? " +
+					   	"SET name = ?, description = ?, icon = ?, color = ? " +
 					   	"WHERE id = ?";
 		PreparedStatement pstmt;
 		int debateCategoryID = debateCategory.getId();
@@ -51,9 +51,11 @@ public class DebateCategoryManager {
 			if (debateCategory.passesNullTest()) {
 				pstmt.setString(1, debateCategory.getName());
 				pstmt.setString(2, debateCategory.getDescription());
+				pstmt.setString(3, debateCategory.getIcon());
+				pstmt.setString(4, debateCategory.getColor());
 
 				if (debateCategory.isPersistent())
-					pstmt.setInt(3, debateCategoryID);
+					pstmt.setInt(5, debateCategoryID);
 
 				pstmt.executeUpdate();
 
@@ -75,7 +77,7 @@ public class DebateCategoryManager {
 	 * @throws MyThoughtsException
 	 */
 	public DebateCategory restore(DebateCategory debateCategory) throws MyThoughtsException {
-		String select = "SELECT id, name, description " +
+		String select = "SELECT id, name, description, icon, color " +
 						"FROM debate_category " +
 						"WHERE ";
 
@@ -97,6 +99,8 @@ public class DebateCategoryManager {
 				dc.setId(rs.getInt(1));
 				dc.setName(rs.getString(2));
 				dc.setDescription(rs.getString(3));
+				dc.setIcon(rs.getString(4));
+				dc.setColor(rs.getString(5));
 				return dc;
 			} else
 				return null;
@@ -111,7 +115,7 @@ public class DebateCategoryManager {
 	 * @throws MyThoughtsException
 	 */
 	public ArrayList<DebateCategory> restoreAll() throws MyThoughtsException {
-		String select = "SELECT id, name, description " +
+		String select = "SELECT id, name, description, icon, color " +
 						"FROM debate_category";
 
 		ArrayList<DebateCategory> dcList = new ArrayList<DebateCategory>();
@@ -125,6 +129,8 @@ public class DebateCategoryManager {
 				dc.setId(rs.getInt(1));
 				dc.setName(rs.getString(2));
 				dc.setDescription(rs.getString(3));
+				dc.setIcon(rs.getString(4));
+				dc.setColor(rs.getString(5));
 				dcList.add(dc);
 			}
 		} catch (SQLException e) {

@@ -16,7 +16,7 @@ import edu.uga.cs.object.*;
  * @author Logan Jahnke
  * @editor Logan Jahnke
  * @created March 19, 2017
- * @updated March 23, 2017
+ * @updated April 5, 2017
  */
 public class DebateTopicManager {
 
@@ -141,8 +141,8 @@ public class DebateTopicManager {
 	public DebateTopic restore(DebateTopic debateTopic) throws MyThoughtsException {
 		String select = "SELECT dt.id, dt.title, dt.description, dt.created, " +
 						"p.id, p.firstname, p.lastname, p.username, p.password, p.email, p.created, p.isModerator, p.karma, " +
-						"dc.id, dc.name, dc.description, " +
-						"COUNT(tv1.upvote), COUNT(tv2.downvote), COUNT(tv3.agrees), COUNT(tv4.disagrees) " + // 17, 18, 19, 20
+						"dc.id, dc.name, dc.description, dc.icon, dc.color, " +
+						"COUNT(tv1.upvote), COUNT(tv2.downvote), COUNT(tv3.agrees), COUNT(tv4.disagrees) " + // 19, 20, 21, 22
 						"FROM debate_topic dt " +
 						"JOIN person p " +
 							"ON dt.user_id = p.id " +
@@ -208,7 +208,7 @@ public class DebateTopicManager {
 	public ArrayList<DebateTopic> restore(Person person) throws MyThoughtsException {
 		String select = "SELECT dt.id, dt.title, dt.description, dt.created, " +
 						"p.id, p.firstname, p.lastname, p.username, p.password, p.email, p.created, p.isModerator, p.karma, " +
-						"dc.id, dc.name, dc.description, " +
+						"dc.id, dc.name, dc.description, dc.icon, dc.color, " +
 						"COUNT(tv1.upvote), COUNT(tv2.downvote), COUNT(tv3.agrees), COUNT(tv4.disagrees) " + // 17, 18, 19, 20
 						"FROM debate_topic dt " +
 						"JOIN person p " +
@@ -276,7 +276,7 @@ public class DebateTopicManager {
 	public ArrayList<DebateTopic> restoreAfter(Date date) throws MyThoughtsException {
 		String select = "SELECT dt.id, dt.title, dt.description, dt.created, " +
 						"p.id, p.firstname, p.lastname, p.username, p.password, p.email, p.created, p.isModerator, p.karma, " +
-						"dc.id, dc.name, dc.description, " +
+						"dc.id, dc.name, dc.description, dc.icon, dc.color, " +
 						"COUNT(tv1.upvote), COUNT(tv2.downvote), COUNT(tv3.agrees), COUNT(tv4.disagrees) " + // 17, 18, 19, 20
 						"FROM debate_topic dt " +
 						"JOIN person p " +
@@ -316,7 +316,7 @@ public class DebateTopicManager {
 	public ArrayList<DebateTopic> restore(DebateCategory debateCategory) throws MyThoughtsException {
 		String select = "SELECT dt.id, dt.title, dt.description, dt.created, " + // 1, 2, 3, 4
 						"p.id, p.firstname, p.lastname, p.username, p.password, p.email, p.created, p.isModerator, p.karma, " + // 5, 6, 7, 8, 9, 10, 11, 12, 13
-						"dc.id, dc.name, dc.description, " + // 14, 15, 16
+						"dc.id, dc.name, dc.description, dc.icon, dc.color, " + // 14, 15, 16
 						"COUNT(tv1.upvote), COUNT(tv2.downvote), COUNT(tv3.agrees), COUNT(tv4.disagrees) " + // 17, 18, 19, 20
 						"FROM debate_topic dt " +
 						"JOIN person p " +
@@ -372,9 +372,9 @@ public class DebateTopicManager {
 					dt.setTitle(rs.getString(2));
 					dt.setDescription(rs.getString(3));
 					dt.setCreatedDate(rs.getDate(4));
-					dt.setVote(rs.getInt(17) - rs.getInt(18));
-					dt.setAgrees(rs.getInt(19));
-					dt.setDisagrees(rs.getInt(20));
+					dt.setVote(rs.getInt(19) - rs.getInt(20));
+					dt.setAgrees(rs.getInt(21));
+					dt.setDisagrees(rs.getInt(22));
 
 					// Add User
 					User u = new User();
@@ -398,6 +398,8 @@ public class DebateTopicManager {
 					dc.setId(rs.getInt(14));
 					dc.setName(rs.getString(15));
 					dc.setDescription(rs.getString(16));
+					dc.setIcon(rs.getString(17));
+					dc.setColor(rs.getString(18));
 					dtList.set(currentIndex, dtList.get(currentIndex).addCategory(dc));
 				}
 			}

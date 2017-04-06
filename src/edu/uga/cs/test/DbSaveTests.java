@@ -79,13 +79,21 @@ public class DbSaveTests {
 
 		System.out.print("Saving Debate Categories: ");
 		DebateCategory dc1 = new DebateCategory("Politics",
-												"I must study politics and war that my sons may have liberty to study mathematics and philosophy. - John Adams");
+												"I must study politics and war that my sons may have liberty to study mathematics and philosophy. - John Adams",
+												"gravel",
+												"red");
 		DebateCategory dc2 = new DebateCategory("Religion",
-												"When I admire the wonders of a sunset or the beauty of the moon, my soul expands in the worship of the creator. - Mahatma Gandhi");
+												"When I admire the wonders of a sunset or the beauty of the moon, my soul expands in the worship of the creator. - Mahatma Gandhi",
+												"book",
+												"blue");
 		DebateCategory dc3 = new DebateCategory("Environmental",
-												"Never doubt that a small group of thoughtful, committed citizens can change the world; indeed, it's the only thing that ever has. - Margaret Mead");
+												"Never doubt that a small group of thoughtful, committed citizens can change the world; indeed, it's the only thing that ever has. - Margaret Mead",
+												"tree",
+												"green");
 		DebateCategory dc4 = new DebateCategory("Music",
-												"Where words fail, music speaks. - Hans Anderson");
+												"Where words fail, music speaks. - Hans Anderson",
+												"music",
+												"blue");
 		try {
 			dc1.setId(pm.saveDebateCategory(dc1));
 			dc2.setId(pm.saveDebateCategory(dc2));
@@ -190,11 +198,11 @@ public class DbSaveTests {
 			return;
 		}
 		System.out.println("success");
-		
+
 		// INSERTing likes
-		
+
 		System.out.print("Saving Likes: ");
-		
+
 		try {
 			pm.castVote(user1, c2, true);
 			pm.castAgree(user1, c2, true);
