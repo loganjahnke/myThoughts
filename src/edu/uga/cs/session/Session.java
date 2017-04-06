@@ -148,5 +148,12 @@ public class Session
             }
         }
     }
+    
+    public boolean getIsAdmin() {
+    	if (this.person instanceof Administrator)
+    		return true;
+    	else
+    		return false;
+    }
 
 }

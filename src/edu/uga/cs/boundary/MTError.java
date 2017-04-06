@@ -9,54 +9,32 @@
 
 package edu.uga.cs.boundary;
 
-
-
-import java.io.BufferedWriter;
-import java.util.HashMap;
-import java.util.Map;
-
 import javax.servlet.ServletException;
+import javax.servlet.http.HttpServletResponse;
 
 import freemarker.template.Configuration;
-import freemarker.template.Template;
+import freemarker.template.DefaultObjectWrapperBuilder;
+import freemarker.template.SimpleHash;
 
 
 public class MTError {
     static  String   errorTemplateName = "error.ftl";
 
-    public static void error( Configuration cfg, BufferedWriter toClient, Exception e )
-            throws ServletException
-    {
-        error( cfg, toClient, e.toString() );
+    public static void error(TemplateProcessor processor, HttpServletResponse response, Configuration cfg, Exception e) throws ServletException {
+        error(processor, response, cfg, e.toString());
     }
 
-    public static void error( Configuration cfg, BufferedWriter toClient, String msg )
-            throws ServletException
-    {
-        Template	    errorTemplate = null;
-        Map<String, String> root = new HashMap<String, String>();
+    public static void error(TemplateProcessor processor, HttpServletResponse response, Configuration cfg, String msg) throws ServletException {
+        DefaultObjectWrapperBuilder db = new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_25);
+		SimpleHash root = new SimpleHash(db.build());
         String back = "index.html";
-
-        // Load the error template from the WEB-INF/templates directory of the Web app
-        try {
-            errorTemplate = cfg.getTemplate( errorTemplateName );
-        } catch( Exception e ) {
-            throw new ServletException( "Can't load template: " + errorTemplateName + ": " + e.toString() );
-        }
 
         if (msg.equals("java.lang.NullPointerException")) msg = "Mega-weird internal error. This shouldn't happen.";
         root.put( "reason", msg );
         if (msg.equals("Session expired or illegal; please log in")) back = "Logout";
         root.put( "window", back );
 
-        try {
-            errorTemplate.process( root, toClient );
-            toClient.flush();
-            toClient.close();
-        }
-        catch( Exception e ) {
-            throw new ServletException( "Error while processing FreeMarker template", e);
-        }
+        processor.processTemplate(errorTemplateName, root, response);
 
         return;
     }

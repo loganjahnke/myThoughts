@@ -55,6 +55,16 @@ public class User extends Person {
 		this.setAgrees(agrees);
 	}
 
+	public User(String firstname, String lastname, String username, String password, String email) {
+		super(firstname, lastname, username, password, email);
+		this.isModerator = false;
+		this.karma = 0;
+		votes = new HashMap<Likeable, Boolean>();
+		this.setLikes(votes);
+		agrees = new HashMap<Likeable, Boolean>();
+		this.setAgrees(agrees);
+	}
+
 	/**
 	 * @return the isModerator
 	 */

@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.Writer;
 
 import javax.servlet.ServletContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import freemarker.template.Configuration;
@@ -18,15 +17,15 @@ public class TemplateProcessor {
 	private String templateDir;
 	private String templateName;
 	private Configuration configuration;
-	
+
 	public TemplateProcessor(String templateDir, ServletContext servContext) {
 		this.templateDir = templateDir;
 		configuration = new Configuration(Configuration.VERSION_2_3_25);
 		configuration.setServletContextForTemplateLoading(servContext, templateDir);
 		configuration.setTemplateExceptionHandler(TemplateExceptionHandler.HTML_DEBUG_HANDLER);
 	}
-	
-	public void processTemplate(String templateName, SimpleHash root, HttpServletRequest request, HttpServletResponse response) {
+
+	public void processTemplate(String templateName, SimpleHash root, HttpServletResponse response) {
 		this.templateName = templateName;
 		Template template = null;
 		try {
@@ -34,7 +33,7 @@ public class TemplateProcessor {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 		try {
 			Writer out = response.getWriter();
 			response.setContentType("text/html");
@@ -45,28 +44,28 @@ public class TemplateProcessor {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
+
 	public String getTemplateDir() {
 		return templateDir;
 	}
-	
+
 	public void setTemplateDir(String templateDir) {
 		this.templateDir = templateDir;
 	}
-	
+
 	public String getTemplateName() {
 		return templateName;
 	}
-	
+
 	public void setTemplateName(String templateName) {
 		this.templateName = templateName;
 	}
-	
+
 	public Configuration getConfiguration() {
 		return configuration;
 	}
-	
+
 	public void setConfiguration(Configuration config) {
 		this.configuration = config;
 	}
