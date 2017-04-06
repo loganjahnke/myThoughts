@@ -23,6 +23,11 @@ body {
     color: #D60000;
 }
 
+.gray {
+    background-color: rgba(44, 44, 44, 0.7);
+    color: #FFFFFF;
+}
+
 .blue > a:hover {
     color: #0082B9;
 }
@@ -63,4 +68,18 @@ body {
 
 .thin {
     font-weight: 100;
+}
+
+/*=====================
+        Footer
+=======================*/
+footer {
+    padding-top: 10px;
+    padding-bottom: 10px;
+    height: 30px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 1);
+    text-align: center;
+    background: #333;
+    /*background-image: url("http://tractile.com.au/wp-content/uploads/2015/05/Banner1-Background_dark.jpg");*/
 }
