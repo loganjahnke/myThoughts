@@ -10,10 +10,12 @@
     <link rel="stylesheet" href="css/main.css">
     <link rel="stylesheet" href="myThoughts.css">
     <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/modal.css">
     <!-- Scripts -->
-    <script src="js/jquery.min.js"></script>
-    <script src="js/skel.min.js"></script>
-    <script src="js/header.js"></script>
+    <script type="text/javascript" src="js/jquery.min.js"></script>
+    <script type="text/javascript" src="js/jquery.leanModal.min.js"></script>
+    <script type="text/javascript" src="js/skel.min.js"></script>
+    <script type="text/javascript" src="js/header.js"></script>
 </head>
 
 <body>
@@ -26,8 +28,7 @@
         </h1>
         <nav class="links">
             <ul>
-                <li><a href="user.html">Sign <span class="bold">in</span></a></li>
-                <li><a href="karma.html">Sign <span class="bold">up</span></a></li>
+                <li><a id="login_trigger" href="#modal">Sign <span class="bold">in</span> | Sign <span class="bold">up</a></li>
             </ul>
         </nav>
         <nav class="main">
@@ -72,6 +73,56 @@
             <p> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
         </div>
     </div>
+    <!-- Login and Register Popup -->
+    <div id="modal" class="popupContainer" style="display:none;">
+        <header class="popupHeader blue no-background">
+            <i class="fa fa-bars"></i> <span class="thin">my</span><span class="bold">Thoughts</span>
+            <span class="modal_close"><i class="fa fa-times"></i></span>
+        </header>
+        <section class="popupBody">
+            <!-- Social Login -->
+            <div class="social_login">
+                <div class="action_btns">
+                    <div class="one_half"><a href="#" id="login_form" class="btn gray">Login</a></div>
+                    <div class="one_half last"><a href="#" id="register_form" class="btn gray">Sign up</a></div>
+                </div>
+            </div>
+            <!-- Username & Password Login form -->
+            <div class="user_login">
+                <form name="login_form" method="POST" action="AuthenticateServlet">
+                    <input type="text" placeholder="username" name="username" />
+                    <br />
+                    <input type="password" placeholder="password" name="password" />
+                    <br />
+                    <div class="action_btns">
+                        <div class="one_half"><a href="#" class="btn back_btn gray"><i class="fa fa-angle-double-left"></i> Back</a></div>
+                        <div class="one_half last"><a id="login_button" href="#" class="btn green">Login</a></div>
+                    </div>
+                </form>
+                <a href="#" class="forgot_password thin">Forgot password?</a>
+            </div>
+            <!-- Register Form -->
+            <div class="user_register">
+                <form name="register_form" method="POST" action="AuthenticateServlet">
+                    <input type="text" placeholder="first name" name="firstname" />
+                    <br />
+                    <input type="text" placeholder="last name" name="lastname" />
+                    <br />
+                    <input type="email" placeholder="email" name="email" />
+                    <br />
+                    <input type="text" placeholder="username" name="username" />
+                    <br />
+                    <input type="password" placeholder="password" name="password" />
+                    <br />
+                    <div class="action_btns">
+                        <div class="one_half"><a href="#" class="btn back_btn gray"><i class="fa fa-angle-double-left"></i> Back</a></div>
+                        <div class="one_half last"><a id="register_button" href="#" class="btn green">Register</a></div>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+    <script type="text/javascript" src="js/modal.js"></script>
 </body>
 
 </html>
