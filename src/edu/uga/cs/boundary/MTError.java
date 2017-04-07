@@ -9,8 +9,12 @@
 
 package edu.uga.cs.boundary;
 
+import java.io.IOException;
+
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletResponse;
+
+import edu.uga.cs.object.User;
 
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapperBuilder;
@@ -20,11 +24,11 @@ import freemarker.template.SimpleHash;
 public class MTError {
     static  String   errorTemplateName = "error.ftl";
 
-    public static void error(TemplateProcessor processor, HttpServletResponse response, Configuration cfg, Exception e) throws ServletException {
+    public static void error(TemplateProcessor processor, HttpServletResponse response, Configuration cfg, Exception e) throws ServletException, IOException {
         error(processor, response, cfg, e.toString());
     }
 
-    public static void error(TemplateProcessor processor, HttpServletResponse response, Configuration cfg, String msg) throws ServletException {
+    public static void error(TemplateProcessor processor, HttpServletResponse response, Configuration cfg, String msg) throws ServletException, IOException {
         DefaultObjectWrapperBuilder db = new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_25);
 		SimpleHash root = new SimpleHash(db.build());
         String back = "index.html";
@@ -33,6 +37,11 @@ public class MTError {
         root.put( "reason", msg );
         if (msg.equals("Session expired or illegal; please log in")) back = "Logout";
         root.put( "window", back );
+        
+        User fake = new User();
+        fake.setFirstname("We messed up.");
+        fake.setKarma(90210);
+        root.put("user", fake);
 
         processor.processTemplate(errorTemplateName, root, response);
 

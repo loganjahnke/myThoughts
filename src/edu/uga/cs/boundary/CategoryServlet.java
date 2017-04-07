@@ -21,16 +21,16 @@ import freemarker.template.DefaultObjectWrapperBuilder;
 import freemarker.template.SimpleHash;
 import freemarker.template.TemplateExceptionHandler;
 
-@WebServlet("/home")
-public class AuthenticateServlet extends HttpServlet {
+@WebServlet("/categories")
+public class CategoryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private String templateDir = "/WEB-INF/templates";
 	private TemplateProcessor processor;
-	
+
 	private Configuration cfg;
 
-	public AuthenticateServlet() {
+	public CategoryServlet() {
 		super();
 	}
 
@@ -42,7 +42,7 @@ public class AuthenticateServlet extends HttpServlet {
 		processor = new TemplateProcessor(templateDir, cfg);
 	}
 
-	private void authenticate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void display(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		DefaultObjectWrapperBuilder db = new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_25);
 		SimpleHash root = new SimpleHash(db.build());
 		String templateName;
@@ -50,8 +50,7 @@ public class AuthenticateServlet extends HttpServlet {
         HttpSession httpSession = null;
         String ssid = null;
         Session session = null;
-        
-        AuthenticateController ac = new AuthenticateController();
+
         MyThoughtsController mtc = new MyThoughtsController();
         ArrayList<DebateCategory> categories = new ArrayList<DebateCategory>();
 
@@ -74,38 +73,15 @@ public class AuthenticateServlet extends HttpServlet {
             }
         }
 
-        // Get the parameters
-        String firstname = request.getParameter("firstname");
-        String lastname = request.getParameter("lastname");
-        String username = request.getParameter("username");
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
-
-        // Login the User and get categories
+        // Get categories
 		try {
-			if (session.getUser() == null) {
-			    if (firstname == null) {
-			    	ssid = ac.login(session, username, password);
-			    } else {
-			    	ssid = ac.register(session, firstname, lastname, username, email, password);
-			    }
-			    httpSession.setAttribute("ssid", ssid);
-			}
-		    
-		    // Only push 7 featured categories
             categories = mtc.getCategories();
-            for (int i = 7; i < categories.size(); i++)
-        		categories.remove(i);
 		} catch (MyThoughtsException mte) {
 			MTError.error(processor, response, cfg, mte);
 			return;
 		}
 
-        if (session.getIsAdmin()) {
-        	templateName = "admin-index.ftl";
-        } else {
-        	templateName = "regindex.ftl";
-        }
+        templateName = "categories.ftl";
 
         root.put("user", session.getUser());
         root.put("categories", categories);
@@ -114,10 +90,10 @@ public class AuthenticateServlet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		authenticate(request, response);
+		display(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		authenticate(request, response);
+		display(request, response);
 	}
 }

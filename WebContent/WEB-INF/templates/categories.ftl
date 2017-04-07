@@ -17,9 +17,9 @@
         <ul id="category-list">
             <#list categories as category>
                 <li>
-                    <a href="#">
+                    <a href="topics?category=${category.getName()}">
                         <i class="fa fa-${category.getIcon()} ${category.getColor()}"></i>
-                        <h3>${category.getTitle()}</h3>
+                        <h3>${category.getName()}</h3>
                     </a>
                     <p>${category.getDescription()}</p>
                 </li>

@@ -1,7 +1,6 @@
 #categories {
 	position: relative;
 	top: 3.5em;
-	width: 100%;
 }
 
 #category-list {
@@ -20,6 +19,10 @@
 #category-list > li:nth-child(3n-1) {
 	border-left: 0.5px solid grey;
 	border-right: 0.5px solid grey;
+}
+
+#category-list > li:nth-child(even) {
+	background: #eee;
 }
 
 #category-list > li > a > i {

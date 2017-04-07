@@ -84,9 +84,21 @@ public class DbDeleteTests {
 		// INSERT DEBATE CATEGORIES
 
 		System.out.print("Deleting Debate Categories: ");
+		DebateCategory featured = new DebateCategory("Featured",
+				"Picked by the myThoughts team!",
+				"star",
+				"green");
+		DebateCategory trending = new DebateCategory("Trending",
+				"The topics with the most votes in the past 24 hours.",
+				"line-chart",
+				"red");
+		DebateCategory recent = new DebateCategory("Recent",
+				"The most recent debate topics.",
+				"clock-o",
+				"blue");
 		DebateCategory dc1 = new DebateCategory("Politics",
 												"I must study politics and war that my sons may have liberty to study mathematics and philosophy. - John Adams",
-												"gravel",
+												"gavel",
 												"red");
 		DebateCategory dc2 = new DebateCategory("Religion",
 												"When I admire the wonders of a sunset or the beauty of the moon, my soul expands in the worship of the creator. - Mahatma Gandhi",
@@ -101,6 +113,9 @@ public class DbDeleteTests {
 												"music",
 												"blue");
 		try {
+			pm.deleteDebateCategory(featured);
+			pm.deleteDebateCategory(trending);
+			pm.deleteDebateCategory(recent);
 			pm.deleteDebateCategory(dc1);
 			pm.deleteDebateCategory(dc2);
 			pm.deleteDebateCategory(dc3);

@@ -1,0 +1,16 @@
+body {
+	background: #333;
+	color: white;
+}
+
+#error {
+	text-align: center;
+	position: relative;
+	top: 25vh;
+	height: 100vh;
+}
+
+a {
+	text-decoration: none;
+	background: none;
+}

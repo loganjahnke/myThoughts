@@ -78,9 +78,21 @@ public class DbSaveTests {
 		// INSERT DEBATE CATEGORIES
 
 		System.out.print("Saving Debate Categories: ");
+		DebateCategory featured = new DebateCategory("Featured",
+				"Picked by the myThoughts team!",
+				"star",
+				"green");
+		DebateCategory trending = new DebateCategory("Trending",
+				"The topics with the most votes in the past 24 hours.",
+				"line-chart",
+				"red");
+		DebateCategory recent = new DebateCategory("Recent",
+				"The most recent debate topics.",
+				"clock-o",
+				"blue");
 		DebateCategory dc1 = new DebateCategory("Politics",
 												"I must study politics and war that my sons may have liberty to study mathematics and philosophy. - John Adams",
-												"gravel",
+												"gavel",
 												"red");
 		DebateCategory dc2 = new DebateCategory("Religion",
 												"When I admire the wonders of a sunset or the beauty of the moon, my soul expands in the worship of the creator. - Mahatma Gandhi",
@@ -95,6 +107,9 @@ public class DbSaveTests {
 												"music",
 												"blue");
 		try {
+			featured.setId(pm.saveDebateCategory(featured));
+			trending.setId(pm.saveDebateCategory(trending));
+			recent.setId(pm.saveDebateCategory(recent));
 			dc1.setId(pm.saveDebateCategory(dc1));
 			dc2.setId(pm.saveDebateCategory(dc2));
 			dc3.setId(pm.saveDebateCategory(dc3));
