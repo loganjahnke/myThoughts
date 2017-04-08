@@ -8,6 +8,8 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.servlet.http.HttpSession;
+
 //import org.apache.log4j.Logger;
 
 import edu.uga.cs.MyThoughtsException;
@@ -173,9 +175,17 @@ public class SessionManager
      * @return Logger object.
      * @author Arsham Mesbah
      */
-    //public static Logger getLog()
-    //{
-     //   return log;
-    //}
+    public static Session prepareSession(HttpSession httpSession, String ssid, Session session) throws MyThoughtsException {
+        ssid = (String) httpSession.getAttribute("ssid");
+        if (ssid != null)
+            session = SessionManager.getSessionById(ssid);
+        else
+            System.out.println("ssid is null");
+
+        // If session is null, create it
+        if (session == null)
+        	session = SessionManager.createSession();
+        return session;
+    }
 
 }

@@ -8,7 +8,10 @@
     <nav class="links">
         <ul>
             <li><a href="user.html">Welcome, ${user.getFirstname()}</a></li>
-            <li><a href="karma.html"><span class="green no-background">${user.getKarma()}<span class="bold">k</span></span></a></li>
+            <#if nonadmin == true>
+                <li><a href="karma.html"><span class="green no-background">${user.getKarma()}<span class="bold">k</span></span></a></li>
+            </#if>
+            <li><a href="logout">Sign Out</a></li>
         </ul>
     </nav>
     <nav class="main">

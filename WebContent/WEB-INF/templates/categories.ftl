@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>myThoughts</title>
+    <title>Categories</title>
     <!-- Styling -->
     <#include "include/style.ftl">
     <link rel="stylesheet" href="css/categories.css">
@@ -18,7 +18,7 @@
             <#list categories as category>
                 <li>
                     <a href="topics?category=${category.getName()}">
-                        <i class="fa fa-${category.getIcon()} ${category.getColor()}"></i>
+                        <i class="${category.getIcon()} ${category.getColor()}"></i>
                         <h3>${category.getName()}</h3>
                     </a>
                     <p>${category.getDescription()}</p>

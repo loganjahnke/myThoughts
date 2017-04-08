@@ -27,7 +27,7 @@ public class AuthenticateServlet extends HttpServlet {
 
 	private String templateDir = "/WEB-INF/templates";
 	private TemplateProcessor processor;
-	
+
 	private Configuration cfg;
 
 	public AuthenticateServlet() {
@@ -50,28 +50,18 @@ public class AuthenticateServlet extends HttpServlet {
         HttpSession httpSession = null;
         String ssid = null;
         Session session = null;
-        
+
         AuthenticateController ac = new AuthenticateController();
         MyThoughtsController mtc = new MyThoughtsController();
         ArrayList<DebateCategory> categories = new ArrayList<DebateCategory>();
 
         // Get Session
-        httpSession = request.getSession();
-        ssid = (String) httpSession.getAttribute("ssid");
-        if (ssid != null)
-            session = SessionManager.getSessionById(ssid);
-        else
-            System.out.println("ssid is null");
-
-        // If session is null, create it
-        if (session == null) {
-            try {
-                session = SessionManager.createSession();
-            }
-            catch (Exception e) {
-                MTError.error(processor, response, cfg, e);
-                return;
-            }
+        try {
+            httpSession = request.getSession();
+            session = SessionManager.prepareSession(httpSession, ssid, session);
+        } catch (MyThoughtsException mte) {
+            MTError.error(processor, response, cfg, mte);
+            return;
         }
 
         // Get the parameters
@@ -91,7 +81,7 @@ public class AuthenticateServlet extends HttpServlet {
 			    }
 			    httpSession.setAttribute("ssid", ssid);
 			}
-		    
+
 		    // Only push 7 featured categories
             categories = mtc.getCategories();
             for (int i = 7; i < categories.size(); i++)
@@ -108,6 +98,7 @@ public class AuthenticateServlet extends HttpServlet {
         }
 
         root.put("user", session.getUser());
+        root.put("nonadmin", !session.getIsAdmin());
         root.put("categories", categories);
 
         processor.processTemplate(templateName, root, response);

@@ -21,8 +21,8 @@ import freemarker.template.DefaultObjectWrapperBuilder;
 import freemarker.template.SimpleHash;
 import freemarker.template.TemplateExceptionHandler;
 
-@WebServlet("/categories")
-public class CategoryServlet extends HttpServlet {
+@WebServlet("/create-category")
+public class CreateCategoryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private String templateDir = "/WEB-INF/templates";
@@ -30,7 +30,7 @@ public class CategoryServlet extends HttpServlet {
 
 	private Configuration cfg;
 
-	public CategoryServlet() {
+	public CreateCategoryServlet() {
 		super();
 	}
 
@@ -42,7 +42,7 @@ public class CategoryServlet extends HttpServlet {
 		processor = new TemplateProcessor(templateDir, cfg);
 	}
 
-	private void display(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void viewForm(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		DefaultObjectWrapperBuilder db = new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_25);
 		SimpleHash root = new SimpleHash(db.build());
 		String templateName;
@@ -51,6 +51,37 @@ public class CategoryServlet extends HttpServlet {
         String ssid = null;
         Session session = null;
 
+        // Get Session
+        try {
+            httpSession = request.getSession();
+            session = SessionManager.prepareSession(httpSession, ssid, session);
+        } catch (MyThoughtsException mte) {
+            MTError.error(processor, response, cfg, mte);
+            return;
+        }
+
+        if (session.getIsAdmin()) {
+        	templateName = "create-category.ftl";
+        } else {
+        	MTError.error(processor, response, cfg, "You do not have the credentials to view this page.");
+        	return;
+        }
+
+        root.put("user", session.getUser());
+        root.put("nonadmin", !session.getIsAdmin());
+
+        processor.processTemplate(templateName, root, response);
+	}
+	
+	private void create(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		DefaultObjectWrapperBuilder db = new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_25);
+		SimpleHash root = new SimpleHash(db.build());
+		String templateName;
+
+        HttpSession httpSession = null;
+        String ssid = null;
+        Session session = null;
+        
         MyThoughtsController mtc = new MyThoughtsController();
         ArrayList<DebateCategory> categories = new ArrayList<DebateCategory>();
 
@@ -62,16 +93,28 @@ public class CategoryServlet extends HttpServlet {
             MTError.error(processor, response, cfg, mte);
             return;
         }
-
-        // Get categories
-		try {
+        
+        DebateCategory dc = new DebateCategory();
+        dc.setName(request.getParameter("name"));
+        dc.setDescription(request.getParameter("description"));
+        dc.setIcon(request.getParameter("icon"));
+        dc.setColor(request.getParameter("color"));
+        
+        // Controller work
+ 		try {
+ 			dc.setId(mtc.createCategory(dc));
             categories = mtc.getCategories();
-		} catch (MyThoughtsException mte) {
-			MTError.error(processor, response, cfg, mte);
-			return;
-		}
+ 		} catch (MyThoughtsException mte) {
+ 			MTError.error(processor, response, cfg, mte);
+ 			return;
+ 		}
 
-        templateName = "categories.ftl";
+        if (session.getIsAdmin()) {
+        	templateName = "categories.ftl";
+        } else {
+        	MTError.error(processor, response, cfg, "You do not have the credentials to view this page.");
+        	return;
+        }
 
         root.put("user", session.getUser());
         root.put("nonadmin", !session.getIsAdmin());
@@ -81,10 +124,10 @@ public class CategoryServlet extends HttpServlet {
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		display(request, response);
+		viewForm(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		display(request, response);
+		create(request, response);
 	}
 }

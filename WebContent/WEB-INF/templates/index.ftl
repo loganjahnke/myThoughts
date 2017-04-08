@@ -28,7 +28,7 @@
         </h1>
         <nav class="links">
             <ul>
-                <li><a id="login_trigger" href="#modal">Sign <span class="bold">in</span> | Sign <span class="bold">up</span></a></li>
+                <li><a id="login_trigger" href="#modal">Sign <span class="bold">in</span> | Sign <span class="bold">up</a></li>
             </ul>
         </nav>
         <nav class="main">

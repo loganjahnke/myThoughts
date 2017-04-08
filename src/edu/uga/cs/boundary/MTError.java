@@ -37,11 +37,12 @@ public class MTError {
         root.put( "reason", msg );
         if (msg.equals("Session expired or illegal; please log in")) back = "Logout";
         root.put( "window", back );
-        
+
         User fake = new User();
         fake.setFirstname("We messed up.");
         fake.setKarma(90210);
         root.put("user", fake);
+        root.put("nonadmin", false);
 
         processor.processTemplate(errorTemplateName, root, response);
 

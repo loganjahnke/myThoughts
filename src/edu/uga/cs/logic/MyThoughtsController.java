@@ -21,4 +21,8 @@ public class MyThoughtsController {
 		return pm.restoreAllDebateCategories();
 	}
 
+	public int createCategory(DebateCategory dc) throws MyThoughtsException {
+		return pm.saveDebateCategory(dc);
+	}
+
 }

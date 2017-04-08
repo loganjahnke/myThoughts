@@ -1,0 +1,82 @@
+body {
+	background: #333;
+}
+
+#content {
+	position: relative;
+	top: 5.8em;
+	text-align: center;
+}
+
+form {
+	border-radius: 8px;
+	padding: 30px;
+	padding-top: 50px;
+	width: 30vw;
+	margin: 0 auto;
+	background: #fff;
+}
+
+.dropdown-menu {
+	position: absolute;
+	top: 20vh;
+	left: 40vw;
+	right: 40vw;
+}
+
+input[type="text"],
+textarea,
+select {
+    width: 90%;
+    border: none;
+    background: none;
+    border-bottom: 1px solid rgba(41, 171, 226, 0.5);
+    color: #333;
+    text-align: center;
+    margin-top: 40px;
+}
+
+select {
+	background: #ddd;
+	width: 40%;
+	height: 30px;
+	border-radius: 0px;
+}
+
+textarea {
+	border: 1px solid rgba(41, 171, 226, 0.5);
+}
+
+input:focus {
+    border-bottom: 1px solid rgba(41, 171, 226, 1.0);
+    outline: none;
+}
+
+textarea:focus {
+    border: 1px solid rgba(41, 171, 226, 1.0);
+    outline: none;
+}
+
+.btn {
+	margin-top: 40px;
+    padding: 10px 20px;
+    color: #fff !important;
+    /*background: #F4F4F2;*/
+}
+
+.btn:hover {
+    background: #000;
+}
+
+a.btn,
+input.btn {
+    color: #666;
+    text-align: center;
+    text-decoration: none;
+}
+
+.result-icon {
+	border-radius: 100%;
+	font-size: 36px;
+	padding: 30px;
+}
