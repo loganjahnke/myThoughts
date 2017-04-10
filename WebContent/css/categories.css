@@ -1,3 +1,8 @@
+body {
+	margin-left: 3%;
+	background: #333;
+}
+
 #categories {
 	position: relative;
 	top: 3.5em;
@@ -9,8 +14,10 @@
 }
 
 #category-list > li {
+	background: white;
 	padding: 2%;
 	width: 28%;
+	height: 35vh;
 	text-align: center;
 	float: left;
 	border-top: 0.5px solid grey;

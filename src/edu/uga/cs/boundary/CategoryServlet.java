@@ -74,6 +74,7 @@ public class CategoryServlet extends HttpServlet {
         templateName = "categories.ftl";
 
         root.put("user", session.getUser());
+        root.put("visitor", session.getUser() == null);
         root.put("nonadmin", !session.getIsAdmin());
         root.put("categories", categories);
 

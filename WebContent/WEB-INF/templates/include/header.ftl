@@ -7,11 +7,17 @@
         </h1>
     <nav class="links">
         <ul>
-            <li><a href="user.html">Welcome, ${user.getFirstname()}</a></li>
-            <#if nonadmin == true>
-                <li><a href="karma.html"><span class="green no-background">${user.getKarma()}<span class="bold">k</span></span></a></li>
+            <#if visitor == false>
+                <li><a href="user.html">Welcome, ${user.getFirstname()}</a></li>
+                <#if nonadmin == true>
+                    <li><a href="karma.html"><span class="green no-background">${user.getKarma()}<span class="bold">k</span></span></a></li>
+                </#if>
+                <li><a href="logout">Sign Out</a></li>
+            <#else>
+                <ul>
+                    <li><a id="login_trigger" href="index.html">Sign <span class="bold">in</span> | Sign <span class="bold">up</span></a></li>
+                </ul>
             </#if>
-            <li><a href="logout">Sign Out</a></li>
         </ul>
     </nav>
     <nav class="main">

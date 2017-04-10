@@ -84,8 +84,8 @@ public class AuthenticateServlet extends HttpServlet {
 
 		    // Only push 7 featured categories
             categories = mtc.getCategories();
-            for (int i = 7; i < categories.size(); i++)
-        		categories.remove(i);
+            while (categories.size() > 7)
+        		categories.remove(7);
 		} catch (MyThoughtsException mte) {
 			MTError.error(processor, response, cfg, mte);
 			return;
@@ -98,6 +98,7 @@ public class AuthenticateServlet extends HttpServlet {
         }
 
         root.put("user", session.getUser());
+        root.put("visitor", session.getUser() == null);
         root.put("nonadmin", !session.getIsAdmin());
         root.put("categories", categories);
 
