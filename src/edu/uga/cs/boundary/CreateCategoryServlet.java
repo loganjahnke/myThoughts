@@ -117,6 +117,7 @@ public class CreateCategoryServlet extends HttpServlet {
         }
 
         root.put("user", session.getUser());
+        root.put("visitor", session.getUser() == null);
         root.put("nonadmin", !session.getIsAdmin());
         root.put("categories", categories);
 

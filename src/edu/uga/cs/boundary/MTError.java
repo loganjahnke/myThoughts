@@ -43,6 +43,7 @@ public class MTError {
         fake.setKarma(90210);
         root.put("user", fake);
         root.put("nonadmin", false);
+        root.put("visitor", false);
 
         processor.processTemplate(errorTemplateName, root, response);
 
