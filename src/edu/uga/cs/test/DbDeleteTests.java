@@ -86,31 +86,31 @@ public class DbDeleteTests {
 		System.out.print("Deleting Debate Categories: ");
 		DebateCategory featured = new DebateCategory("Featured",
 				"Picked by the myThoughts team!",
-				"star",
+				"fa fa-star",
 				"green");
 		DebateCategory trending = new DebateCategory("Trending",
 				"The topics with the most votes in the past 24 hours.",
-				"line-chart",
+				"fa fa-line-chart",
 				"red");
 		DebateCategory recent = new DebateCategory("Recent",
 				"The most recent debate topics.",
-				"clock-o",
+				"fa fa-clock-o",
 				"blue");
 		DebateCategory dc1 = new DebateCategory("Politics",
 												"I must study politics and war that my sons may have liberty to study mathematics and philosophy. - John Adams",
-												"gavel",
+												"fa fa-gavel",
 												"red");
 		DebateCategory dc2 = new DebateCategory("Religion",
 												"When I admire the wonders of a sunset or the beauty of the moon, my soul expands in the worship of the creator. - Mahatma Gandhi",
-												"book",
+												"fa fa-book",
 												"blue");
 		DebateCategory dc3 = new DebateCategory("Environmental",
 												"Never doubt that a small group of thoughtful, committed citizens can change the world; indeed, it's the only thing that ever has. - Margaret Mead",
-												"tree",
+												"fa fa-tree",
 												"green");
 		DebateCategory dc4 = new DebateCategory("Music",
 												"Where words fail, music speaks. - Hans Anderson",
-												"music",
+												"fa fa-music",
 												"blue");
 		try {
 			pm.deleteDebateCategory(featured);

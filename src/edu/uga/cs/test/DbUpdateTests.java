@@ -92,7 +92,7 @@ public class DbUpdateTests {
 		System.out.print("Updating Debate Categories: ");
 		DebateCategory dc2 = new DebateCategory("Religion",
 												"When I admire the wonders of a sunset or the beauty of the moon, my soul expands in the worship of the creator. - Mahatma Gandhi",
-												"book",
+												"fa fa-book",
 												"blue");
 		try {
 			dc2 = pm.restoreDebateCategory(dc2);
