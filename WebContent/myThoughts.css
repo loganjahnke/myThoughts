@@ -4,7 +4,7 @@ body{
 
 #topicsMenu {
     position: relative;
-    top: 2.2em;
+   	top: 3.3em;
     z-index: 1000;
 }
 
@@ -48,9 +48,7 @@ body{
     position: relative;
     top: 3.5em;
     height:300px;
-    background-size: 100% 100%;
-    background-repeat: no-repeat;
-    background-image: url("http://www.serenitysecretgarden.com/wp-content/uploads/sites/1106/2016/01/field5.png");
+    background-image: url("http://www.clipartkid.com/images/73/onlinelabels-clip-art-simple-clouds-efpA9c-clipart.png");
     background-color: #cccccc;
 }
 
@@ -79,4 +77,14 @@ body{
     padding:20px;
     border-radius: 43.5%;
     border: 2px solid black;
+}
+
+.welcome{
+	margin: auto;
+	
+	top:50%;
+	left:35%;
+	position: absolute;
+	
+
 }
