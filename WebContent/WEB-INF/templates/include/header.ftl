@@ -8,12 +8,17 @@
     <nav class="links">
         <ul>
             <#if visitor == false>
+              <form action ="" method ="post"> 
                 <li><a href="user.html">Welcome, ${user.getFirstname()}</a></li>
                 <#if nonadmin == true>
                     <li><a href="karma.html"><span class="green no-background">${user.getKarma()}<span class="bold">k</span></span></a></li>
+                 	<li><a href="createpost">Create a Post</a></li>
                 </#if>
                 <li><a href="logout">Sign Out</a></li>
+              </form>          
+
             <#else>
+            	
                 <ul>
                     <li><a id="login_trigger" href="index.html">Sign <span class="bold">in</span> | Sign <span class="bold">up</span></a></li>
                 </ul>

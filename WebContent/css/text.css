@@ -1,0 +1,13 @@
+.input, .input1{
+	background-color: slategray;
+	height: 25px;
+	width: 500px;
+	padding: 10px;	
+	
+}
+
+.input1{
+	margin-bottom:5px;
+	margin-top: 200px;	
+	
+}
