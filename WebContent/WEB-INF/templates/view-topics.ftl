@@ -21,7 +21,7 @@
                     <h3>${category.getName()}</h3>
                 </a>
                 <p>${category.getDescription()}</p><br />
-                <a id="back" class="gray" href="categories?">View all Categories</a>
+                <a id="back" class="mt-button gray" href="categories?">View all Categories</a>
             </div>
         </#if>
         <ul id="topic-list">

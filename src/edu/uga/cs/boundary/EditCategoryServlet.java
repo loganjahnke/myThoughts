@@ -21,8 +21,8 @@ import freemarker.template.DefaultObjectWrapperBuilder;
 import freemarker.template.SimpleHash;
 import freemarker.template.TemplateExceptionHandler;
 
-@WebServlet("/create-category")
-public class CreateCategoryServlet extends HttpServlet {
+@WebServlet("/edit-category")
+public class EditCategoryServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private String templateDir = "/WEB-INF/templates";
@@ -30,7 +30,7 @@ public class CreateCategoryServlet extends HttpServlet {
 
 	private Configuration cfg;
 
-	public CreateCategoryServlet() {
+	public EditCategoryServlet() {
 		super();
 	}
 
@@ -67,11 +67,20 @@ public class CreateCategoryServlet extends HttpServlet {
         	return;
         }
 
+        String name = request.getParameter("name");
+        String description = request.getParameter("description");
+        String icon = request.getParameter("icon");
+        String color = request.getParameter("color");
+
+        DebateCategory dc = new DebateCategory(name, description, icon, color);
+        if (request.getParameter("id") != null)
+            dc.setId(Integer.parseInt(request.getParameter("id")));
+
         root.put("user", session.getUser());
         root.put("visitor", session.getUser() == null);
         root.put("nonadmin", !session.getIsAdmin());
-        root.put("update", false);
-        root.put("category", new DebateCategory("", "", "", "red"));
+        root.put("update", true);
+        root.put("category", dc);
 
         processor.processTemplate(templateName, root, response);
 	}
@@ -98,6 +107,7 @@ public class CreateCategoryServlet extends HttpServlet {
         }
 
         DebateCategory dc = new DebateCategory();
+        dc.setId(Integer.parseInt(request.getParameter("id")));
         dc.setName(request.getParameter("name"));
         dc.setDescription(request.getParameter("description"));
         dc.setIcon(request.getParameter("icon"));
@@ -105,7 +115,12 @@ public class CreateCategoryServlet extends HttpServlet {
 
         // Controller work
  		try {
- 			dc.setId(mtc.saveCategory(dc));
+ 			if (request.getParameter("updateORdelete").equals("update")) {
+ 				dc.setId(mtc.saveCategory(dc));
+ 			}
+ 			else if (request.getParameter("updateORdelete").equals("delete")) {
+ 				mtc.deleteCategory(dc);
+ 			}
             categories = mtc.getCategories();
  		} catch (MyThoughtsException mte) {
  			MTError.error(processor, response, cfg, mte);

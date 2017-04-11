@@ -22,6 +22,10 @@
                         <h3>${category.getName()}</h3>
                     </a>
                     <p>${category.getDescription()}</p>
+                    <#if nonadmin == false>
+                        <br />
+                        <a id="back" class="mt-button gray" href="edit-category?id=${category.getId()}&name=${category.getName()}&description=${category.getDescription()}&icon=${category.getIcon()}&color=${category.getColor()}">Edit Category</a>
+                    </#if>
                 </li>
             <#else>
                 <h3 class="centerAlign thin">No <span class="bold">categories</span>!</h3>

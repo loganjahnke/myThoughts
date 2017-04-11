@@ -30,8 +30,8 @@
     </div>
     <div id="debate">
         <h1 class="thin" id="debate-title">${featured.getTitle()}</h1>
-        <a class="gray" href="topic?id=${featured.getId()}">Join the Debate</a>
-        <a class="gray" href="categories?">View all Categories</a>
+        <a class="mt-button gray" href="topic?id=${featured.getId()}">Join the Debate</a>
+        <a class="mt-button gray" href="categories?">View all Categories</a>
     </div>
     <#include "include/footer.ftl">
 </body>

@@ -59,6 +59,16 @@ public class DebateCategory extends Persistent {
 	public String getIcon() {
 		return icon;
 	}
+	
+	/**
+	 * @return the icon
+	 */
+	public String getIconWithoutFirstFA() {
+		if (getIcon().length() > 3)
+			return icon.substring(3);
+		else
+			return icon;
+	}
 
 	/**
 	 * @param icon the icon to set
