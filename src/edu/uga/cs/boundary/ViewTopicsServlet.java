@@ -15,6 +15,7 @@ import edu.uga.cs.MyThoughtsException;
 import edu.uga.cs.logic.*;
 import edu.uga.cs.object.DebateCategory;
 import edu.uga.cs.object.DebateTopic;
+import edu.uga.cs.object.User;
 import edu.uga.cs.session.Session;
 import edu.uga.cs.session.SessionManager;
 import freemarker.template.Configuration;
@@ -22,8 +23,8 @@ import freemarker.template.DefaultObjectWrapperBuilder;
 import freemarker.template.SimpleHash;
 import freemarker.template.TemplateExceptionHandler;
 
-@WebServlet("/home")
-public class AuthenticateServlet extends HttpServlet {
+@WebServlet("/topics")
+public class ViewTopicsServlet extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private String templateDir = "/WEB-INF/templates";
@@ -31,7 +32,7 @@ public class AuthenticateServlet extends HttpServlet {
 
 	private Configuration cfg;
 
-	public AuthenticateServlet() {
+	public ViewTopicsServlet() {
 		super();
 	}
 
@@ -43,7 +44,7 @@ public class AuthenticateServlet extends HttpServlet {
 		processor = new TemplateProcessor(templateDir, cfg);
 	}
 
-	private void authenticate(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+	private void display(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		DefaultObjectWrapperBuilder db = new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_25);
 		SimpleHash root = new SimpleHash(db.build());
 		String templateName;
@@ -52,12 +53,9 @@ public class AuthenticateServlet extends HttpServlet {
         String ssid = null;
         Session session = null;
 
-        AuthenticateController ac = new AuthenticateController();
         MyThoughtsController mtc = new MyThoughtsController();
         TopicListController tlc = new TopicListController();
-
-        ArrayList<DebateCategory> categories = new ArrayList<DebateCategory>();
-        DebateTopic dt = new DebateTopic();
+        ArrayList<DebateTopic> topics = new ArrayList<DebateTopic>();
 
         // Get Session
         try {
@@ -68,55 +66,51 @@ public class AuthenticateServlet extends HttpServlet {
             return;
         }
 
-        // Get the parameters
-        String firstname = request.getParameter("firstname");
-        String lastname = request.getParameter("lastname");
-        String username = request.getParameter("username");
-        String email = request.getParameter("email");
-        String password = request.getParameter("password");
+        String categoryName = request.getParameter("category");
+        String userName = request.getParameter("user");
 
-        // Login the User and get categories
+        // Get topics
 		try {
-			if (session.getUser() == null) {
-			    if (firstname == null) {
-			    	ssid = ac.login(session, username, password);
-			    } else {
-			    	ssid = ac.register(session, firstname, lastname, username, email, password);
-			    }
-			    httpSession.setAttribute("ssid", ssid);
-			}
-
-		    // Only push 7 featured categories
-            categories = mtc.getCategories();
-            while (categories.size() > 7)
-        		categories.remove(7);
-
-        	dt = tlc.getMostRecentFeatured();
+			if (categoryName != null && !categoryName.equals("Recent")) {
+				DebateCategory dc = mtc.getCategory(categoryName);
+				root.put("category", dc);
+	            topics = tlc.getTopics(dc);
+	            root.put("sender", "category");
+        	} else if (categoryName != null && categoryName.equals("Recent")) {
+        		DebateCategory dc = mtc.getCategory(categoryName);
+				root.put("category", dc);
+	            topics = tlc.getRecentTopics();
+	            root.put("sender", "category");
+        	} else if (userName != null) {
+				User user = mtc.getUser(userName);
+	            topics = tlc.getTopics(user);
+	            root.put("sender", "user");
+        	} else {
+        		DebateCategory dc = mtc.getCategory("Recent");
+				root.put("category", dc);
+        		topics = tlc.getRecentTopics();
+	            root.put("sender", "category");
+        	}
 		} catch (MyThoughtsException mte) {
 			MTError.error(processor, response, cfg, mte);
 			return;
 		}
 
-        if (session.getIsAdmin()) {
-        	templateName = "admin-index.ftl";
-        } else {
-        	templateName = "regindex.ftl";
-        }
+        templateName = "view-topics.ftl";
 
         root.put("user", session.getUser());
         root.put("visitor", session.getUser() == null);
         root.put("nonadmin", !session.getIsAdmin());
-        root.put("categories", categories);
-        root.put("featured", dt);
+        root.put("topics", topics);
 
         processor.processTemplate(templateName, root, response);
 	}
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		authenticate(request, response);
+		display(request, response);
 	}
 
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		authenticate(request, response);
+		display(request, response);
 	}
 }

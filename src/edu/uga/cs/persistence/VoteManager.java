@@ -335,4 +335,102 @@ public class VoteManager {
 		return user;
 	}
 
+	/**
+	 * Restores the number of votes for a given debate topic id
+	 * @param id - the id to acquire
+	 * @param dt - the debate topic to edit - inout
+	 * @return the DebateTopic
+	 * @throws MyThoughtsException
+	 */
+	public DebateTopic getTopicData(DebateTopic dt) throws MyThoughtsException {
+		String select = "SELECT COUNT(tv1.upvote), COUNT(tv2.downvote) " +
+						"FROM debate_topic dt " +
+						"LEFT OUTER JOIN topic_vote tv1 " +
+							"ON dt.id = tv1.topic_id AND tv1.upvote = true " +
+						"LEFT OUTER JOIN topic_vote tv2 " +
+							"ON dt.id = tv2.topic_id AND tv2.downvote = true " +
+						"WHERE dt.id = " + dt.getId();
+
+		try {
+			Statement stmt = con.createStatement();
+			stmt.execute(select);
+			ResultSet rs = stmt.getResultSet();
+			while (rs.next()) {
+				dt.setVote(rs.getInt(1) - rs.getInt(2));
+			}
+		} catch (SQLException e) {
+			throw new MyThoughtsException("PersonManager.restore: failed to restore Person: " + e.getMessage());
+		}
+
+		select = "SELECT COUNT(tv1.agrees), COUNT(tv2.disagrees) " +
+						"FROM debate_topic dt " +
+						"LEFT OUTER JOIN topic_vote tv1 " +
+							"ON dt.id = tv1.topic_id AND tv1.agrees = true " +
+						"LEFT OUTER JOIN topic_vote tv2 " +
+							"ON dt.id = tv2.topic_id AND tv2.disagrees = true " +
+						"WHERE dt.id = " + dt.getId();
+
+		try {
+			Statement stmt = con.createStatement();
+			stmt.execute(select);
+			ResultSet rs = stmt.getResultSet();
+			while (rs.next()) {
+				dt.setAgrees(rs.getInt(1));
+				dt.setDisagrees(rs.getInt(2));
+			}
+		} catch (SQLException e) {
+			throw new MyThoughtsException("VoteManager.restore: failed to retreive vote information: " + e.getMessage());
+		}
+		return dt;
+	}
+
+	/**
+	 * Restores the number of votes for a given comment id
+	 * @param id - the id to acquire
+	 * @param c - the comment to edit - inout
+	 * @return the Comment
+	 * @throws MyThoughtsException
+	 */
+	public Comment getCommentData(Comment c) throws MyThoughtsException {
+		String select = "SELECT COUNT(cv1.upvote), COUNT(cv2.downvote) " +
+						"FROM comment c " +
+						"LEFT OUTER JOIN comment_vote cv1 " +
+							"ON c.id = cv1.topic_id AND cv1.upvote = true " +
+						"LEFT OUTER JOIN comment_vote cv2 " +
+							"ON c.id = cv2.topic_id AND cv2.downvote = true " +
+						"WHERE c.id = " + c.getId();
+
+		try {
+			Statement stmt = con.createStatement();
+			stmt.execute(select);
+			ResultSet rs = stmt.getResultSet();
+			while (rs.next()) {
+				c.setVote(rs.getInt(1) - rs.getInt(2));
+			}
+		} catch (SQLException e) {
+			throw new MyThoughtsException("PersonManager.restore: failed to restore Person: " + e.getMessage());
+		}
+
+		select = "SELECT COUNT(cv1.agrees), COUNT(cv2.disagrees) " +
+						"FROM comment c " +
+						"LEFT OUTER JOIN comment_vote cv1 " +
+							"ON c.id = cv1.topic_id AND cv1.agrees = true " +
+						"LEFT OUTER JOIN comment_vote cv2 " +
+							"ON c.id = cv2.topic_id AND cv2.disagrees = true " +
+						"WHERE c.id = " + c.getId();
+
+		try {
+			Statement stmt = con.createStatement();
+			stmt.execute(select);
+			ResultSet rs = stmt.getResultSet();
+			while (rs.next()) {
+				c.setAgrees(rs.getInt(1));
+				c.setDisagrees(rs.getInt(2));
+			}
+		} catch (SQLException e) {
+			throw new MyThoughtsException("VoteManager.restore: failed to retreive vote information: " + e.getMessage());
+		}
+		return c;
+	}
+
 }

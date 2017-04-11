@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 
 import edu.uga.cs.MyThoughtsException;
 import edu.uga.cs.object.*;
@@ -141,8 +142,7 @@ public class DebateTopicManager {
 	public DebateTopic restore(DebateTopic debateTopic) throws MyThoughtsException {
 		String select = "SELECT dt.id, dt.title, dt.description, dt.created, " +
 						"p.id, p.firstname, p.lastname, p.username, p.password, p.email, p.created, p.isModerator, p.karma, " +
-						"dc.id, dc.name, dc.description, dc.icon, dc.color, " +
-						"COUNT(tv1.upvote), COUNT(tv2.downvote), COUNT(tv3.agrees), COUNT(tv4.disagrees) " + // 19, 20, 21, 22
+						"dc.id, dc.name, dc.description, dc.icon, dc.color " +
 						"FROM debate_topic dt " +
 						"JOIN person p " +
 							"ON dt.user_id = p.id " +
@@ -150,14 +150,6 @@ public class DebateTopicManager {
 							"ON dt.id = tc.topic_id " +
 						"JOIN debate_category dc " +
 							"ON tc.category_id = dc.id " +
-						"LEFT OUTER JOIN topic_vote tv1 " +
-							"ON dt.id = tv1.topic_id AND tv1.upvote = true " +
-						"LEFT OUTER JOIN topic_vote tv2 " +
-							"ON dt.id = tv2.topic_id AND tv2.downvote = true " +
-						"LEFT OUTER JOIN topic_vote tv3 " +
-							"ON dt.id = tv3.topic_id AND tv3.agrees = true " +
-						"LEFT OUTER JOIN topic_vote tv4 " +
-							"ON dt.id = tv4.topic_id AND tv4.disagrees = true " +
 						"WHERE";
 		int conditionLength = 0;
 
@@ -208,8 +200,7 @@ public class DebateTopicManager {
 	public ArrayList<DebateTopic> restore(Person person) throws MyThoughtsException {
 		String select = "SELECT dt.id, dt.title, dt.description, dt.created, " +
 						"p.id, p.firstname, p.lastname, p.username, p.password, p.email, p.created, p.isModerator, p.karma, " +
-						"dc.id, dc.name, dc.description, dc.icon, dc.color, " +
-						"COUNT(tv1.upvote), COUNT(tv2.downvote), COUNT(tv3.agrees), COUNT(tv4.disagrees) " + // 17, 18, 19, 20
+						"dc.id, dc.name, dc.description, dc.icon, dc.color " +
 						"FROM debate_topic dt " +
 						"JOIN person p " +
 							"ON dt.user_id = p.id " +
@@ -217,14 +208,6 @@ public class DebateTopicManager {
 							"ON dt.id = tc.topic_id " +
 						"JOIN debate_category dc " +
 							"ON tc.category_id = dc.id " +
-						"LEFT OUTER JOIN topic_vote tv1 " +
-							"ON dt.id = tv1.topic_id AND tv1.upvote = true " +
-						"LEFT OUTER JOIN topic_vote tv2 " +
-							"ON dt.id = tv2.topic_id AND tv2.downvote = true " +
-						"LEFT OUTER JOIN topic_vote tv3 " +
-							"ON dt.id = tv3.topic_id AND tv3.agrees = true " +
-						"LEFT OUTER JOIN topic_vote tv4 " +
-							"ON dt.id = tv4.topic_id AND tv4.disagrees = true " +
 						"WHERE";
 		int conditionLength = 0;
 
@@ -276,8 +259,7 @@ public class DebateTopicManager {
 	public ArrayList<DebateTopic> restoreAfter(Date date) throws MyThoughtsException {
 		String select = "SELECT dt.id, dt.title, dt.description, dt.created, " +
 						"p.id, p.firstname, p.lastname, p.username, p.password, p.email, p.created, p.isModerator, p.karma, " +
-						"dc.id, dc.name, dc.description, dc.icon, dc.color, " +
-						"COUNT(tv1.upvote), COUNT(tv2.downvote), COUNT(tv3.agrees), COUNT(tv4.disagrees) " + // 17, 18, 19, 20
+						"dc.id, dc.name, dc.description, dc.icon, dc.color " +
 						"FROM debate_topic dt " +
 						"JOIN person p " +
 							"ON dt.user_id = p.id " +
@@ -285,17 +267,10 @@ public class DebateTopicManager {
 							"ON dt.id = tc.topic_id " +
 						"JOIN debate_category dc " +
 							"ON tc.category_id = dc.id " +
-						"LEFT OUTER JOIN topic_vote tv1 " +
-							"ON dt.id = tv1.topic_id AND tv1.upvote = true " +
-						"LEFT OUTER JOIN topic_vote tv2 " +
-							"ON dt.id = tv2.topic_id AND tv2.downvote = true " +
-						"LEFT OUTER JOIN topic_vote tv3 " +
-							"ON dt.id = tv3.topic_id AND tv3.agrees = true " +
-						"LEFT OUTER JOIN topic_vote tv4 " +
-							"ON dt.id = tv4.topic_id AND tv4.disagrees = true " +
 						"WHERE";
 
-		select += " dt.created > " + date;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		select += " dt.created > \'" + sdf.format(date) + "\'";
 
 		try {
 			Statement stmt = con.createStatement();
@@ -316,8 +291,7 @@ public class DebateTopicManager {
 	public ArrayList<DebateTopic> restore(DebateCategory debateCategory) throws MyThoughtsException {
 		String select = "SELECT dt.id, dt.title, dt.description, dt.created, " + // 1, 2, 3, 4
 						"p.id, p.firstname, p.lastname, p.username, p.password, p.email, p.created, p.isModerator, p.karma, " + // 5, 6, 7, 8, 9, 10, 11, 12, 13
-						"dc.id, dc.name, dc.description, dc.icon, dc.color, " + // 14, 15, 16
-						"COUNT(tv1.upvote), COUNT(tv2.downvote), COUNT(tv3.agrees), COUNT(tv4.disagrees) " + // 17, 18, 19, 20
+						"dc.id, dc.name, dc.description, dc.icon, dc.color " + // 14, 15, 16
 						"FROM debate_topic dt " +
 						"JOIN person p " +
 							"ON dt.user_id = p.id " +
@@ -325,14 +299,6 @@ public class DebateTopicManager {
 							"ON dt.id = tc.topic_id " +
 						"JOIN debate_category dc " +
 							"ON tc.category_id = dc.id " +
-						"LEFT OUTER JOIN topic_vote tv1 " +
-							"ON dt.id = tv1.topic_id AND tv1.upvote = true " +
-						"LEFT OUTER JOIN topic_vote tv2 " +
-							"ON dt.id = tv2.topic_id AND tv2.downvote = true " +
-						"LEFT OUTER JOIN topic_vote tv3 " +
-							"ON dt.id = tv3.topic_id AND tv3.agrees = true " +
-						"LEFT OUTER JOIN topic_vote tv4 " +
-							"ON dt.id = tv4.topic_id AND tv4.disagrees = true " +
 						"WHERE";
 
 		if (debateCategory.isPersistent())
@@ -364,6 +330,7 @@ public class DebateTopicManager {
 		try {
 			int id = -1, currentIndex = -1;
 			ArrayList<DebateTopic> dtList = new ArrayList<DebateTopic>();
+			VoteManager vm = new VoteManager(this.con);
 			while (rs.next()) {
 				if (id != rs.getInt(1)) {
 					// Create Debate Topic
@@ -372,9 +339,7 @@ public class DebateTopicManager {
 					dt.setTitle(rs.getString(2));
 					dt.setDescription(rs.getString(3));
 					dt.setCreatedDate(rs.getDate(4));
-					dt.setVote(rs.getInt(19) - rs.getInt(20));
-					dt.setAgrees(rs.getInt(21));
-					dt.setDisagrees(rs.getInt(22));
+					dt = vm.getTopicData(dt);
 
 					// Add User
 					User u = new User();

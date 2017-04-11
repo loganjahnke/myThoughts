@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.text.SimpleDateFormat;
 
 import edu.uga.cs.MyThoughtsException;
 import edu.uga.cs.object.*;
@@ -102,21 +103,12 @@ public class CommentManager {
 	public Comment restore(Comment comment) throws MyThoughtsException {
 		String select = "SELECT c.id, c.subject, c.argument, c.created, c.parent_id, " +
 						"p.id, " +
-						"dt.id, " +
-						"COUNT(cv1.upvote), COUNT(cv2.downvote), COUNT(cv3.agrees), COUNT(cv4.disagrees) " +
+						"dt.id " +
 						"FROM comment c " +
 						"JOIN person p " +
 							"ON c.user_id = p.id " +
 						"JOIN debate_topic dt " +
 							"ON c.topic_id = dt.id " +
-						"LEFT OUTER JOIN comment_vote cv1 " +
-							"ON c.id = cv1.comment_id AND cv1.upvote = 1 " +
-						"LEFT OUTER JOIN comment_vote cv2 " +
-							"ON c.id = cv2.comment_id AND cv2.downvote = 1 " +
-						"LEFT OUTER JOIN comment_vote cv3 " +
-							"ON c.id = cv3.comment_id AND cv3.agrees = 1 " +
-						"LEFT OUTER JOIN comment_vote cv4 " +
-							"ON c.id = cv4.comment_id AND cv4.disagrees = 1 " +
 						"WHERE";
 		int conditionLength = 0;
 
@@ -180,21 +172,12 @@ public class CommentManager {
 	public ArrayList<Comment> restore(Person person) throws MyThoughtsException {
 		String select = "SELECT c.id, c.subject, c.argument, c.created, c.parent_id, " +
 						"p.id, " +
-						"dt.id, " +
-						"COUNT(cv1.upvote), COUNT(cv2.downvote), COUNT(cv3.agrees), COUNT(cv4.disagrees) " +
+						"dt.id " +
 						"FROM comment c " +
 						"JOIN person p " +
 							"ON c.user_id = p.id " +
 						"JOIN debate_topic dt " +
 							"ON c.topic_id = dt.id " +
-						"LEFT OUTER JOIN comment_vote cv1 " +
-							"ON c.id = cv1.comment_id AND cv1.upvote = 1 " +
-						"LEFT OUTER JOIN comment_vote cv2 " +
-							"ON c.id = cv2.comment_id AND cv2.downvote = 1 " +
-						"LEFT OUTER JOIN comment_vote cv3 " +
-							"ON c.id = cv3.comment_id AND cv3.agrees = 1 " +
-						"LEFT OUTER JOIN comment_vote cv4 " +
-							"ON c.id = cv4.comment_id AND cv4.disagrees = 1 " +
 						"WHERE";
 		int conditionLength = 0;
 
@@ -246,24 +229,16 @@ public class CommentManager {
 	public ArrayList<Comment> restoreAfter(Date date) throws MyThoughtsException {
 		String select = "SELECT c.id, c.subject, c.argument, c.created, c.parent_id, " +
 						"p.id, " +
-						"dt.id, " +
-						"COUNT(cv1.upvote), COUNT(cv2.downvote), COUNT(cv3.agrees), COUNT(cv4.disagrees) " +
+						"dt.id " +
 						"FROM comment c " +
 						"JOIN person p " +
 							"ON c.user_id = p.id " +
 						"JOIN debate_topic dt " +
 							"ON c.topic_id = dt.id " +
-						"LEFT OUTER JOIN comment_vote cv1 " +
-							"ON c.id = cv1.comment_id AND cv1.upvote = 1 " +
-						"LEFT OUTER JOIN comment_vote cv2 " +
-							"ON c.id = cv2.comment_id AND cv2.downvote = 1 " +
-						"LEFT OUTER JOIN comment_vote cv3 " +
-							"ON c.id = cv3.comment_id AND cv3.agrees = 1 " +
-						"LEFT OUTER JOIN comment_vote cv4 " +
-							"ON c.id = cv4.comment_id AND cv4.disagrees = 1 " +
 						"WHERE";
 
-		select += " comment.created > " + date;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+		select += " comment.created > \'" + sdf.format(date) + "\'";
 
 		try {
 			Statement stmt = con.createStatement();
@@ -284,21 +259,12 @@ public class CommentManager {
 	public ArrayList<Comment> restore(DebateTopic debateTopic) throws MyThoughtsException {
 		String select = "SELECT c.id, c.subject, c.argument, c.created, c.parent_id, " +
 						"p.id, " +
-						"dt.id, " +
-						"COUNT(cv1.upvote), COUNT(cv2.downvote), COUNT(cv3.agrees), COUNT(cv4.disagrees) " +
+						"dt.id " +
 						"FROM comment c " +
 						"JOIN person p " +
 							"ON c.user_id = p.id " +
 						"JOIN debate_topic dt " +
 							"ON c.topic_id = dt.id " +
-						"LEFT OUTER JOIN comment_vote cv1 " +
-							"ON c.id = cv1.comment_id AND cv1.upvote = 1 " +
-						"LEFT OUTER JOIN comment_vote cv2 " +
-							"ON c.id = cv2.comment_id AND cv2.downvote = 1 " +
-						"LEFT OUTER JOIN comment_vote cv3 " +
-							"ON c.id = cv3.comment_id AND cv3.agrees = 1 " +
-						"LEFT OUTER JOIN comment_vote cv4 " +
-							"ON c.id = cv4.comment_id AND cv4.disagrees = 1 " +
 						"WHERE";
 		int conditionLength = 0;
 
@@ -338,15 +304,14 @@ public class CommentManager {
 		try {
 			PersistenceManager pm = new PersistenceManager(con);
 			ArrayList<Comment> commentList = new ArrayList<Comment>();
+			VoteManager vm = new VoteManager(this.con);
 			while (rs.next()) {
 				Comment comment = new Comment();
 				comment.setId(rs.getInt(1));
 				comment.setSubject(rs.getString(2));
 				comment.setArgument(rs.getString(3));
 				comment.setCreatedDate(rs.getDate(4));
-				comment.setVote(rs.getInt(8) - rs.getInt(9));
-				comment.setAgrees(rs.getInt(10));
-				comment.setDisagrees(rs.getInt(11));
+				comment = vm.getCommentData(comment);
 
 				User user = new User();
 				user.setId(rs.getInt(6));

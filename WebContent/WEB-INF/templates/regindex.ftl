@@ -29,8 +29,8 @@
         </ul>
     </div>
     <div id="debate">
-        <h1 class="thin" id="debate-title">Developed countries should have a higher obligation to combat climate change than developing countries</h1>
-        <a class="gray" href="topic?id=1">Join the Debate</a>
+        <h1 class="thin" id="debate-title">${featured.getTitle()}</h1>
+        <a class="gray" href="topic?id=${featured.getId()}">Join the Debate</a>
         <a class="gray" href="categories?">View all Categories</a>
     </div>
     <#include "include/footer.ftl">

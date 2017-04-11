@@ -25,4 +25,16 @@ public class MyThoughtsController {
 		return pm.saveDebateCategory(dc);
 	}
 
+	public DebateCategory getCategory(String name) throws MyThoughtsException {
+		DebateCategory dc = new DebateCategory();
+		dc.setName(name);
+		return pm.restoreDebateCategory(dc);
+	}
+
+	public User getUser(String username) throws MyThoughtsException {
+		User user = new User();
+		user.setUsername(username);
+		return (User) pm.restorePerson(user);
+	}
+
 }
