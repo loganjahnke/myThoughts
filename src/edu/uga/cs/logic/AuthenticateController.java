@@ -32,10 +32,9 @@ public class AuthenticateController {
 	}
 
 	public String login(Session session, String username, String password) throws MyThoughtsException {
-		Person person = new User("", "", username, password, "");
-		person = pm.restorePerson(person);
+		Person person = pm.login(username, password);
 		if (person == null)
-			throw new MyThoughtsException("User not found in system. Recheck your username/password.");
+			throw new MyThoughtsException("Hmmm... Recheck your username and password.");
 		session.setUser(person);
 		return SessionManager.storeSession(session);
 	}

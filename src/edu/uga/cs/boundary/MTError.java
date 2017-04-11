@@ -34,6 +34,7 @@ public class MTError {
         String back = "index.html";
 
         if (msg.equals("java.lang.NullPointerException")) msg = "Mega-weird internal error. This shouldn't happen.";
+        msg = msg.substring(msg.indexOf(": ") + 1);
         root.put( "reason", msg );
         if (msg.equals("Session expired or illegal; please log in")) back = "Logout";
         root.put( "window", back );

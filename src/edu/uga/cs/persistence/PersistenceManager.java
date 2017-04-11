@@ -53,6 +53,17 @@ public class PersistenceManager {
 	}
 
 	/**
+	 * SELECTs a Person from the database
+	 * @param username - the username of the Person
+	 * @param password - the password of the Person
+	 * @return the Person object
+	 * @throws MyThoughtsException
+	 */
+	public Person login(String username, String password) throws MyThoughtsException {
+		return pm.login(username, password);
+	}
+
+	/**
 	 * DELETEs a Person from the database
 	 * @param person - the person to DELETE
 	 * @throws MyThoughtsException

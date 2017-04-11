@@ -86,7 +86,7 @@ public class PersonManager {
 	 * @throws MyThoughtsException
 	 */
 	public Person restore(Person person) throws MyThoughtsException {
-		String select = "SELECT id, firstname, lastname, username, email, password, created, isAdmin, isModerator, karma " +
+		String select = "SELECT id, firstname, lastname, username, email, created, isAdmin, isModerator, karma " +
 						"FROM person " +
 						"WHERE ";
 		int conditionLength = 0;
@@ -111,17 +111,60 @@ public class PersonManager {
 				select += ("lastname = \"" + person.getLastname() + "\"");
 				conditionLength++;
 			}
-
-			if (person.getPassword() != null) {
-				if (conditionLength > 0)
-					select += (" AND ");
-				select += ("password = \"" + person.getPassword() + "\"");
-				conditionLength++;
-			}
 		}
 
 		VoteManager vm = new VoteManager(this.con);
-		
+
+		try {
+			Statement stmt = con.createStatement();
+			stmt.execute(select);
+			ResultSet rs = stmt.getResultSet();
+			if (rs.next()) {
+				if (rs.getBoolean(7)) {
+					Administrator a = new Administrator();
+					a.setId(rs.getInt(1));
+					a.setFirstname(rs.getString(2));
+					a.setLastname(rs.getString(3));
+					a.setUsername(rs.getString(4));
+					a.setEmail(rs.getString(5));
+					a.setCreatedDate(rs.getDate(6));
+					return a;
+				} else {
+					User u = new User();
+					u.setId(rs.getInt(1));
+					u.setFirstname(rs.getString(2));
+					u.setLastname(rs.getString(3));
+					u.setUsername(rs.getString(4));
+					u.setEmail(rs.getString(5));
+					u.setCreatedDate(rs.getDate(6));
+					u.setModerator(rs.getBoolean(8));
+					u.setKarma(rs.getInt(9));
+					u = vm.restoreVotes(u);
+					return u;
+				}
+			} else
+				return null;
+		} catch (SQLException e) {
+			throw new MyThoughtsException("PersonManager.restore: failed to restore Person: " + e.getMessage());
+		}
+	}
+
+	/**
+	 * Attempts to restore a Person object from the database
+	 * @param username - the username of the Person
+	 * @param password - the password of the Person
+	 * @return the Person object (Administrator or User)
+	 * @throws MyThoughtsException
+	 */
+	public Person login(String username, String password) throws MyThoughtsException {
+		String select = "SELECT id, firstname, lastname, username, email, password, created, isAdmin, isModerator, karma " +
+						"FROM person " +
+						"WHERE ";
+
+		select += "username = \'" + username + "\' AND password = \'" + password + "\'";
+
+		VoteManager vm = new VoteManager(this.con);
+
 		try {
 			Statement stmt = con.createStatement();
 			stmt.execute(select);
@@ -134,7 +177,6 @@ public class PersonManager {
 					a.setLastname(rs.getString(3));
 					a.setUsername(rs.getString(4));
 					a.setEmail(rs.getString(5));
-					a.setPassword(rs.getString(6));
 					a.setCreatedDate(rs.getDate(7));
 					return a;
 				} else {
@@ -144,7 +186,6 @@ public class PersonManager {
 					u.setLastname(rs.getString(3));
 					u.setUsername(rs.getString(4));
 					u.setEmail(rs.getString(5));
-					u.setPassword(rs.getString(6));
 					u.setCreatedDate(rs.getDate(7));
 					u.setModerator(rs.getBoolean(9));
 					u.setKarma(rs.getInt(10));
