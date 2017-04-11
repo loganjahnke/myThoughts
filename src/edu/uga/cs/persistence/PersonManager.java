@@ -120,6 +120,8 @@ public class PersonManager {
 			}
 		}
 
+		VoteManager vm = new VoteManager(this.con);
+		
 		try {
 			Statement stmt = con.createStatement();
 			stmt.execute(select);
@@ -146,6 +148,7 @@ public class PersonManager {
 					u.setCreatedDate(rs.getDate(7));
 					u.setModerator(rs.getBoolean(9));
 					u.setKarma(rs.getInt(10));
+					u = vm.restoreVotes(u);
 					return u;
 				}
 			} else

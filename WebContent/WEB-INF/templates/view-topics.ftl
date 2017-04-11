@@ -26,15 +26,39 @@
         </#if>
         <ul id="topic-list">
             <#list topics as topic>
+            	<#if (nonadmin && user.doesAgree(topic))>
+                <li class="green">
+                <#elseif (nonadmin && user.doesDisagree(topic))>
+                <li class="red">
+                <#else>
                 <li>
+                </#if>
                     <a href="topic?id=${topic.getId()}">
                         <h2>${topic.getTitle()}</h2>
                     </a>
                     <p>${topic.getDescription()}</p>
                     <div class="user-links">
                         <ul>
-                            <li><a class="no-decoration" href="user?username=${topic.getUser().getUsername()}">${topic.getUser().getUsername()}</a> | <span class="green no-background">${topic.getUser().getKarma()}<span class="bold">k</span></span></li>
-                            <li><a href=""><i class="fa fa-caret-up"></i></a> ${topic.getVote()} <a href=""><i class="fa fa-caret-down"></i></a></li>
+                            <li>
+                                <a class="no-decoration" href="user?username=${topic.getUser().getUsername()}">${topic.getUser().getUsername()}</a>
+                                |
+                                <span class="green no-background">${topic.getUser().getKarma()}<span class="bold">k</span></span>
+                            </li>
+                            <li>
+                                <#if nonadmin && user.doesLike(topic)>
+                                    <span class="bold green no-background"><a href=""><i class="fa fa-caret-up"></i></a></span>
+                                    ${topic.getVote()}
+                                    <a href=""><i class="fa fa-caret-down"></i></a>
+                                <#elseif nonadmin && user.doesDislike(topic)>
+                                    <a href=""><i class="fa fa-caret-up"></i></a>
+                                    ${topic.getVote()}
+                                    <span class="bold red no-background"><a href=""><i class="fa fa-caret-down"></i></a></span>
+                                <#else>
+                                    <a href=""><i class="fa fa-caret-up"></i></a>
+                                    ${topic.getVote()}
+                                    <a href=""><i class="fa fa-caret-down"></i></a>
+                                </#if>
+                            </li>
                             <li>${topic.getCreatedDate()}</li>
                         </ul>
                     </div>

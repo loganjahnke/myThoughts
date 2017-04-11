@@ -267,8 +267,8 @@ public class VoteManager {
 	 * @throws MyThoughtsException
 	 */
 	public User restoreVotes(Person person) throws MyThoughtsException {
-		String select = "SELECT cv.upvote, cv.downvote, cv.agrees, cv.disagrees " +
-						"c.id, " +
+		String select = "SELECT cv.upvote, cv.downvote, cv.agrees, cv.disagrees, " +
+						"c.id " +
 						"FROM person p " +
 						"LEFT OUTER JOIN comment_vote cv " +
 							"ON p.id = cv.user_id " +
@@ -304,7 +304,7 @@ public class VoteManager {
 			throw new MyThoughtsException("PersonManager.restore: failed to restore Person: " + e.getMessage());
 		}
 
-		select = "SELECT tv.upvote, tv.downvote, tv.agrees, tv.disagrees " +
+		select = "SELECT tv.upvote, tv.downvote, tv.agrees, tv.disagrees, " +
 				 "dt.id " +
 				 "FROM person p " +
 				 "LEFT OUTER JOIN topic_vote tv " +

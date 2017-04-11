@@ -13,11 +13,8 @@ import javax.servlet.http.HttpSession;
 
 import edu.uga.cs.MyThoughtsException;
 import edu.uga.cs.logic.*;
-import edu.uga.cs.object.DebateCategory;
-import edu.uga.cs.object.DebateTopic;
-import edu.uga.cs.object.User;
-import edu.uga.cs.session.Session;
-import edu.uga.cs.session.SessionManager;
+import edu.uga.cs.object.*;
+import edu.uga.cs.session.*;
 import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapperBuilder;
 import freemarker.template.SimpleHash;
@@ -69,18 +66,18 @@ public class ViewTopicsServlet extends HttpServlet {
         String categoryName = request.getParameter("category");
         String userName = request.getParameter("user");
 
+        root.put("sender", "category");
+        
         // Get topics
 		try {
 			if (categoryName != null && !categoryName.equals("Recent")) {
 				DebateCategory dc = mtc.getCategory(categoryName);
 				root.put("category", dc);
 	            topics = tlc.getTopics(dc);
-	            root.put("sender", "category");
         	} else if (categoryName != null && categoryName.equals("Recent")) {
         		DebateCategory dc = mtc.getCategory(categoryName);
 				root.put("category", dc);
 	            topics = tlc.getRecentTopics();
-	            root.put("sender", "category");
         	} else if (userName != null) {
 				User user = mtc.getUser(userName);
 	            topics = tlc.getTopics(user);
@@ -89,7 +86,6 @@ public class ViewTopicsServlet extends HttpServlet {
         		DebateCategory dc = mtc.getCategory("Recent");
 				root.put("category", dc);
         		topics = tlc.getRecentTopics();
-	            root.put("sender", "category");
         	}
 		} catch (MyThoughtsException mte) {
 			MTError.error(processor, response, cfg, mte);

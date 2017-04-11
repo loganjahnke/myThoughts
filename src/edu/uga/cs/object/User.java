@@ -116,6 +116,72 @@ public class User extends Person {
 	public void addAgree(Likeable object, Boolean agree) {
 		this.agrees.put(object, agree);
 	}
+	
+	public boolean doesLike(Likeable object) {
+		if (object instanceof DebateTopic) {
+			DebateTopic dt = (DebateTopic) object;
+			System.out.println(getFirstname() + " might like " + dt.getTitle());
+			System.out.println("Does [votes] contain the object? " + (this.votes.containsKey(dt) ? "yes" : "no"));
+			if (this.votes.containsKey(dt) && this.votes.get(dt) == true) {
+				return true;
+			}
+		} else if (object instanceof Comment) {
+			Comment c = (Comment) object;
+			if (this.votes.containsKey(c) && this.votes.get(c) == true) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public boolean doesDislike(Likeable object) {
+		if (object instanceof DebateTopic) {
+			DebateTopic dt = (DebateTopic) object;
+			if (this.votes.containsKey(dt) && this.votes.get(dt) == false) {
+				return true;
+			}
+		} else if (object instanceof Comment) {
+			Comment c = (Comment) object;
+			if (this.votes.containsKey(c) && this.votes.get(c) == false) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public boolean doesAgree(Likeable object) {
+		if (object instanceof DebateTopic) {
+			DebateTopic dt = (DebateTopic) object;
+			if (this.agrees.containsKey(dt) && this.agrees.get(dt) == true) {
+				return true;
+			}
+		} else if (object instanceof Comment) {
+			Comment c = (Comment) object;
+			if (this.agrees.containsKey(c) && this.agrees.get(c) == true) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
+	
+	public boolean doesDisagree(Likeable object) {
+		if (object instanceof DebateTopic) {
+			DebateTopic dt = (DebateTopic) object;
+			if (this.agrees.containsKey(dt) && this.agrees.get(dt) == false) {
+				return true;
+			}
+		} else if (object instanceof Comment) {
+			Comment c = (Comment) object;
+			if (this.agrees.containsKey(c) && this.agrees.get(c) == false) {
+				return true;
+			}
+		}
+		
+		return false;
+	}
 
 	/* (non-Javadoc)
 	 * @see java.lang.Object#toString()
