@@ -2,6 +2,7 @@ package edu.uga.cs.boundary;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -66,6 +67,8 @@ public class InsertPostServlet extends HttpServlet {
         // Get categories
 		try {
             categories = mtc.getCategories();
+            while (categories.size() > 7)
+        		categories.remove(ThreadLocalRandom.current().nextInt(0, categories.size()));
 		} catch (MyThoughtsException mte) {
 			MTError.error(processor, response, cfg, mte);
 			return;
@@ -74,7 +77,7 @@ public class InsertPostServlet extends HttpServlet {
         templateName = "regindex.ftl";
         String dTitle = request.getParameter("debateTitle");
         String dDescription = request.getParameter("debateDescription");
-        
+
         root.put("debateTitle", dTitle);
         root.put("debateDescription", dDescription);
         root.put("user", session.getUser());

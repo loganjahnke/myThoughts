@@ -51,6 +51,11 @@
     top: 25vh;
 }
 
+#debate .mt-button {
+    position: relative;
+    top: 35vh;
+}
+
 #wrapper {
     text-align: center;
     height: 500px;

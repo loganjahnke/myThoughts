@@ -2,6 +2,7 @@ package edu.uga.cs.boundary;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.concurrent.ThreadLocalRandom;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -89,7 +90,7 @@ public class AuthenticateServlet extends HttpServlet {
 		    // Only push 7 featured categories
             categories = mtc.getCategories();
             while (categories.size() > 7)
-        		categories.remove(7);
+        		categories.remove(ThreadLocalRandom.current().nextInt(0, categories.size()));
 
         	dt = tlc.getMostRecentFeatured();
 		} catch (MyThoughtsException mte) {

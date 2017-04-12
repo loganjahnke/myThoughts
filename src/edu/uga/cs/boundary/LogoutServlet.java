@@ -53,6 +53,7 @@ public class LogoutServlet extends HttpServlet {
             httpSession = request.getSession();
             session = SessionManager.prepareSession(httpSession, ssid, session);
             SessionManager.logout(session);
+            response.sendRedirect("index.html");
         } catch (MyThoughtsException mte) {
             MTError.error(processor, response, cfg, mte);
             return;
