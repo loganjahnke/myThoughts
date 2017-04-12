@@ -11,3 +11,21 @@
 	margin-top: 200px;	
 	
 }
+
+.select{
+	width: 150px;
+	height: 20px;
+	font-size: 15px;	
+	text-allign:center;
+
+}
+
+.selectT{
+	font-size:20px;
+	font-weight: bold;
+}
+option{
+	color:blue;
+	
+}
+

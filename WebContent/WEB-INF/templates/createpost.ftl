@@ -30,10 +30,23 @@
         </ul>
     </div>
     <div id="debate">
-    	<form action="login_form" method="post">
- 		 <input class ="input1" type="text" placeholder="Debate Title" name="debateTitle"><br>
+    	<form action="InsertPostServlet" method="post">
+ 		<input class ="input1" type="text" placeholder="Debate Title" name="debateTitle"><br>
  		<input class ="input" type="text" name="debateDescription" placeholder="Debate Description"><br>
-        <a class="gray" href="insertpost">Enter</a>
+ 		
+ 		<pre class="selectT">Select the Category</pre>
+		 <select name="category" class="select">
+			<option value="Politics">Politics</option>
+		    <option value="Environmental">Environmental</option>
+		    <option value="Religion">Religion</option>
+			<option value="Music">Music</option>
+			<option value="Movies">Movies</option>
+			<option value="State Politics">State Politics</option>
+			<option value="Soccer">Soccer</option>
+			<option value="Space Exploration">Space Exploration</option>
+			<option value="Coffee Shops">Coffee Shops</option>
+		  </select>
+        <input class="gray" type="submit" value="Enter" name="submit">
         </form>
     </div>
     <#include "include/footer.ftl">
