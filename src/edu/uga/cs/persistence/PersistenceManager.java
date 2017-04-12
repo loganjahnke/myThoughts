@@ -155,6 +155,16 @@ public class PersistenceManager {
 
 	// DEBATE CATEGORY METHODS
 
+	public void assignTopicIntoCategory(int topicId, int categoryId) throws MyThoughtsException {
+		if (!dtm.relationIsInDatabase(categoryId, topicId)) {
+			DebateCategory dc = new DebateCategory();
+			dc.setId(categoryId);
+			ArrayList<DebateCategory> dcList = new ArrayList<DebateCategory>();
+			dcList.add(dc);
+			dtm.insertCategories(topicId, dcList);
+		}
+	}
+	
 	/**
 	 * INSERTs a DebateCategory into the database
 	 * @param debateCategory - the category to INSERT

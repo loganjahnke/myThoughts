@@ -95,6 +95,23 @@ body {
     cursor: pointer;
 }
 
+.mt-button-tiny {
+    text-decoration: none;
+    width: 120px;
+    border-radius: 8px;
+    padding: 6px;
+    font-size: 12px;
+    border: none;
+    font-weight: 200;
+}
+
+.mt-button-tiny:hover {
+    font-weight: 500;
+    background-color: #333;
+    color: white;
+    cursor: pointer;
+}
+
 /*=====================
         Footer
 =======================*/

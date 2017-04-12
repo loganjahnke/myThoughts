@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="css/view-topics.css">
     <!-- Scripts -->
     <#include "include/script.ftl">
-    <script src="view-topics.js"></script>
+    <script src="js/view-topics.js"></script>
 </head>
 
 <body>
@@ -62,7 +62,8 @@
                             </li>
                             <li>${topic.getCreatedDate()}</li>
                             <#if nonadmin == false>
-                                <li><a id="${topic.getId()}" class="feature no-decoration" href="#"><i class="fa fa-star"></i> Feature</li>
+                                <li><button onclick="feature(this, ${topic.getId()})" class="mt-button-tiny"><i class="fa fa-star"></i> Feature</button></li>
+                                <li><button onclick="doDelete(${topic.getId()})" class="mt-button-tiny"><i class="fa fa-trash"></i> Delete</button></li>
                             </#if>
                         </ul>
                     </div>
