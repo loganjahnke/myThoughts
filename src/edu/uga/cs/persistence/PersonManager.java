@@ -25,6 +25,48 @@ public class PersonManager {
 	}
 
 	/**
+	 * Checks the database for a specific email duplication
+	 * @param email - the email to check
+	 * @return true if duplicate, false otherwise
+	 * @throws MyThoughtsException
+	 */
+	public boolean isDuplicateEmail(String email) throws MyThoughtsException {
+		String query = "SELECT COUNT(*) FROM person WHERE email = " + email;
+		try {
+			Statement stmt = con.createStatement();
+			stmt.execute(query);
+			ResultSet rs = stmt.getResultSet();
+			if (rs.next())
+				if (rs.getInt(1) > 0)
+					return true;
+			return false;
+		} catch (Exception e) {
+			throw new MyThoughtsException("PersonManager.isDuplicateEmail: error in something... " + e);
+		}
+	}
+	
+	/**
+	 * Checks the database for a specific username duplication
+	 * @param username - the username to check
+	 * @return true if duplicate, false otherwise
+	 * @throws MyThoughtsException
+	 */
+	public boolean isDuplicateUsername(String username) throws MyThoughtsException {
+		String query = "SELECT COUNT(*) FROM person WHERE username = " + username;
+		try {
+			Statement stmt = con.createStatement();
+			stmt.execute(query);
+			ResultSet rs = stmt.getResultSet();
+			if (rs.next())
+				if (rs.getInt(1) > 0)
+					return true;
+			return false;
+		} catch (Exception e) {
+			throw new MyThoughtsException("PersonManager.isDuplicateUsername: error in something... " + e);
+		}
+	}
+	
+	/**
 	 * Handles the INSERT or the UPDATE of a Person object
 	 * @param person - the person to INSERT or UPDATE
 	 * @return the ID of the person

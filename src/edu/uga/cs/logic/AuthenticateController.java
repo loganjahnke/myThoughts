@@ -39,4 +39,20 @@ public class AuthenticateController {
 		return SessionManager.storeSession(session);
 	}
 
+	public boolean precheckLogin(String username, String password) throws MyThoughtsException {
+		Person person = pm.login(username, password);
+		if (person == null)
+			return true;
+		else
+			return false;
+	}
+
+	public boolean precheckEmail(String email) throws MyThoughtsException {
+		return pm.isDuplicateEmail(email);
+	}
+
+	public boolean precheckUsername(String username) throws MyThoughtsException {
+		return pm.isDuplicateUsername(username);
+	}
+
 }

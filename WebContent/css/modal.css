@@ -156,6 +156,25 @@ input:focus {
     text-align: center;
 }
 
+.error-message {
+    display: block;
+    margin: 20px 0 10px;
+    clear: both;
+    overflow: hidden;
+    text-decoration: none;
+    color: rgba(255, 100, 100, 0.7);
+    text-align: center;
+}
+
+.error-input {
+    border-bottom: 1px solid rgba(255, 100, 100, 0.5) !important;
+    color: rgba(255, 160, 160, 1.0) !important;
+}
+
+.error-input:focus {
+    border-bottom: 1px solid rgba(255, 100, 100, 1.0);
+}
+
 
 /* User Register Form */
 

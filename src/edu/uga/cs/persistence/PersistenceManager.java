@@ -33,6 +33,26 @@ public class PersistenceManager {
 	// PERSON METHODS
 
 	/**
+	 * Checks for a duplicate email in the database
+	 * @param email - the email to check
+	 * @return true if it is in the database, false otherwise
+	 * @throws MyThoughtsException
+	 */
+	public boolean isDuplicateEmail(String email) throws MyThoughtsException {
+		return pm.isDuplicateEmail(email);
+	}
+	
+	/**
+	 * Checks for a duplicate username in the database
+	 * @param username - the username to check
+	 * @return true if it is in the database, false otherwise
+	 * @throws MyThoughtsException
+	 */
+	public boolean isDuplicateUsername(String username) throws MyThoughtsException {
+		return pm.isDuplicateUsername(username);
+	}
+	
+	/**
 	 * INSERTs a Person into the database
 	 * @param person - the Person to INSERT
 	 * @return the new person id
