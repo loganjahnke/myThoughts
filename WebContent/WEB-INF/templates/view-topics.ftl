@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="css/view-topics.css">
     <!-- Scripts -->
     <#include "include/script.ftl">
+    <script src="view-topics.js"></script>
 </head>
 
 <body>
@@ -60,6 +61,9 @@
                                 </#if>
                             </li>
                             <li>${topic.getCreatedDate()}</li>
+                            <#if nonadmin == false>
+                                <li><a id="${topic.getId()}" class="feature no-decoration" href="#"><i class="fa fa-star"></i> Feature</li>
+                            </#if>
                         </ul>
                     </div>
                 </li>

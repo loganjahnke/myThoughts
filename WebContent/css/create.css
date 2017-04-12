@@ -3,8 +3,12 @@ body {
 }
 
 #content {
+	height: 100vh;
+    background-size: 100% 100%;
+    background-repeat: no-repeat;
+    background-image: url("https://s-media-cache-ak0.pinimg.com/originals/9a/ff/2e/9aff2efca7e7fc907e325cfed0365107.jpg");
 	position: relative;
-	top: 5.8em;
+	top: 3.6em;
 	text-align: center;
 }
 
@@ -79,4 +83,15 @@ input.btn {
 	border-radius: 100%;
 	font-size: 36px;
 	padding: 30px;
+}
+
+#select-title {
+	font-family: "Open Sans";
+	padding-top: 5px;
+}
+
+#select-multiple {
+	height: 150px;
+	font-size: 16px;
+	margin: 25px;
 }

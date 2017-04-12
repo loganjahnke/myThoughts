@@ -41,4 +41,7 @@ public class MyThoughtsController {
 		return (User) pm.restorePerson(user);
 	}
 
+	public int saveTopic(DebateTopic dt) throws MyThoughtsException {
+		return pm.saveDebateTopic(dt);
+	}
 }

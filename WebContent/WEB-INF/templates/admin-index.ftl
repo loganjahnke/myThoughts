@@ -30,8 +30,8 @@
     </div>
     <div id="debate">
         <h1 class="thin" id="debate-title">Welcome back ${user.getFirstname()} ${user.getLastname()}</h1>
-        <a class="gray" href="create-category">Create a Category</a>
-        <a class="gray" href="categories?">Create a Post</a>
+        <a class="mt-button gray" href="create-category">Create a Category</a>
+        <a class="mt-button gray" href="categories?">View Categories</a>
     </div>
     <#include "include/footer.ftl">
 </body>
