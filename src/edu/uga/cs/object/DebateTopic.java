@@ -100,6 +100,13 @@ public class DebateTopic extends Likeable {
 			this.categories.add(dc);
 		return this;
 	}
+	
+	public boolean containsCategory(String name) {
+		for (DebateCategory dc : categories)
+			if (dc.getName().equals(name))
+				return true;
+		return false;
+	}
 
 	public boolean passesNullTest() {
 		if (this.title == null)

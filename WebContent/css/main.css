@@ -103,6 +103,8 @@ body {
     font-size: 12px;
     border: none;
     font-weight: 200;
+    position: relative;
+    top: -10px;
 }
 
 .mt-button-tiny:hover {

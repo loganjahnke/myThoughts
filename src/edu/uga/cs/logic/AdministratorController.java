@@ -27,6 +27,10 @@ public class AdministratorController {
 	public void featureTopic(int id) throws MyThoughtsException {
 		pm.assignTopicIntoCategory(id, 1);
 	}
+	
+	public void unfeatureTopic(int id) throws MyThoughtsException {
+		pm.unassignTopicFromCategory(id, 1);
+	}
 
 	public void deleteTopic(int id) throws MyThoughtsException {
 		DebateTopic dt = new DebateTopic();

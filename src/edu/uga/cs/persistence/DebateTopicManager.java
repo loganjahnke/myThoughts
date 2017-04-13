@@ -272,6 +272,7 @@ public class DebateTopicManager {
 
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
 		select += " dt.created > \'" + sdf.format(date) + "\'";
+		select += " ORDER BY YEAR(dt.created), MONTH(dt.created), DAY(dt.created) DESC";
 
 		try {
 			Statement stmt = con.createStatement();
@@ -385,6 +386,19 @@ public class DebateTopicManager {
 			return dtList;
 		} catch (SQLException e) {
 			throw new MyThoughtsException("DebateTopicManager.retrieve: failed to restore DebateTopic(s): " + e.getMessage());
+		}
+	}
+	
+	public void removeCategory(int topicId, int categoryId) throws MyThoughtsException {
+		String delete = "DELETE from topic_category " +
+						"WHERE topic_id = " + topicId + 
+						" AND category_id = " + categoryId;
+		
+		try {
+			Statement stmt = con.createStatement();
+			stmt.execute(delete);
+		} catch (SQLException e) {
+			throw new MyThoughtsException("DebateTopicManager.removeCategory: failed to remove category from topic: " + e.getMessage());
 		}
 	}
 

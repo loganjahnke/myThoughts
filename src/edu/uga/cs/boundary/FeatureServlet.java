@@ -43,6 +43,8 @@ public class FeatureServlet extends HttpServlet {
 				ac.deleteTopic(id);
 			else if (whattodo.equals("feature"))
 				ac.featureTopic(id);
+			else if (whattodo.equals("unfeature"))
+				ac.unfeatureTopic(id);
 		} catch (Exception e) {
 			System.out.println("not featured");
 		}

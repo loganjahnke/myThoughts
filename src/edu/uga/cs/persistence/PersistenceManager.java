@@ -165,6 +165,11 @@ public class PersistenceManager {
 		}
 	}
 	
+	public void unassignTopicFromCategory(int topicId, int categoryId) throws MyThoughtsException {
+		if (dtm.relationIsInDatabase(categoryId, topicId))
+			dtm.removeCategory(topicId, categoryId);
+	}
+	
 	/**
 	 * INSERTs a DebateCategory into the database
 	 * @param debateCategory - the category to INSERT

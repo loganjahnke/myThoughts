@@ -62,7 +62,11 @@
                             </li>
                             <li>${topic.getCreatedDate()}</li>
                             <#if nonadmin == false>
-                                <li><button onclick="feature(this, ${topic.getId()})" class="mt-button-tiny"><i class="fa fa-star"></i> Feature</button></li>
+                                <#if !topic.containsCategory("Featured")>
+                                    <li id="feature-${topic.getId()}"><button onclick="feature(${topic.getId()})" class="mt-button-tiny"><i class="fa fa-star"></i> Feature</button></li>
+                                <#else>
+                                    <li id="unfeature-${topic.getId()}"><button onclick="unfeature(${topic.getId()})" class="mt-button-tiny"><i class="fa fa-times"></i> Remove Feature</button></li>
+                                </#if>
                                 <li><button onclick="doDelete(${topic.getId()})" class="mt-button-tiny"><i class="fa fa-trash"></i> Delete</button></li>
                             </#if>
                         </ul>

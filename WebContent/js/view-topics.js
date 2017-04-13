@@ -7,12 +7,20 @@ function doDelete(id) {
     });
 }
 
-function feature(btn, id) {
+function feature(id) {
 	$.post("feature", {
             id: id,
             do: "feature"
     }).done(function(responseText) {
-        btn.addClass("green");
-        btn.text = "Featured!";
+    	document.getElementById("feature-" + id).outerHTML = "";
+    });
+}
+
+function unfeature(id) {
+	$.post("feature", {
+            id: id,
+            do: "unfeature"
+    }).done(function(responseText) {
+        document.getElementById("unfeature-" + id).outerHTML = "";
     });
 }
