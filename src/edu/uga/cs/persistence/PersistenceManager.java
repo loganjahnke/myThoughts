@@ -10,9 +10,7 @@ import edu.uga.cs.object.*;
 /**
  * PersistenceManager
  * @author Logan Jahnke
- * @editor Logan Jahnke
  * @created March 22, 2017
- * @updated March 23, 2017
  */
 public class PersistenceManager {
 
@@ -22,6 +20,10 @@ public class PersistenceManager {
 	CommentManager cm;
 	VoteManager vm;
 
+	/**
+	 * Manages all possible methods and database interactions
+	 * @param con
+	 */
 	public PersistenceManager(Connection con) {
 		this.pm = new PersonManager(con);
 		this.dtm = new DebateTopicManager(con);
@@ -155,6 +157,12 @@ public class PersistenceManager {
 
 	// DEBATE CATEGORY METHODS
 
+	/**
+	 * INSERTs a topic and category relationship into the database
+	 * @param topicId - the topic id
+	 * @param categoryId - the category id
+	 * @throws MyThoughtsException
+	 */
 	public void assignTopicIntoCategory(int topicId, int categoryId) throws MyThoughtsException {
 		if (!dtm.relationIsInDatabase(categoryId, topicId)) {
 			DebateCategory dc = new DebateCategory();
@@ -165,11 +173,23 @@ public class PersistenceManager {
 		}
 	}
 	
+	/**
+	 * DELETEs a topic and category relationship from the database
+	 * @param topicId - the topic id
+	 * @param categoryId - the category id
+	 * @throws MyThoughtsException
+	 */
 	public void unassignTopicFromCategory(int topicId, int categoryId) throws MyThoughtsException {
 		if (dtm.relationIsInDatabase(categoryId, topicId))
 			dtm.removeCategory(topicId, categoryId);
 	}
 	
+	/**
+	 * SELECTs all categories from the database that a User 
+	 * can assign a topic to.
+	 * @return the list of categories
+	 * @throws MyThoughtsException
+	 */
 	public ArrayList<DebateCategory> restoreAllUsableDebateCategories() throws MyThoughtsException {
 		return dcm.restoreUsable();
 	}

@@ -3,9 +3,7 @@ package edu.uga.cs.persistence;
 /**
  * DbAccessConfig
  * @author Logan Jahnke
- * @editor Logan Jahnke
  * @created March 18, 2017
- * @updated March 18, 2017
  */
 public abstract class DbAccessConfig {
 

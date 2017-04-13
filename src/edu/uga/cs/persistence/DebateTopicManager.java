@@ -16,9 +16,7 @@ import edu.uga.cs.object.*;
 /**
  * DebateTopicManager
  * @author Logan Jahnke
- * @editor Logan Jahnke
  * @created March 19, 2017
- * @updated April 5, 2017
  */
 public class DebateTopicManager {
 
@@ -389,6 +387,12 @@ public class DebateTopicManager {
 		}
 	}
 	
+	/**
+	 * Attempts to DELETE a row from topic_category
+	 * @param topicId
+	 * @param categoryId
+	 * @throws MyThoughtsException
+	 */
 	public void removeCategory(int topicId, int categoryId) throws MyThoughtsException {
 		String delete = "DELETE from topic_category " +
 						"WHERE topic_id = " + topicId + 

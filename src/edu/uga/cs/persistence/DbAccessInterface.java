@@ -10,9 +10,7 @@ import java.sql.Statement;
 /**
  * DbAccessInterface
  * @author Logan Jahnke
- * @editor Logan Jahnke
  * @created March 18, 2017
- * @updated March 18, 2017
  */
 public class DbAccessInterface {
 
@@ -87,8 +85,6 @@ public class DbAccessInterface {
         }
         return -1;
 	}
-
-	public static void update(Connection con, String query) {}
 
 	/**
 	 * Used to execute a DELETE sql statement

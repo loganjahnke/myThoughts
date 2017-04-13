@@ -12,9 +12,7 @@ import edu.uga.cs.object.*;
 /**
  * VoteManager
  * @author Logan Jahnke
- * @editor Logan Jahnke
  * @created March 29, 2017
- * @updated March 29, 2017
  */
 public class VoteManager {
 

@@ -12,9 +12,7 @@ import edu.uga.cs.object.*;
 /**
  * PersonManager
  * @author Logan Jahnke
- * @editor Logan Jahnke
  * @created March 19, 2017
- * @updated March 23, 2017
  */
 public class PersonManager {
 

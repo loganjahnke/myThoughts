@@ -14,9 +14,7 @@ import edu.uga.cs.object.*;
 /**
  * DebateCategoryManager
  * @author Logan Jahnke
- * @editor Logan Jahnke
  * @created March 19, 2017
- * @updated April 5, 2017
  */
 public class DebateCategoryManager {
 

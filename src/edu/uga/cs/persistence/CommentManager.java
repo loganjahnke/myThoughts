@@ -15,9 +15,7 @@ import edu.uga.cs.object.*;
 /**
  * CommentManager
  * @author Logan Jahnke
- * @editor Logan Jahnke
  * @created March 23, 2017
- * @updated March 23, 2017
  */
 public class CommentManager {
 
