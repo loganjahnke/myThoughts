@@ -2,6 +2,14 @@ package edu.uga.cs.object;
 
 import edu.uga.cs.persistence.Persistent;
 
+/**
+ * A DebateCategory is an organizational object that
+ * a User can access to see relevant DebateTopics.
+ * DebateCategories contain a fontawesome icon and
+ * color for UI purposes.
+ * 
+ * @author loganjahnke
+ */
 public class DebateCategory extends Persistent {
 
 	private String name;
@@ -9,6 +17,9 @@ public class DebateCategory extends Persistent {
 	private String icon;
 	private String color;
 
+	/**
+	 * Creates an empty DebateCategory
+	 */
 	public DebateCategory() {
 		super();
 		this.name = "";
@@ -17,6 +28,13 @@ public class DebateCategory extends Persistent {
 		this.color = "";
 	}
 
+	/**
+	 * Create a DebateCategory with the given information
+	 * @param name - the name of the category
+	 * @param description - the description of the category
+	 * @param icon - the fontawesome icon of the category
+	 * @param color - the color of the icon
+	 */
 	public DebateCategory(String name, String description, String icon, String color) {
 		super();
 		this.name = name;
@@ -91,6 +109,9 @@ public class DebateCategory extends Persistent {
 		this.color = color;
 	}
 
+	/**
+	 * @return true if passes null test, false otherwise
+	 */
 	public boolean passesNullTest() {
 		if (this.name == null)
 			return false;

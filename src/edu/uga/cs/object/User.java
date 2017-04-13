@@ -3,6 +3,11 @@ package edu.uga.cs.object;
 import java.util.Date;
 import java.util.HashMap;
 
+/**
+ * A User can create DebateTopics and Comments.
+ * 
+ * @author loganjahnke
+ */
 public class User extends Person {
 
 	private boolean isModerator;
@@ -23,13 +28,12 @@ public class User extends Person {
 
 	/**
 	 * Creates a User given the following information
-	 *
-	 * @param firstname
-	 * @param lastname
-	 * @param username
-	 * @param email
-	 * @param isModerator
-	 * @param karma
+	 * @param firstname - the first name
+	 * @param lastname - the last name
+	 * @param username - the username
+	 * @param email - the email address
+	 * @param isModerator - is moderator or not
+	 * @param karma - the karma score
 	 */
 	public User(String firstname, String lastname, String username, String password, String email, boolean isModerator, int karma, Date created, HashMap<Likeable, Boolean> votes, HashMap<Likeable, Boolean> agrees) {
 		super(firstname, lastname, username, password, email, created);
@@ -43,6 +47,18 @@ public class User extends Person {
 		this.setAgrees(agrees);
 	}
 
+	/**
+	 * 
+	 * Creates a User given the following information
+	 * @param firstname - the first name
+	 * @param lastname - the last name
+	 * @param username - the username
+	 * @param email - the email address
+	 * @param isModerator - is moderator or not
+	 * @param karma - the karma score
+	 * @param votes - HashMap of vote choice to Likeable objects
+	 * @param agrees - HashMap of agreement/disagreement to Likeable objects
+	 */
 	public User(String firstname, String lastname, String username, String password, String email, boolean isModerator, int karma, HashMap<Likeable, Boolean> votes, HashMap<Likeable, Boolean> agrees) {
 		super(firstname, lastname, username, password, email);
 		this.isModerator = isModerator;
@@ -55,6 +71,13 @@ public class User extends Person {
 		this.setAgrees(agrees);
 	}
 
+	/**
+	 * Creates a User given the following information
+	 * @param firstname - the first name
+	 * @param lastname - the last name
+	 * @param username - the username
+	 * @param email - the email address
+	 */
 	public User(String firstname, String lastname, String username, String password, String email) {
 		super(firstname, lastname, username, password, email);
 		this.isModerator = false;
@@ -93,30 +116,57 @@ public class User extends Person {
 		this.karma = karma;
 	}
 
+	/**
+	 * @return the HashMap of votes
+	 */
 	public HashMap<Likeable, Boolean> getLikes() {
 		return votes;
 	}
 
+	/**
+	 * @param votes
+	 */
 	public void setLikes(HashMap<Likeable, Boolean> votes) {
 		this.votes = votes;
 	}
 
+	/**
+	 * @return the HashMap of agrees
+	 */
 	public HashMap<Likeable, Boolean> getAgrees() {
 		return agrees;
 	}
 
+	/**
+	 * @param agrees
+	 */
 	public void setAgrees(HashMap<Likeable, Boolean> agrees) {
 		this.agrees = agrees;
 	}
 
+	/**
+	 * Adds a vote to a Likeable
+	 * @param object - the Likeable
+	 * @param vote - true is upvote, false is downvote
+	 */
 	public void addVote(Likeable object, Boolean vote) {
 		this.votes.put(object, vote);
 	}
 
+	/**
+	 * Adds a agreement to a Likeable
+	 * @param object - the Likeable
+	 * @param agree - true is agree, false is disagree
+	 */
 	public void addAgree(Likeable object, Boolean agree) {
 		this.agrees.put(object, agree);
 	}
 	
+	/**
+	 * Checks to see if the User likes a Likeable
+	 * @param object - the Likeable
+	 * @return true if like
+	 */
 	public boolean doesLike(Likeable object) {
 		if (object instanceof DebateTopic) {
 			DebateTopic dt = (DebateTopic) object;
@@ -135,6 +185,11 @@ public class User extends Person {
 		return false;
 	}
 	
+	/**
+	 * Checks to see if the User dislikes a Likeable
+	 * @param object - the Likeable
+	 * @return true if dislike
+	 */
 	public boolean doesDislike(Likeable object) {
 		if (object instanceof DebateTopic) {
 			DebateTopic dt = (DebateTopic) object;
@@ -151,6 +206,11 @@ public class User extends Person {
 		return false;
 	}
 	
+	/**
+	 * Checks to see if the User agrees with a Likeable
+	 * @param object - the Likeable
+	 * @return true if agree
+	 */
 	public boolean doesAgree(Likeable object) {
 		if (object instanceof DebateTopic) {
 			DebateTopic dt = (DebateTopic) object;
@@ -167,6 +227,11 @@ public class User extends Person {
 		return false;
 	}
 	
+	/**
+	 * Checks to see if the User disagrees with a Likeable
+	 * @param object - the Likeable
+	 * @return true if disagree
+	 */
 	public boolean doesDisagree(Likeable object) {
 		if (object instanceof DebateTopic) {
 			DebateTopic dt = (DebateTopic) object;

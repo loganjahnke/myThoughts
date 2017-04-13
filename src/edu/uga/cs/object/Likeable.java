@@ -3,6 +3,14 @@ package edu.uga.cs.object;
 import edu.uga.cs.persistence.Persistent;
 import java.util.Date;
 
+/**
+ * Likeable is an abstract parent class that both
+ * DebateTopic and Comment inherit. This contains
+ * functionality to vote, agree, and disagree on
+ * an object.
+ * 
+ * @author loganjahnke
+ */
 public abstract class Likeable extends Persistent {
 
 	private int vote;
@@ -10,6 +18,9 @@ public abstract class Likeable extends Persistent {
 	private int disagrees;
 	private Date created;
 
+	/**
+	 * Creates a blank Likeable object
+	 */
 	public Likeable() {
 		super();
 		this.vote = 0;
@@ -18,6 +29,10 @@ public abstract class Likeable extends Persistent {
 		this.created = new Date();
 	}
 	
+	/** 
+	 * Creates a Likeable object with the given information
+	 * @param created - the date and time of creation
+	 */
 	public Likeable(Date created) {
 		super();
 		this.vote = 0;
@@ -26,6 +41,13 @@ public abstract class Likeable extends Persistent {
 		this.created = created;
 	}
 
+	/**
+	 * Creates a Likeable object with the given information
+	 * @param vote - the vote count
+	 * @param agrees - the agreement count
+	 * @param disagrees - the disagreement count
+	 * @param created - the date and time of creation
+	 */
 	public Likeable(int vote, int agrees, int disagrees, Date created) {
 		super();
 		this.vote = vote;
@@ -34,6 +56,10 @@ public abstract class Likeable extends Persistent {
 		this.created = created;
 	}
 
+	/**
+	 * Creates a Likeable object with the given information
+	 * @param id - the persistent ID
+	 */
 	public Likeable(int id) {
 		super(id);
 		this.vote = 0;
@@ -42,6 +68,14 @@ public abstract class Likeable extends Persistent {
 		this.created = new Date();
 	}
 
+	/**
+	 * Creates a Likeable object with the given information
+	 * @param id - the persistent ID
+	 * @param vote - the vote count
+	 * @param agrees - the agreement count
+	 * @param disagrees - the disagreement count
+	 * @param created - the date and time of creation
+	 */
 	public Likeable(int id, int vote, int agrees, int disagrees, Date created) {
 		super(id);
 		this.vote = 0;
@@ -92,26 +126,44 @@ public abstract class Likeable extends Persistent {
 		this.disagrees = disagrees;
 	}
 
+	/**
+	 * increments the vote by one
+	 */
 	public void incrementVote() {
 		this.vote++;
 	}
 
+	/**
+	 * decrements the vote by one
+	 */
 	public void decrementVote() {
 		this.vote--;
 	}
 
+	/**
+	 * increments the agreement count by one
+	 */
 	public void incrementAgree() {
 		this.agrees++;
 	}
 
+	/**
+	 * decrements the agreement count by one
+	 */
 	public void decrementAgree() {
 		this.agrees--;
 	}
 
+	/**
+	 * increments the disagreement count by one
+	 */
 	public void incrementDisagree() {
 		this.disagrees++;
 	}
 
+	/**
+	 * decrements the disagreement count by one
+	 */
 	public void decrementDisagree() {
 		this.disagrees--;
 	}
