@@ -2,6 +2,7 @@ package edu.uga.cs.persistence;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -328,14 +329,18 @@ public class DebateTopicManager {
 	 */
 	public ArrayList<DebateTopic> retrieve(ResultSet rs) throws MyThoughtsException {
 		try {
-			int id = -1, currentIndex = -1;
+			int id = -1, currentIndex = 0;
 			ArrayList<DebateTopic> dtList = new ArrayList<DebateTopic>();
+			HashMap<Integer, Integer> dtMap = new HashMap<Integer, Integer>();
 			VoteManager vm = new VoteManager(this.con);
 			while (rs.next()) {
-				if (id != rs.getInt(1)) {
+				id = rs.getInt(1);
+				if (!dtMap.containsKey(id)) {
+					dtMap.put(id, currentIndex);
+					
 					// Create Debate Topic
 					DebateTopic dt = new DebateTopic();
-					dt.setId(rs.getInt(1));
+					dt.setId(id);
 					dt.setTitle(rs.getString(2));
 					dt.setDescription(rs.getString(3));
 					dt.setCreatedDate(rs.getDate(4));
@@ -353,19 +358,28 @@ public class DebateTopicManager {
 					u.setModerator(rs.getBoolean(12));
 					u.setKarma(rs.getInt(13));
 					dt.setUser(u);
-
-					// Set ID and index
-					id = dt.getId();
-					currentIndex++;
-					dtList.add(dt);
-				} else {
+					
+					// Set DebateCategory
 					DebateCategory dc = new DebateCategory();
 					dc.setId(rs.getInt(14));
 					dc.setName(rs.getString(15));
 					dc.setDescription(rs.getString(16));
 					dc.setIcon(rs.getString(17));
 					dc.setColor(rs.getString(18));
-					dtList.set(currentIndex, dtList.get(currentIndex).addCategory(dc));
+					dt.addCategory(dc);
+
+					// Set index and add topic
+					currentIndex++;
+					dtList.add(dt);
+				} else {
+					int index = dtMap.get(id);
+					DebateCategory dc = new DebateCategory();
+					dc.setId(rs.getInt(14));
+					dc.setName(rs.getString(15));
+					dc.setDescription(rs.getString(16));
+					dc.setIcon(rs.getString(17));
+					dc.setColor(rs.getString(18));
+					dtList.set(index, dtList.get(index).addCategory(dc));
 				}
 			}
 			return dtList;
