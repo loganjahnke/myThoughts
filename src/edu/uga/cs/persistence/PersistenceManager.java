@@ -170,6 +170,10 @@ public class PersistenceManager {
 			dtm.removeCategory(topicId, categoryId);
 	}
 	
+	public ArrayList<DebateCategory> restoreAllUsableDebateCategories() throws MyThoughtsException {
+		return dcm.restoreUsable();
+	}
+	
 	/**
 	 * INSERTs a DebateCategory into the database
 	 * @param debateCategory - the category to INSERT

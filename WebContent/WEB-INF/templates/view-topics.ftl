@@ -61,7 +61,7 @@
                                 </#if>
                             </li>
                             <li>${topic.getCreatedDate()}</li>
-                            <#if nonadmin == false>
+                            <#if nonadmin == false || user.isModerator()>
                                 <#if !topic.containsCategory("Featured")>
                                     <li id="feature-${topic.getId()}"><button onclick="feature(${topic.getId()})" class="mt-button-tiny"><i class="fa fa-star"></i> Feature</button></li>
                                 <#else>

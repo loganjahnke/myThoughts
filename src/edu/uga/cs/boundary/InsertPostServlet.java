@@ -67,9 +67,7 @@ public class InsertPostServlet extends HttpServlet {
 
         // Get categories
 		try {
-            allCategories = mtc.getCategories();
-            DebateCategory recent = mtc.getCategory("Recent");
-            allCategories.remove(recent);
+            allCategories = mtc.getUsableCategories();
 		} catch (MyThoughtsException mte) {
 			MTError.error(processor, response, cfg, mte);
 			return;

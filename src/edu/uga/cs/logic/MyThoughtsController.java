@@ -44,4 +44,8 @@ public class MyThoughtsController {
 	public int saveTopic(DebateTopic dt) throws MyThoughtsException {
 		return pm.saveDebateTopic(dt);
 	}
+
+	public ArrayList<DebateCategory> getUsableCategories() throws MyThoughtsException {
+		return pm.restoreAllUsableDebateCategories();
+	}
 }

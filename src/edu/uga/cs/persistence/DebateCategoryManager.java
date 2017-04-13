@@ -138,6 +138,39 @@ public class DebateCategoryManager {
 		}
 		return dcList;
 	}
+	
+	/**
+	 * Attempts to restore all DebateCategory objects from the database
+	 * @return the DebateCategory objects
+	 * @throws MyThoughtsException
+	 */
+	public ArrayList<DebateCategory> restoreUsable() throws MyThoughtsException {
+		String select = "SELECT id, name, description, icon, color " +
+						"FROM debate_category";
+
+		ArrayList<DebateCategory> dcList = new ArrayList<DebateCategory>();
+
+		try {
+			Statement stmt = con.createStatement();
+			stmt.execute(select);
+			ResultSet rs = stmt.getResultSet();
+			while (rs.next()) {
+				DebateCategory dc = new DebateCategory();
+				dc.setId(rs.getInt(1));
+				dc.setName(rs.getString(2));
+				dc.setDescription(rs.getString(3));
+				dc.setIcon(rs.getString(4));
+				dc.setColor(rs.getString(5));
+				
+				if (dc.getName().equals("Recent") || dc.getName().equals("Featured") || dc.getName().equals("Trending")) {}
+				else
+					dcList.add(dc);
+			}
+		} catch (SQLException e) {
+			throw new MyThoughtsException("DebateCategoryManager.restore: failed to restore DebateCategory: " + e.getMessage());
+		}
+		return dcList;
+	}
 
 	/**
 	 * Attempts to DELETE a DebateCategory from the database
