@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 
 import edu.uga.cs.MyThoughtsException;
 import edu.uga.cs.object.*;
@@ -65,6 +66,43 @@ public class PersonManager {
 	}
 	
 	/**
+	 * SELECTs all the Users in the database so admins can
+	 * assign/unassign moderators
+	 * @return all Users
+	 * @throws MyThoughtsException
+	 */
+	public ArrayList<User> restoreUsers() throws MyThoughtsException {
+		String select = "SELECT id, firstname, lastname, username, email, created, isAdmin, isModerator, karma " +
+						"FROM person";
+
+		ArrayList<User> users = new ArrayList<User>();
+		
+		try {
+			Statement stmt = con.createStatement();
+			stmt.execute(select);
+			ResultSet rs = stmt.getResultSet();
+			while (rs.next()) {
+				if (!rs.getBoolean(7)) {
+					User u = new User();
+					u.setId(rs.getInt(1));
+					u.setFirstname(rs.getString(2));
+					u.setLastname(rs.getString(3));
+					u.setUsername(rs.getString(4));
+					u.setEmail(rs.getString(5));
+					u.setCreatedDate(rs.getDate(6));
+					u.setModerator(rs.getBoolean(8));
+					u.setKarma(rs.getInt(9));
+					users.add(u);
+				}
+			}
+		} catch (SQLException e) {
+			throw new MyThoughtsException("PersonManager.restoreUsers: failed to restore all Users: " + e.getMessage());
+		}
+		
+		return users;
+	}
+	
+	/**
 	 * Handles the INSERT or the UPDATE of a Person object
 	 * @param person - the person to INSERT or UPDATE
 	 * @return the ID of the person
@@ -101,6 +139,60 @@ public class PersonManager {
 					pstmt.setBoolean(6, false);
 					pstmt.setBoolean(7, ((User) person).isModerator());
 					pstmt.setInt(8, ((User) person).getKarma());
+				}
+
+				if (person.isPersistent())
+					pstmt.setInt(9, personID);
+
+				pstmt.executeUpdate();
+
+				if (!person.isPersistent()) {
+					ResultSet rs = pstmt.getGeneratedKeys();
+	                if(rs.next()) personID = rs.getInt(1);
+				}
+			}
+		} catch (SQLException e) {
+			throw new MyThoughtsException("PersonManager.save: failed to save Person: " + e.getMessage());
+		}
+		return personID;
+	}
+	
+	/**
+	 * Handles the INSERT or the UPDATE of a Person object
+	 * @param person - the person to INSERT or UPDATE
+	 * @return the ID of the person
+	 * @throws MyThoughtsException
+	 */
+	public int saveWithoutPassword(Person person) throws MyThoughtsException {
+		String insert = "INSERT into person " +
+					   	"(firstname, lastname, username, email, isAdmin, isModerator, karma) " +
+					   	"VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
+		String update = "UPDATE person " +
+					   	"SET firstname = ?, lastname = ?, username = ?, email = ?, isAdmin = ?, isModerator = ?, karma = ? " +
+					   	"WHERE id = ?";
+		PreparedStatement pstmt;
+		int personID = person.getId();
+
+		try {
+			if (person.isPersistent())
+				pstmt = con.prepareStatement(update);
+			else
+				pstmt = con.prepareStatement(insert, Statement.RETURN_GENERATED_KEYS);
+
+			if (person.passesNullTest()) {
+				pstmt.setString(1, person.getFirstname());
+				pstmt.setString(2, person.getLastname());
+				pstmt.setString(3, person.getUsername());
+				pstmt.setString(4, person.getEmail());
+
+				if (person instanceof Administrator) {
+					pstmt.setBoolean(5, true);
+					pstmt.setNull(6, 0);
+					pstmt.setNull(7, 0);
+				} else {
+					pstmt.setBoolean(5, false);
+					pstmt.setBoolean(6, ((User) person).isModerator());
+					pstmt.setInt(7, ((User) person).getKarma());
 				}
 
 				if (person.isPersistent())

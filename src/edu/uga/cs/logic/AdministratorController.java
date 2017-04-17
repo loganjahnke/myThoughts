@@ -1,6 +1,7 @@
 package edu.uga.cs.logic;
 
 import java.sql.Connection;
+import java.util.ArrayList;
 
 import edu.uga.cs.MyThoughtsException;
 import edu.uga.cs.object.*;
@@ -36,6 +37,19 @@ public class AdministratorController {
 		DebateTopic dt = new DebateTopic();
 		dt.setId(id);
 		pm.deleteDebateTopic(dt);
+	}
+
+	public ArrayList<User> getUsers() throws MyThoughtsException {
+		return pm.restoreAllUsers();
+	}
+
+	public boolean toggleModerator(int userId) throws MyThoughtsException {
+		User user = new User();
+		user.setId(userId);
+		user = (User) pm.restorePerson(user);
+		user.setModerator(!user.isModerator());
+		pm.savePersonWithoutPassword(user);
+		return user.isModerator();
 	}
 
 }

@@ -198,8 +198,6 @@ public abstract class Person extends Persistent {
 			return false;
 		if (this.email.length() == 0)
 			return false;
-		if (this.password.length() == 0)
-			return false;
 		return true;
 	}
 

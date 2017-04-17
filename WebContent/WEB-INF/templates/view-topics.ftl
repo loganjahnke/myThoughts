@@ -54,6 +54,10 @@
                                     <span class="no-background" id="upvote-${topic.getId()}"><a class="fake-link" onclick="upvote(${topic.getId()})"><i class="fa fa-caret-up"></i></a></span>
                                     <span id="count-${topic.getId()}">${topic.getVote()}</span>
                                     <span class="bold red no-background" id="downvote-${topic.getId()}"><a class="fake-link" onclick="downvote(${topic.getId()})"><i class="fa fa-caret-down"></i></a></span>
+                                <#elseif !visitor && !nonadmin>
+                                    <span class="no-background" id="upvote-${topic.getId()}"><a><i class="fa fa-caret-up"></i></a></span>
+                                    <span id="count-${topic.getId()}">${topic.getVote()}</span>
+                                    <span class="no-background" id="downvote-${topic.getId()}"><a><i class="fa fa-caret-down"></i></a></span>
                                 <#elseif !visitor>
                                     <span class="no-background" id="upvote-${topic.getId()}"><a class="fake-link" onclick="upvote(${topic.getId()})"><i class="fa fa-caret-up"></i></a></span>
                                     <span id="count-${topic.getId()}">${topic.getVote()}</span>

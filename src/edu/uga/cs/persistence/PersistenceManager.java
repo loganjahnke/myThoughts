@@ -63,6 +63,16 @@ public class PersistenceManager {
 	public int savePerson(Person person) throws MyThoughtsException {
 		return pm.save(person);
 	}
+	
+	/**
+	 * INSERTs a Person into the database
+	 * @param person - the Person to INSERT
+	 * @return the new person id
+	 * @throws MyThoughtsException
+	 */
+	public int savePersonWithoutPassword(Person person) throws MyThoughtsException {
+		return pm.saveWithoutPassword(person);
+	}
 
 	/**
 	 * SELECTs a Person from the database
@@ -92,6 +102,14 @@ public class PersistenceManager {
 	 */
 	public void deletePerson(Person person) throws MyThoughtsException {
 		pm.delete(person);
+	}
+	
+	/**
+	 * SELECTs all Users from the database
+	 * @return all Users
+	 */
+	public ArrayList<User> restoreAllUsers() throws MyThoughtsException {
+		return pm.restoreUsers();
 	}
 
 	// DEBATE TOPIC METHODS
