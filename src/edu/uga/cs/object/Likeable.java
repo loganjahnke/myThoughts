@@ -11,7 +11,7 @@ import java.util.Date;
  * 
  * @author loganjahnke
  */
-public abstract class Likeable extends Persistent {
+public abstract class Likeable extends Persistent implements Comparable<Likeable>  {
 
 	private int vote;
 	private int agrees;
@@ -181,5 +181,15 @@ public abstract class Likeable extends Persistent {
 	public void setCreatedDate(Date created) {
 		this.created = created;
 	}
+	
+	@Override
+    public int compareTo(Likeable l) {
+		if (l.vote > this.vote)
+			return 1;
+		else if (l.vote == this.vote)
+			return 0;
+		else
+			return -1;
+    }
 
 }
