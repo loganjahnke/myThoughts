@@ -1,0 +1,185 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project name="myThoughts" id="Project_14c923d8" template="Default" database="MySql" >
+	<schema name="myThoughts" catalogname="myThoughts" >
+		<table name="comment" >
+			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" unsigned="y" autoincrement="y" />
+			<column name="subject" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="argument" type="varchar" length="2047" decimal="0" jt="12" mandatory="y" />
+			<column name="created" type="datetime" length="19" decimal="0" jt="93" mandatory="y" >
+				<defo>CURRENT_TIMESTAMP</defo>
+			</column>
+			<column name="user_id" type="int" length="10" decimal="0" jt="4" mandatory="y" unsigned="y" />
+			<column name="topic_id" type="int" length="10" decimal="0" jt="4" mandatory="y" unsigned="y" />
+			<column name="parent_id" type="int" length="10" decimal="0" jt="4" unsigned="y" />
+			<index name="pk_comment" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="parent_id" unique="NORMAL" >
+				<column name="parent_id" />
+			</index>
+			<index name="topic_id" unique="NORMAL" >
+				<column name="topic_id" />
+			</index>
+			<index name="user_id" unique="NORMAL" >
+				<column name="user_id" />
+			</index>
+			<fk name="fk_comment" to_schema="myThoughts" to_table="person" >
+				<fk_column name="user_id" pk="id" />
+			</fk>
+			<fk name="fk_comment_0" to_schema="myThoughts" to_table="debate_topic" >
+				<fk_column name="topic_id" pk="id" />
+			</fk>
+			<fk name="fk_comment_1" to_schema="myThoughts" to_table="comment" >
+				<fk_column name="parent_id" pk="id" />
+			</fk>
+		</table>
+		<table name="comment_vote" >
+			<column name="user_id" type="int" length="10" decimal="0" jt="4" mandatory="y" unsigned="y" />
+			<column name="comment_id" type="int" length="10" decimal="0" jt="4" mandatory="y" unsigned="y" />
+			<column name="upvote" type="bit" decimal="0" jt="-7" mandatory="y" >
+				<defo>0</defo>
+			</column>
+			<column name="downvote" type="bit" decimal="0" jt="-7" mandatory="y" >
+				<defo>0</defo>
+			</column>
+			<column name="agrees" type="bit" decimal="0" jt="-7" mandatory="y" >
+				<defo>0</defo>
+			</column>
+			<column name="disagrees" type="bit" decimal="0" jt="-7" mandatory="y" >
+				<defo>0</defo>
+			</column>
+			<index name="pk_comment_vote" unique="PRIMARY_KEY" >
+				<column name="user_id" />
+				<column name="comment_id" />
+			</index>
+			<index name="comment_id" unique="NORMAL" >
+				<column name="comment_id" />
+			</index>
+			<index name="idx_comment_vote" unique="NORMAL" >
+				<column name="user_id" />
+			</index>
+			<fk name="fk_comment_vote" to_schema="myThoughts" to_table="person" >
+				<fk_column name="user_id" pk="id" />
+			</fk>
+			<fk name="fk_comment_vote_0" to_schema="myThoughts" to_table="comment" >
+				<fk_column name="comment_id" pk="id" />
+			</fk>
+		</table>
+		<table name="debate_category" >
+			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" unsigned="y" autoincrement="y" />
+			<column name="name" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="icon" type="varchar" length="50" decimal="0" jt="12" mandatory="y" />
+			<column name="color" type="varchar" length="30" decimal="0" jt="12" mandatory="y" />
+			<column name="description" type="varchar" length="511" decimal="0" jt="12" />
+			<index name="pk_debate_category" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="name" unique="UNIQUE" >
+				<column name="name" />
+			</index>
+		</table>
+		<table name="debate_topic" >
+			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" unsigned="y" autoincrement="y" />
+			<column name="title" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="description" type="varchar" length="1023" decimal="0" jt="12" />
+			<column name="created" type="datetime" length="19" decimal="0" jt="93" mandatory="y" >
+				<defo>CURRENT_TIMESTAMP</defo>
+			</column>
+			<column name="user_id" type="int" length="10" decimal="0" jt="4" mandatory="y" unsigned="y" />
+			<index name="pk_debate_topic" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="user_id" unique="NORMAL" >
+				<column name="user_id" />
+			</index>
+			<fk name="fk_debate_topic" to_schema="myThoughts" to_table="person" >
+				<fk_column name="user_id" pk="id" />
+			</fk>
+		</table>
+		<table name="person" >
+			<column name="id" type="int" length="10" decimal="0" jt="4" mandatory="y" unsigned="y" autoincrement="y" />
+			<column name="firstname" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="lastname" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="username" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="password" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="email" type="varchar" length="255" decimal="0" jt="12" mandatory="y" />
+			<column name="created" type="datetime" length="19" decimal="0" jt="93" mandatory="y" >
+				<defo>CURRENT_TIMESTAMP</defo>
+			</column>
+			<column name="isAdmin" type="bit" decimal="0" jt="-7" mandatory="y" />
+			<column name="isModerator" type="bit" decimal="0" jt="-7" />
+			<column name="karma" type="int" length="10" decimal="0" jt="4" />
+			<index name="pk_person" unique="PRIMARY_KEY" >
+				<column name="id" />
+			</index>
+			<index name="email" unique="UNIQUE" >
+				<column name="email" />
+			</index>
+			<index name="username" unique="UNIQUE" >
+				<column name="username" />
+			</index>
+		</table>
+		<table name="topic_category" >
+			<column name="category_id" type="int" length="10" decimal="0" jt="4" mandatory="y" unsigned="y" />
+			<column name="topic_id" type="int" length="10" decimal="0" jt="4" mandatory="y" unsigned="y" />
+			<index name="pk_topic_category" unique="PRIMARY_KEY" >
+				<column name="category_id" />
+				<column name="topic_id" />
+			</index>
+			<index name="topic_id" unique="NORMAL" >
+				<column name="topic_id" />
+			</index>
+			<index name="idx_topic_category" unique="NORMAL" >
+				<column name="category_id" />
+			</index>
+			<fk name="fk_topic_category" to_schema="myThoughts" to_table="debate_category" >
+				<fk_column name="category_id" pk="id" />
+			</fk>
+			<fk name="fk_topic_category_0" to_schema="myThoughts" to_table="debate_topic" >
+				<fk_column name="topic_id" pk="id" />
+			</fk>
+		</table>
+		<table name="topic_vote" >
+			<column name="user_id" type="int" length="10" decimal="0" jt="4" mandatory="y" unsigned="y" />
+			<column name="topic_id" type="int" length="10" decimal="0" jt="4" mandatory="y" unsigned="y" />
+			<column name="upvote" type="bit" decimal="0" jt="-7" mandatory="y" >
+				<defo>0</defo>
+			</column>
+			<column name="downvote" type="bit" decimal="0" jt="-7" mandatory="y" >
+				<defo>0</defo>
+			</column>
+			<column name="agrees" type="bit" decimal="0" jt="-7" mandatory="y" >
+				<defo>0</defo>
+			</column>
+			<column name="disagrees" type="bit" decimal="0" jt="-7" mandatory="y" >
+				<defo>0</defo>
+			</column>
+			<index name="pk_topic_vote" unique="PRIMARY_KEY" >
+				<column name="user_id" />
+				<column name="topic_id" />
+			</index>
+			<index name="topic_id" unique="NORMAL" >
+				<column name="topic_id" />
+			</index>
+			<index name="idx_topic_vote" unique="NORMAL" >
+				<column name="user_id" />
+			</index>
+			<fk name="fk_topic_vote" to_schema="myThoughts" to_table="person" >
+				<fk_column name="user_id" pk="id" />
+			</fk>
+			<fk name="fk_topic_vote_0" to_schema="myThoughts" to_table="debate_topic" >
+				<fk_column name="topic_id" pk="id" />
+			</fk>
+		</table>
+	</schema>
+	<connector name="myThoughts" database="MySql" driver_class="com.mysql.jdbc.Driver" driver_jar="mysql-connector-java-5.1.40-bin.jar" driver_desc="Standard" host="boundlessecho.com" port="3306" instance="myThoughts" user="team2" passwd="cmVhZHlUb0NvZGU5JA==" />
+	<layout name="Default Layout" id="Layout_f1302b8" joined_routing="y" show_relation="columns" >
+		<entity schema="myThoughts" name="topic_category" color="c8f5bf" x="464" y="240" />
+		<entity schema="myThoughts" name="person" color="c8f5bf" x="48" y="48" />
+		<entity schema="myThoughts" name="debate_category" color="bfd4f5" x="544" y="48" />
+		<entity schema="myThoughts" name="debate_topic" color="bfd4f5" x="336" y="48" />
+		<entity schema="myThoughts" name="topic_vote" color="c8f5bf" x="256" y="208" />
+		<entity schema="myThoughts" name="comment_vote" color="bfd4f5" x="336" y="400" />
+		<entity schema="myThoughts" name="comment" color="bfd4f5" x="64" y="320" />
+	</layout>
+</project>
