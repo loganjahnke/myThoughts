@@ -46,3 +46,11 @@ ul {
 a {
 	color: inherit;
 }
+
+.green-topic {
+    background: rgba(140, 198, 63, 0.4) !important;
+}
+
+.red-topic {
+    background: rgba(255, 0, 0, 0.4) !important;
+}

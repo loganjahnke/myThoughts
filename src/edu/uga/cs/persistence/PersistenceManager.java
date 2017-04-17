@@ -43,7 +43,7 @@ public class PersistenceManager {
 	public boolean isDuplicateEmail(String email) throws MyThoughtsException {
 		return pm.isDuplicateEmail(email);
 	}
-	
+
 	/**
 	 * Checks for a duplicate username in the database
 	 * @param username - the username to check
@@ -53,7 +53,7 @@ public class PersistenceManager {
 	public boolean isDuplicateUsername(String username) throws MyThoughtsException {
 		return pm.isDuplicateUsername(username);
 	}
-	
+
 	/**
 	 * INSERTs a Person into the database
 	 * @param person - the Person to INSERT
@@ -145,7 +145,7 @@ public class PersistenceManager {
 	public ArrayList<DebateTopic> restoreDebateTopic(Date date) throws MyThoughtsException {
 		return dtm.restoreAfter(date);
 	}
-	
+
 	/**
 	 * SELECTs all DebateTopics after a certain Date in ORDER BY votes
 	 * @param date - the date
@@ -182,7 +182,7 @@ public class PersistenceManager {
 			dtm.insertCategories(topicId, dcList);
 		}
 	}
-	
+
 	/**
 	 * DELETEs a topic and category relationship from the database
 	 * @param topicId - the topic id
@@ -193,9 +193,9 @@ public class PersistenceManager {
 		if (dtm.relationIsInDatabase(categoryId, topicId))
 			dtm.removeCategory(topicId, categoryId);
 	}
-	
+
 	/**
-	 * SELECTs all categories from the database that a User 
+	 * SELECTs all categories from the database that a User
 	 * can assign a topic to.
 	 * @return the list of categories
 	 * @throws MyThoughtsException
@@ -203,7 +203,7 @@ public class PersistenceManager {
 	public ArrayList<DebateCategory> restoreAllUsableDebateCategories() throws MyThoughtsException {
 		return dcm.restoreUsable();
 	}
-	
+
 	/**
 	 * INSERTs a DebateCategory into the database
 	 * @param debateCategory - the category to INSERT
@@ -310,8 +310,8 @@ public class PersistenceManager {
 	 * @param vote - the vote to cast
 	 * @throws MyThoughtsException
 	 */
-	public int castVote(User user, Comment comment, Boolean vote) throws MyThoughtsException {
-		return vm.vote(user, comment, vote);
+	public void castVote(User user, Comment comment, Boolean vote) throws MyThoughtsException {
+		vm.vote(user, comment, vote);
 	}
 
 	/**
@@ -321,8 +321,8 @@ public class PersistenceManager {
 	 * @param agree - the agree to cast
 	 * @throws MyThoughtsException
 	 */
-	public int castAgree(User user, Comment comment, Boolean agree) throws MyThoughtsException {
-		return vm.agree(user, comment, agree);
+	public void castAgree(User user, Comment comment, Boolean agree) throws MyThoughtsException {
+		vm.agree(user, comment, agree);
 	}
 
 	/**
@@ -332,8 +332,8 @@ public class PersistenceManager {
 	 * @param vote - the vote to cast
 	 * @throws MyThoughtsException
 	 */
-	public int castVote(User user, DebateTopic topic, Boolean vote) throws MyThoughtsException {
-		return vm.vote(user, topic, vote);
+	public void castVote(User user, DebateTopic topic, Boolean vote) throws MyThoughtsException {
+		vm.vote(user, topic, vote);
 	}
 
 	/**
@@ -343,8 +343,8 @@ public class PersistenceManager {
 	 * @param agree - the agree to cast
 	 * @throws MyThoughtsException
 	 */
-	public int castAgree(User user, DebateTopic topic, Boolean agree) throws MyThoughtsException {
-		return vm.agree(user, topic, agree);
+	public void castAgree(User user, DebateTopic topic, Boolean agree) throws MyThoughtsException {
+		vm.agree(user, topic, agree);
 	}
 
 }

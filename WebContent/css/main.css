@@ -114,6 +114,10 @@ body {
     cursor: pointer;
 }
 
+.fake-link {
+    cursor: pointer;
+}
+
 /*=====================
         Footer
 =======================*/

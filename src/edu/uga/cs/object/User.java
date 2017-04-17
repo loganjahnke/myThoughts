@@ -5,7 +5,7 @@ import java.util.HashMap;
 
 /**
  * A User can create DebateTopics and Comments.
- * 
+ *
  * @author loganjahnke
  */
 public class User extends Person {
@@ -48,7 +48,7 @@ public class User extends Person {
 	}
 
 	/**
-	 * 
+	 *
 	 * Creates a User given the following information
 	 * @param firstname - the first name
 	 * @param lastname - the last name
@@ -145,23 +145,37 @@ public class User extends Person {
 	}
 
 	/**
-	 * Adds a vote to a Likeable
+	 * Adds an upvote to a Likeable
 	 * @param object - the Likeable
-	 * @param vote - true is upvote, false is downvote
 	 */
-	public void addVote(Likeable object, Boolean vote) {
-		this.votes.put(object, vote);
+	public void addUpvote(Likeable object) {
+		this.votes.put(object, true);
+	}
+	
+	/**
+	 * Adds a downvote to a Likeable
+	 * @param object - the Likeable
+	 */
+	public void addDownvote(Likeable object) {
+		this.votes.put(object, false);
 	}
 
 	/**
-	 * Adds a agreement to a Likeable
+	 * Adds an agreement to a Likeable
 	 * @param object - the Likeable
-	 * @param agree - true is agree, false is disagree
 	 */
-	public void addAgree(Likeable object, Boolean agree) {
-		this.agrees.put(object, agree);
+	public void addAgree(Likeable object) {
+		this.agrees.put(object, true);
 	}
 	
+	/**
+	 * Adds a disagreement to a Likeable
+	 * @param object - the Likeable
+	 */
+	public void addDisagree(Likeable object) {
+		this.agrees.put(object, false);
+	}
+
 	/**
 	 * Checks to see if the User likes a Likeable
 	 * @param object - the Likeable
@@ -169,22 +183,26 @@ public class User extends Person {
 	 */
 	public boolean doesLike(Likeable object) {
 		if (object instanceof DebateTopic) {
-			DebateTopic dt = (DebateTopic) object;
-			System.out.println(getFirstname() + " might like " + dt.getTitle());
-			System.out.println("Does [votes] contain the object? " + (this.votes.containsKey(dt) ? "yes" : "no"));
-			if (this.votes.containsKey(dt) && this.votes.get(dt) == true) {
-				return true;
+			for (Likeable l : this.votes.keySet()) {
+				if (l instanceof DebateTopic) {
+					DebateTopic dt = (DebateTopic) l;
+					if (dt.getId() == object.getId())
+						return this.votes.get(l);
+				}
 			}
 		} else if (object instanceof Comment) {
-			Comment c = (Comment) object;
-			if (this.votes.containsKey(c) && this.votes.get(c) == true) {
-				return true;
+			for (Likeable l : this.votes.keySet()) {
+				if (l instanceof Comment) {
+					Comment dt = (Comment) l;
+					if (dt.getId() == object.getId())
+						return this.votes.get(l);
+				}
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * Checks to see if the User dislikes a Likeable
 	 * @param object - the Likeable
@@ -192,20 +210,26 @@ public class User extends Person {
 	 */
 	public boolean doesDislike(Likeable object) {
 		if (object instanceof DebateTopic) {
-			DebateTopic dt = (DebateTopic) object;
-			if (this.votes.containsKey(dt) && this.votes.get(dt) == false) {
-				return true;
+			for (Likeable l : this.votes.keySet()) {
+				if (l instanceof DebateTopic) {
+					DebateTopic dt = (DebateTopic) l;
+					if (dt.getId() == object.getId())
+						return !this.votes.get(l);
+				}
 			}
 		} else if (object instanceof Comment) {
-			Comment c = (Comment) object;
-			if (this.votes.containsKey(c) && this.votes.get(c) == false) {
-				return true;
+			for (Likeable l : this.votes.keySet()) {
+				if (l instanceof Comment) {
+					Comment dt = (Comment) l;
+					if (dt.getId() == object.getId())
+						return !this.votes.get(l);
+				}
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * Checks to see if the User agrees with a Likeable
 	 * @param object - the Likeable
@@ -213,20 +237,26 @@ public class User extends Person {
 	 */
 	public boolean doesAgree(Likeable object) {
 		if (object instanceof DebateTopic) {
-			DebateTopic dt = (DebateTopic) object;
-			if (this.agrees.containsKey(dt) && this.agrees.get(dt) == true) {
-				return true;
+			for (Likeable l : this.agrees.keySet()) {
+				if (l instanceof DebateTopic) {
+					DebateTopic dt = (DebateTopic) l;
+					if (dt.getId() == object.getId())
+						return this.agrees.get(l);
+				}
 			}
 		} else if (object instanceof Comment) {
-			Comment c = (Comment) object;
-			if (this.agrees.containsKey(c) && this.agrees.get(c) == true) {
-				return true;
+			for (Likeable l : this.agrees.keySet()) {
+				if (l instanceof Comment) {
+					Comment dt = (Comment) l;
+					if (dt.getId() == object.getId())
+						return this.agrees.get(l);
+				}
 			}
 		}
-		
+
 		return false;
 	}
-	
+
 	/**
 	 * Checks to see if the User disagrees with a Likeable
 	 * @param object - the Likeable
@@ -234,17 +264,23 @@ public class User extends Person {
 	 */
 	public boolean doesDisagree(Likeable object) {
 		if (object instanceof DebateTopic) {
-			DebateTopic dt = (DebateTopic) object;
-			if (this.agrees.containsKey(dt) && this.agrees.get(dt) == false) {
-				return true;
+			for (Likeable l : this.agrees.keySet()) {
+				if (l instanceof DebateTopic) {
+					DebateTopic dt = (DebateTopic) l;
+					if (dt.getId() == object.getId())
+						return !this.agrees.get(l);
+				}
 			}
 		} else if (object instanceof Comment) {
-			Comment c = (Comment) object;
-			if (this.agrees.containsKey(c) && this.agrees.get(c) == false) {
-				return true;
+			for (Likeable l : this.agrees.keySet()) {
+				if (l instanceof Comment) {
+					Comment dt = (Comment) l;
+					if (dt.getId() == object.getId())
+						return !this.agrees.get(l);
+				}
 			}
 		}
-		
+
 		return false;
 	}
 
