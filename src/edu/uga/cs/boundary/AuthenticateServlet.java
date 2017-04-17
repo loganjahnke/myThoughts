@@ -89,8 +89,12 @@ public class AuthenticateServlet extends HttpServlet {
 
 		    // Only push 7 featured categories
             categories = mtc.getCategories();
-            while (categories.size() > 7)
-        		categories.remove(ThreadLocalRandom.current().nextInt(0, categories.size()));
+            while (categories.size() > 7) {
+            	int ran = ThreadLocalRandom.current().nextInt(0, categories.size());
+            	if (categories.get(ran).getName().equals("Recent") || categories.get(ran).getName().equals("Featured") || categories.get(ran).getName().equals("Trending")) {}
+            	else
+            		categories.remove(ran);
+            }
 
         	dt = tlc.getMostRecentFeatured();
 		} catch (MyThoughtsException mte) {

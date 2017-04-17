@@ -70,14 +70,18 @@ public class ViewTopicsServlet extends HttpServlet {
         
         // Get topics
 		try {
-			if (categoryName != null && !categoryName.equals("Recent")) {
+			if (categoryName != null && categoryName.equals("Trending")) {
 				DebateCategory dc = mtc.getCategory(categoryName);
 				root.put("category", dc);
-	            topics = tlc.getTopics(dc);
+	            topics = tlc.getTrendingTopics();
         	} else if (categoryName != null && categoryName.equals("Recent")) {
         		DebateCategory dc = mtc.getCategory(categoryName);
 				root.put("category", dc);
 	            topics = tlc.getRecentTopics();
+        	} else if (categoryName != null) {
+        		DebateCategory dc = mtc.getCategory(categoryName);
+				root.put("category", dc);
+	            topics = tlc.getTopics(dc);
         	} else if (userName != null) {
 				User user = mtc.getUser(userName);
 	            topics = tlc.getTopics(user);

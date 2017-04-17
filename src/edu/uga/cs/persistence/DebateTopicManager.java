@@ -1,6 +1,7 @@
 package edu.uga.cs.persistence;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.sql.Connection;
@@ -280,6 +281,19 @@ public class DebateTopicManager {
 		} catch (SQLException e) {
 			throw new MyThoughtsException("DebateTopicManager.restore: failed to restore DebateTopic: " + e.getMessage());
 		}
+	}
+	
+	/**
+	 * Attempts to restore DebateTopics by a certain Date from the database
+	 * in order by vote count
+	 * @param date - the date to SELECT after
+	 * @return the DebateTopic object
+	 * @throws MyThoughtsException
+	 */
+	public ArrayList<DebateTopic> restoreTrendingAfter(Date date) throws MyThoughtsException {
+		ArrayList<DebateTopic> dtList = restoreAfter(date);
+		Collections.sort(dtList);
+		return dtList;
 	}
 
 	/**

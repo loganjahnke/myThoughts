@@ -47,4 +47,16 @@ public class TopicListController {
 			return new DebateTopic();
 	}
 
+	public ArrayList<DebateTopic> getTrendingTopics() throws MyThoughtsException {
+		long DAY_IN_MS = 1000 * 60 * 60 * 24;
+		Date date = new Date(System.currentTimeMillis() - (7 * DAY_IN_MS));
+		return pm.restoreTrendingDebateTopic(date);
+	}
+	
+	public DebateTopic getTopic(int id) throws MyThoughtsException {
+		DebateTopic dt = new DebateTopic();
+		dt.setId(id);
+		return pm.restoreDebateTopic(dt);
+	}
+
 }

@@ -145,6 +145,16 @@ public class PersistenceManager {
 	public ArrayList<DebateTopic> restoreDebateTopic(Date date) throws MyThoughtsException {
 		return dtm.restoreAfter(date);
 	}
+	
+	/**
+	 * SELECTs all DebateTopics after a certain Date in ORDER BY votes
+	 * @param date - the date
+	 * @return all DebateTopics in an ArrayList
+	 * @throws MyThoughtsException
+	 */
+	public ArrayList<DebateTopic> restoreTrendingDebateTopic(Date date) throws MyThoughtsException {
+		return dtm.restoreTrendingAfter(date);
+	}
 
 	/**
 	 * DELETEs a DebateTopic from the database
@@ -300,10 +310,8 @@ public class PersistenceManager {
 	 * @param vote - the vote to cast
 	 * @throws MyThoughtsException
 	 */
-	public User castVote(User user, Comment comment, Boolean vote) throws MyThoughtsException {
-		vm.vote(user, comment, vote);
-		user.addVote(comment, vote);
-		return user;
+	public int castVote(User user, Comment comment, Boolean vote) throws MyThoughtsException {
+		return vm.vote(user, comment, vote);
 	}
 
 	/**
@@ -313,10 +321,8 @@ public class PersistenceManager {
 	 * @param agree - the agree to cast
 	 * @throws MyThoughtsException
 	 */
-	public User castAgree(User user, Comment comment, Boolean agree) throws MyThoughtsException {
-		vm.agree(user, comment, agree);
-		user.addAgree(comment, agree);
-		return user;
+	public int castAgree(User user, Comment comment, Boolean agree) throws MyThoughtsException {
+		return vm.agree(user, comment, agree);
 	}
 
 	/**
@@ -326,10 +332,8 @@ public class PersistenceManager {
 	 * @param vote - the vote to cast
 	 * @throws MyThoughtsException
 	 */
-	public User castVote(User user, DebateTopic topic, Boolean vote) throws MyThoughtsException {
-		vm.vote(user, topic, vote);
-		user.addVote(topic, vote);
-		return user;
+	public int castVote(User user, DebateTopic topic, Boolean vote) throws MyThoughtsException {
+		return vm.vote(user, topic, vote);
 	}
 
 	/**
@@ -339,10 +343,8 @@ public class PersistenceManager {
 	 * @param agree - the agree to cast
 	 * @throws MyThoughtsException
 	 */
-	public User castAgree(User user, DebateTopic topic, Boolean agree) throws MyThoughtsException {
-		vm.agree(user, topic, agree);
-		user.addAgree(topic, agree);
-		return user;
+	public int castAgree(User user, DebateTopic topic, Boolean agree) throws MyThoughtsException {
+		return vm.agree(user, topic, agree);
 	}
 
 }

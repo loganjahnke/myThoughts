@@ -77,7 +77,7 @@ public class VoteManager {
 	 * @param upvote - if true, upvote - if false, downvote
 	 * @throws MyThoughtsException
 	 */
-	public void vote(Person person, Comment comment, boolean upvote) throws MyThoughtsException {
+	public int vote(Person person, Comment comment, boolean upvote) throws MyThoughtsException {
 		String insert = "INSERT into comment_vote " +
 					   	"(user_id, comment_id, upvote, downvote) " +
 					   	"VALUES (?, ?, ?, ?)";
@@ -86,6 +86,7 @@ public class VoteManager {
 					   	"WHERE user_id = ? AND comment_id = ?";
 		PreparedStatement pstmt;
 		PersistenceManager pm = new PersistenceManager(this.con);
+		int v = -1;
 
 		try {
 			if (!person.isPersistent())
@@ -102,6 +103,7 @@ public class VoteManager {
 				pstmt.setBoolean(2, !upvote);
 				pstmt.setInt(3, person.getId());
 				pstmt.setInt(4, comment.getId());
+				v = 1;
 			}
 			else {
 				pstmt = con.prepareStatement(insert);
@@ -109,12 +111,14 @@ public class VoteManager {
 				pstmt.setInt(2, comment.getId());
 				pstmt.setBoolean(3, upvote);
 				pstmt.setBoolean(4, !upvote);
+				v = 0;
 			}
 
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new MyThoughtsException("VoteManager.save: failed to save Vote: " + e.getMessage());
 		}
+		return v;
 	}
 
 	/**
@@ -124,7 +128,7 @@ public class VoteManager {
 	 * @param upvote - if true, upvote - if false, downvote
 	 * @throws MyThoughtsException
 	 */
-	public void vote(Person person, DebateTopic topic, boolean upvote) throws MyThoughtsException {
+	public int vote(Person person, DebateTopic topic, boolean upvote) throws MyThoughtsException {
 		String insert = "INSERT into topic_vote " +
 					   	"(user_id, topic_id, upvote, downvote) " +
 					   	"VALUES (?, ?, ?, ?)";
@@ -133,6 +137,7 @@ public class VoteManager {
 					   	"WHERE user_id = ? AND topic_id = ?";
 		PreparedStatement pstmt;
 		PersistenceManager pm = new PersistenceManager(this.con);
+		int v = -1;
 
 		try {
 			if (!person.isPersistent())
@@ -149,19 +154,22 @@ public class VoteManager {
 				pstmt.setBoolean(2, !upvote);
 				pstmt.setInt(3, person.getId());
 				pstmt.setInt(4, topic.getId());
+				v = 1;
 			}
 			else {
 				pstmt = con.prepareStatement(insert);
 				pstmt.setInt(1, person.getId());
 				pstmt.setInt(2, topic.getId());
 				pstmt.setBoolean(3, upvote);
-				pstmt.setBoolean(4, !upvote);
+				pstmt.setBoolean(4, !upvote); 
+				v = 0;
 			}
 
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new MyThoughtsException("VoteManager.save: failed to save Vote: " + e.getMessage());
 		}
+		return v;
 	}
 
 	/**
@@ -171,7 +179,7 @@ public class VoteManager {
 	 * @param agree - if true, agree - if false, disagree
 	 * @throws MyThoughtsException
 	 */
-	public void agree(Person person, Comment comment, boolean agrees) throws MyThoughtsException {
+	public int agree(Person person, Comment comment, boolean agrees) throws MyThoughtsException {
 		String insert = "INSERT into comment_vote " +
 					   	"(user_id, comment_id, agrees, disagrees) " +
 					   	"VALUES (?, ?, ?, ?)";
@@ -180,6 +188,7 @@ public class VoteManager {
 					   	"WHERE user_id = ? AND comment_id = ?";
 		PreparedStatement pstmt;
 		PersistenceManager pm = new PersistenceManager(this.con);
+		int v = -1;
 
 		try {
 			if (!person.isPersistent())
@@ -196,6 +205,7 @@ public class VoteManager {
 				pstmt.setBoolean(2, !agrees);
 				pstmt.setInt(3, person.getId());
 				pstmt.setInt(4, comment.getId());
+				v = 1;
 			}
 			else {
 				pstmt = con.prepareStatement(insert);
@@ -203,12 +213,14 @@ public class VoteManager {
 				pstmt.setInt(2, comment.getId());
 				pstmt.setBoolean(3, agrees);
 				pstmt.setBoolean(4, !agrees);
+				v = 0;
 			}
 
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new MyThoughtsException("VoteManager.save: failed to save Vote: " + e.getMessage());
 		}
+		return v;
 	}
 
 	/**
@@ -218,7 +230,7 @@ public class VoteManager {
 	 * @param agrees - if true, agree - if false, disagree
 	 * @throws MyThoughtsException
 	 */
-	public void agree(Person person, DebateTopic topic, boolean agrees) throws MyThoughtsException {
+	public int agree(Person person, DebateTopic topic, boolean agrees) throws MyThoughtsException {
 		String insert = "INSERT into topic_vote " +
 					   	"(user_id, topic_id, agrees, disagrees) " +
 					   	"VALUES (?, ?, ?, ?)";
@@ -227,6 +239,7 @@ public class VoteManager {
 					   	"WHERE user_id = ? AND topic_id = ?";
 		PreparedStatement pstmt;
 		PersistenceManager pm = new PersistenceManager(this.con);
+		int v = -1;
 
 		try {
 			if (!person.isPersistent())
@@ -243,6 +256,7 @@ public class VoteManager {
 				pstmt.setBoolean(2, !agrees);
 				pstmt.setInt(3, person.getId());
 				pstmt.setInt(4, topic.getId());
+				v = -1;
 			}
 			else {
 				pstmt = con.prepareStatement(insert);
@@ -250,12 +264,14 @@ public class VoteManager {
 				pstmt.setInt(2, topic.getId());
 				pstmt.setBoolean(3, agrees);
 				pstmt.setBoolean(4, !agrees);
+				v = 0;
 			}
 
 			pstmt.executeUpdate();
 		} catch (SQLException e) {
 			throw new MyThoughtsException("VoteManager.save: failed to save Vote: " + e.getMessage());
 		}
+		return v;
 	}
 
 	/**

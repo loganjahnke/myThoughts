@@ -16,7 +16,6 @@ import edu.uga.cs.logic.*;
 import edu.uga.cs.object.DebateCategory;
 import edu.uga.cs.object.DebateTopic;
 import edu.uga.cs.object.User;
-import edu.uga.cs.object.UserID;
 import edu.uga.cs.session.Session;
 import edu.uga.cs.session.SessionManager;
 import freemarker.template.Configuration;
@@ -30,7 +29,6 @@ public class InsertPostServlet extends HttpServlet {
 	private String templateDir = "/WEB-INF/templates";
 	private TemplateProcessor processor;
 	private Configuration cfg;
-	UserID user, cat, topic;
 
 	public InsertPostServlet() {
 		super();
