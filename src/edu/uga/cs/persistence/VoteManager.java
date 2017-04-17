@@ -149,7 +149,6 @@ public class VoteManager {
 				pstmt.setBoolean(2, !upvote);
 				pstmt.setInt(3, person.getId());
 				pstmt.setInt(4, topic.getId());
-				System.out.println("UPDATE: " + person.getFirstname() + " is " + (upvote ? "upvoting" : "downvoting") + " topic " + topic.getId());
 			}
 			else {
 				pstmt = con.prepareStatement(insert);
@@ -157,7 +156,6 @@ public class VoteManager {
 				pstmt.setInt(2, topic.getId());
 				pstmt.setBoolean(3, upvote);
 				pstmt.setBoolean(4, !upvote);
-				System.out.println("INSERT: " + person.getFirstname() + " is " + (upvote ? "upvoting" : "downvoting") + " topic " + topic.getId());
 			}
 
 			pstmt.executeUpdate();

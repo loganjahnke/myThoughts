@@ -8,7 +8,7 @@
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,400,700,900" rel="stylesheet">
     <link rel="stylesheet" href="css/font-awesome.min.css">
     <link rel="stylesheet" href="css/main.css">
-    <link rel="stylesheet" href="myThoughts.css">
+    <link rel="stylesheet" href="css/landing.css">
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/modal.css">
     <!-- Scripts -->
@@ -35,7 +35,7 @@
             <ul>
                 <li class="search">
                     <a class="fa-search" href="#search">Search</a>
-                    <form id="search" method="get" action="#">
+                    <form id="search" method="GET" action="search">
                         <input type="text" name="query" placeholder="Search" />
                     </form>
                 </li>
@@ -44,35 +44,40 @@
     </header>
     <div id="topicsMenu">
         <ul>
-            <li class="blue"><a href="">Politics</a></li>
-            <li class="green"><a href="">Environmental</a></li>
-            <li class="red"><a href="">Religion</a></li>
+            <li class="blue"><a href="categories?name=Politics">Politics</a></li>
+            <li class="green"><a href="categories?name=Environmental">Environmental</a></li>
+            <li class="red"><a href="categories?name=Religion">Religion</a></li>
             <li class="grey"><a href="categories">Categories</a></li>
-            <li class="red"><a href="">Recent</a></li>
-            <li class="green"><a href="">Featured</a></li>
-            <li class="blue"><a href="">Trending</a></li>
+            <li class="red"><a href="categories?name=Recent">Recent</a></li>
+            <li class="green"><a href="categories?name=Featured">Featured</a></li>
+            <li class="blue"><a href="categories?name=Trending">Trending</a></li>
         </ul>
     </div>
-    <div id="debate">
-        <h1 class= "welcome"> Welcome to my<b>Thoughts</b></h1>
-    </div>
-    <div id="wrapper">
-        <p>
-            What is <span class="bold"> myThoughts</span>
-        </p>
-        <div id="yourOpinions">
-            <img class="clipart" src="http://www.clipartbest.com/cliparts/4ib/6nB/4ib6nB79T.png" />
-            <p><br/>your<b>Opinions</b> <br/><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </div>
-        <div id="ourModeration">
-            <img class="clipart" src="https://img.clipartfest.com/00923b3316ae11d903d8344caa3a5ce4_available-as-a-print-magnifying-glass-clipart-black-and-white_170-170.jpeg" />
-            <p><br/>our<b>Moderation</b> <br/><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </div>
-        <div id="allDebate">
-            <img class="clipart" src="https://maxcdn.icons8.com/Share/icon/Mobile//sms1600.png" />
-            <p> <br/>all<b>Debate</b> <br/><br/>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
-        </div>
-    </div>
+    <div id="debate"></div>
+    <h1 id="welcome">Welcome to <span class="thin">my</span><span class="bold">Thoughts</span></h1>
+    <ul id="category-list">
+        <li>
+            <a class="fake-link">
+                <i class="fa fa-user-circle red"></i>
+                <h3><span class="thin">your</span><span class="bold">Opinions</span></h3>
+            </a>
+            <p>Every person has their own unique outlook the world, informed by their experiences, personality, and desires. Here at myThoughts, we believe that every individual has a right to express that opinion. We all have something to contribute to the conversation and something to learn from each other. Remember to respect other people’s opinions as you would have them respect yours.</p>
+        </li>
+        <li>
+            <a class="fake-link">
+                <i class="fa fa-search blue"></i>
+                <h3><span class="thin">our</span><span class="bold">Moderation</span></h3>
+            </a>
+            <p>We all want to be right and defend our points of view. While passionate debate is encouraged, however, arguments should not spiral into ad hominem attacks and unproductive squabbling. We the administrators of myThoughts, in order to protect the integrity of this forum and the security of our users, reserve the right to manage and moderate all debate, including the removal of offensive posts and comments.</p>
+        </li>
+        <li>
+            <a class="fake-link">
+                <i class="fa fa-gavel green"></i>
+                <h3><span class="thin">all</span><span class="bold">Debate</span></h3>
+            </a>
+            <p>myThoughts will not discriminate among topics. We believe that knowledge and discourse is valuable on all levels, from “Which Star Wars movie is the best?” to “How can the US take a firm stand against the Syrian government without risking armed conflict with Russia?” Feel free to post any topic that crosses your mind, and you may find that someone else is anxious to engage.</p>
+        </li>
+    </ul>
     <!-- Login and Register Popup -->
     <div id="modal" class="popupContainer" style="display:none;">
         <header class="popupHeader blue no-background">
@@ -90,9 +95,9 @@
             <!-- Username & Password Login form -->
             <div class="user_login">
                 <form name="login_form" method="POST" action="home">
-                    <input type="text" placeholder="username" name="username" />
+                    <input id="username-login" type="text" placeholder="username" name="username" />
                     <br />
-                    <input type="password" placeholder="password" name="password" />
+                    <input id="password-login" type="password" placeholder="password" name="password" />
                     <br />
                     <div class="action_btns">
                         <div class="one_half"><a href="#" class="btn back_btn gray"><i class="fa fa-angle-double-left"></i> Back</a></div>
@@ -100,6 +105,7 @@
                     </div>
                 </form>
                 <a href="#" class="forgot_password thin">Forgot password?</a>
+                <a id="error-login" href="#" class="error-message thin"></a>
             </div>
             <!-- Register Form -->
             <div class="user_register">
@@ -108,9 +114,9 @@
                     <br />
                     <input type="text" placeholder="last name" name="lastname" />
                     <br />
-                    <input type="email" placeholder="email" name="email" />
+                    <input id="email-register" type="email" placeholder="email" name="email" />
                     <br />
-                    <input type="text" placeholder="username" name="username" />
+                    <input id="username-register" type="text" placeholder="username" name="username" />
                     <br />
                     <input type="password" placeholder="password" name="password" />
                     <br />
@@ -119,6 +125,7 @@
                         <div class="one_half last"><a id="register_button" href="#" class="btn green">Register</a></div>
                     </div>
                 </form>
+                <a id="error-register" href="#" class="error-message thin"></a>
             </div>
         </section>
     </div>

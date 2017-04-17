@@ -175,6 +175,16 @@ public class PersistenceManager {
 	}
 
 	/**
+	 * SELECTs all DebateTopics from a given search query
+	 * @param query - the seach query
+	 * @return all DebateTopics in an ArrayList
+	 * @throws MyThoughtsException
+	 */
+	public ArrayList<DebateTopic> restoreDebateTopicsContaining(String query) throws MyThoughtsException {
+		return dtm.restoreContaining(query);
+	}
+	
+	/**
 	 * DELETEs a DebateTopic from the database
 	 * @param debateTopic - the debateTopic to delete
 	 * @throws MyThoughtsException

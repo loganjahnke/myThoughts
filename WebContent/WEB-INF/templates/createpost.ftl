@@ -16,7 +16,7 @@
     <body>
         <#include "include/header.ftl">
         <div id="content">
-            <form action="create-topic" method="POST">
+            <form id="create" action="create-topic" method="POST">
                 <h2>Create Debate Topic</h2>
                 <input class ="input1" type="text" placeholder="Title" name="debateTitle"><br />
                 <textarea name="debateDescription" placeholder="Description"></textarea><br />

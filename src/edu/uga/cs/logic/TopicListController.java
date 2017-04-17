@@ -59,4 +59,8 @@ public class TopicListController {
 		return pm.restoreDebateTopic(dt);
 	}
 
+	public ArrayList<DebateTopic> getTopicsContaining(String query) throws MyThoughtsException {
+		return pm.restoreDebateTopicsContaining(query);
+	}
+
 }

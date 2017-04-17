@@ -26,7 +26,7 @@
         <ul>
             <li class="search">
                 <a class="fa-search" href="#search">Search</a>
-                <form id="search" method="get" action="#">
+                <form id="search" method="GET" action="search">
                     <input type="text" name="query" placeholder="Search" />
                 </form>
             </li>

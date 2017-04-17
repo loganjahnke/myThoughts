@@ -333,6 +333,38 @@ public class DebateTopicManager {
 			throw new MyThoughtsException("DebateTopicManager.restore: failed to restore DebateTopic: " + e.getMessage());
 		}
 	}
+	
+	/**
+	 * Attempts to restore DebateTopics by a certain search query
+	 * @param debateCategory - the DebateCategory to SELECT from
+	 * @return the DebateTopic object
+	 * @throws MyThoughtsException
+	 */
+	public ArrayList<DebateTopic> restoreContaining(String query) throws MyThoughtsException {
+		String select = "SELECT dt.id, dt.title, dt.description, dt.created, " + // 1, 2, 3, 4
+				"p.id, p.firstname, p.lastname, p.username, p.password, p.email, p.created, p.isModerator, p.karma, " + // 5, 6, 7, 8, 9, 10, 11, 12, 13
+				"dc.id, dc.name, dc.description, dc.icon, dc.color " + // 14, 15, 16
+				"FROM debate_topic dt " +
+				"JOIN person p " +
+					"ON dt.user_id = p.id " +
+				"JOIN topic_category tc " +
+					"ON dt.id = tc.topic_id " +
+				"JOIN debate_category dc " +
+					"ON tc.category_id = dc.id " +
+				"WHERE";
+
+				select += " dt.title LIKE \"%" + query + "%\"";
+				select += " OR dt.description LIKE \"%" + query + "%\"";
+				
+				try {
+					Statement stmt = con.createStatement();
+					stmt.execute(select);
+					ResultSet rs = stmt.getResultSet();
+					return retrieve(rs);
+				} catch (SQLException e) {
+					throw new MyThoughtsException("DebateTopicManager.restore: failed to restore DebateTopic: " + e.getMessage());
+				}
+	}
 
 	/**
 	 * Acquires all DebateTopics from a given ResultSet

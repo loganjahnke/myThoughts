@@ -35,7 +35,7 @@
             <ul>
                 <li class="search">
                     <a class="fa-search" href="#search">Search</a>
-                    <form id="search" method="get" action="#">
+                    <form id="search" method="GET" action="search">
                         <input type="text" name="query" placeholder="Search" />
                     </form>
                 </li>
@@ -44,38 +44,40 @@
     </header>
     <div id="topicsMenu">
         <ul>
-            <li class="blue"><a href="">Politics</a></li>
-            <li class="green"><a href="">Environmental</a></li>
-            <li class="red"><a href="">Religion</a></li>
-            <li class="grey"><a href="categories.html">Categories</a></li>
-            <li class="red"><a href="">Recent</a></li>
-            <li class="green"><a href="">Featured</a></li>
-            <li class="blue"><a href="">Trending</a></li>
+            <li class="blue"><a href="categories?name=Politics">Politics</a></li>
+            <li class="green"><a href="categories?name=Environmental">Environmental</a></li>
+            <li class="red"><a href="categories?name=Religion">Religion</a></li>
+            <li class="grey"><a href="categories">Categories</a></li>
+            <li class="red"><a href="categories?name=Recent">Recent</a></li>
+            <li class="green"><a href="categories?name=Featured">Featured</a></li>
+            <li class="blue"><a href="categories?name=Trending">Trending</a></li>
         </ul>
     </div>
-    <div id="debate">
-        <h1 class= "welcome"> Welcome to my<b>Thoughts</b></h1>
-    </div>
-    <div id="wrapper">
-        <p>
-            What is <span class="bold"> myThoughts</span>
-        </p>
-        <div id="yourOpinions">
-            <img class="clipart" src="http://www.clipartbest.com/cliparts/4ib/6nB/4ib6nB79T.png" />
-            <p><br/>your<b>Opinions</b> <br/><br/>Every person has their own unique outlook the world, informed by their experiences, personality, and desires. Here at myThoughts, we believe that every individual has a right to express that opinion. We all have something to contribute to the conversation and something to learn from each other. Remember to respect other people’s opinions as you would have them respect yours.
-             </p>
-        </div>
-        <div id="ourModeration">
-            <img class="clipart" src="https://img.clipartfest.com/00923b3316ae11d903d8344caa3a5ce4_available-as-a-print-magnifying-glass-clipart-black-and-white_170-170.jpeg" />
-            <p><br/>our<b>Moderation</b> <br/><br/>We all want to be right and defend our points of view. While passionate debate is encouraged, however, arguments should not spiral into ad hominem attacks and unproductive squabbling. We the administrators of myThoughts, in order to protect the integrity of this forum and the security of our users, reserve the right to manage and moderate all debate, including the removal of offensive posts and comments.
-            </p>
-        </div>
-        <div id="allDebate">
-            <img class="clipart" src="https://maxcdn.icons8.com/Share/icon/Mobile//sms1600.png" />
-            <p> <br/>all<b>Debate</b> <br/><br/>myThoughts will not discriminate among topics. We believe that knowledge and discourse is valuable on all levels, from “Which Star Wars movie is the best?” to “How can the US take a firm stand against the Syrian government without risking armed conflict with Russia?” Feel free to post any topic that crosses your mind, and you may find that someone else is anxious to engage.
-            </p>
-        </div>
-    </div>
+    <div id="debate"></div>
+    <h1 id="welcome">Welcome to <span class="thin">my</span><span class="bold">Thoughts</span></h1>
+    <ul id="category-list">
+        <li>
+            <a class="fake-link">
+                <i class="fa fa-user-circle red"></i>
+                <h3><span class="thin">your</span><span class="bold">Opinions</span></h3>
+            </a>
+            <p>Every person has their own unique outlook the world, informed by their experiences, personality, and desires. Here at myThoughts, we believe that every individual has a right to express that opinion. We all have something to contribute to the conversation and something to learn from each other. Remember to respect other people’s opinions as you would have them respect yours.</p>
+        </li>
+        <li>
+            <a class="fake-link">
+                <i class="fa fa-search blue"></i>
+                <h3><span class="thin">our</span><span class="bold">Moderation</span></h3>
+            </a>
+            <p>We all want to be right and defend our points of view. While passionate debate is encouraged, however, arguments should not spiral into ad hominem attacks and unproductive squabbling. We the administrators of myThoughts, in order to protect the integrity of this forum and the security of our users, reserve the right to manage and moderate all debate, including the removal of offensive posts and comments.</p>
+        </li>
+        <li>
+            <a class="fake-link">
+                <i class="fa fa-gavel green"></i>
+                <h3><span class="thin">all</span><span class="bold">Debate</span></h3>
+            </a>
+            <p>myThoughts will not discriminate among topics. We believe that knowledge and discourse is valuable on all levels, from “Which Star Wars movie is the best?” to “How can the US take a firm stand against the Syrian government without risking armed conflict with Russia?” Feel free to post any topic that crosses your mind, and you may find that someone else is anxious to engage.</p>
+        </li>
+    </ul>
     <!-- Login and Register Popup -->
     <div id="modal" class="popupContainer" style="display:none;">
         <header class="popupHeader blue no-background">
