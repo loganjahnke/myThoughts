@@ -156,13 +156,9 @@ public class Comment extends Likeable {
 	 * @return
 	 */
 	public boolean doesAgreeWithTopic(int debateTopicId) {
-		for (Likeable l : this.user.agrees.keySet()) {
-				if (l instanceof DebateTopic) {
-					DebateTopic dt = (DebateTopic) l;
-					if (dt.getId() == debateTopicId)
-						return this.agrees.get(l);
-				}
-			}
+		if (this.user.getTopicAgrees().containsKey(debateTopicId))
+			return this.user.getTopicAgrees().get(debateTopicId);
+		return false;
 	}
 
 	/**

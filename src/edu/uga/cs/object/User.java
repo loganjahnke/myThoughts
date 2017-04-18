@@ -12,8 +12,10 @@ public class User extends Person {
 
 	private boolean isModerator;
 	private int karma;
-	private HashMap<Likeable, Boolean> votes;
-	private HashMap<Likeable, Boolean> agrees;
+	private HashMap<Integer, Boolean> topicVotes;
+	private HashMap<Integer, Boolean> topicAgrees;
+	private HashMap<Integer, Boolean> commentVotes;
+	private HashMap<Integer, Boolean> commentAgrees;
 
 	/**
 	 * Convenience Constructor
@@ -22,8 +24,10 @@ public class User extends Person {
 		super();
 		this.isModerator = false;
 		this.karma = 0;
-		this.setLikes(new HashMap<Likeable, Boolean>());
-		this.setAgrees(new HashMap<Likeable, Boolean>());
+		this.topicVotes = new HashMap<Integer, Boolean>();
+		this.topicAgrees = new HashMap<Integer, Boolean>();
+		this.commentVotes = new HashMap<Integer, Boolean>();
+		this.commentAgrees = new HashMap<Integer, Boolean>();
 	}
 
 	/**
@@ -35,16 +39,14 @@ public class User extends Person {
 	 * @param isModerator - is moderator or not
 	 * @param karma - the karma score
 	 */
-	public User(String firstname, String lastname, String username, String password, String email, boolean isModerator, int karma, Date created, HashMap<Likeable, Boolean> votes, HashMap<Likeable, Boolean> agrees) {
+	public User(String firstname, String lastname, String username, String password, String email, boolean isModerator, int karma, Date created) {
 		super(firstname, lastname, username, password, email, created);
 		this.isModerator = isModerator;
 		this.karma = karma;
-		if (votes == null)
-			votes = new HashMap<Likeable, Boolean>();
-		this.setLikes(votes);
-		if (agrees == null)
-			agrees = new HashMap<Likeable, Boolean>();
-		this.setAgrees(agrees);
+		this.topicVotes = new HashMap<Integer, Boolean>();
+		this.topicAgrees = new HashMap<Integer, Boolean>();
+		this.commentVotes = new HashMap<Integer, Boolean>();
+		this.commentAgrees = new HashMap<Integer, Boolean>();
 	}
 
 	/**
@@ -56,19 +58,17 @@ public class User extends Person {
 	 * @param email - the email address
 	 * @param isModerator - is moderator or not
 	 * @param karma - the karma score
-	 * @param votes - HashMap of vote choice to Likeable objects
-	 * @param agrees - HashMap of agreement/disagreement to Likeable objects
+	 * @param votes - HashMap of vote choice to Integer objects
+	 * @param agrees - HashMap of agreement/disagreement to Integer objects
 	 */
-	public User(String firstname, String lastname, String username, String password, String email, boolean isModerator, int karma, HashMap<Likeable, Boolean> votes, HashMap<Likeable, Boolean> agrees) {
+	public User(String firstname, String lastname, String username, String password, String email, boolean isModerator, int karma) {
 		super(firstname, lastname, username, password, email);
 		this.isModerator = isModerator;
 		this.karma = karma;
-		if (votes == null)
-			votes = new HashMap<Likeable, Boolean>();
-		this.setLikes(votes);
-		if (agrees == null)
-			agrees = new HashMap<Likeable, Boolean>();
-		this.setAgrees(agrees);
+		this.topicVotes = new HashMap<Integer, Boolean>();
+		this.topicAgrees = new HashMap<Integer, Boolean>();
+		this.commentVotes = new HashMap<Integer, Boolean>();
+		this.commentAgrees = new HashMap<Integer, Boolean>();
 	}
 
 	/**
@@ -82,10 +82,10 @@ public class User extends Person {
 		super(firstname, lastname, username, password, email);
 		this.isModerator = false;
 		this.karma = 0;
-		votes = new HashMap<Likeable, Boolean>();
-		this.setLikes(votes);
-		agrees = new HashMap<Likeable, Boolean>();
-		this.setAgrees(agrees);
+		this.topicVotes = new HashMap<Integer, Boolean>();
+		this.topicAgrees = new HashMap<Integer, Boolean>();
+		this.commentVotes = new HashMap<Integer, Boolean>();
+		this.commentAgrees = new HashMap<Integer, Boolean>();
 	}
 
 	/**
@@ -119,29 +119,57 @@ public class User extends Person {
 	/**
 	 * @return the HashMap of votes
 	 */
-	public HashMap<Likeable, Boolean> getLikes() {
-		return votes;
+	public HashMap<Integer, Boolean> getTopicLikes() {
+		return topicVotes;
 	}
 
 	/**
 	 * @param votes
 	 */
-	public void setLikes(HashMap<Likeable, Boolean> votes) {
-		this.votes = votes;
+	public void setTopicLikes(HashMap<Integer, Boolean> topicVotes) {
+		this.topicVotes = topicVotes;
 	}
 
 	/**
 	 * @return the HashMap of agrees
 	 */
-	public HashMap<Likeable, Boolean> getAgrees() {
-		return agrees;
+	public HashMap<Integer, Boolean> getTopicAgrees() {
+		return topicAgrees;
 	}
 
 	/**
 	 * @param agrees
 	 */
-	public void setAgrees(HashMap<Likeable, Boolean> agrees) {
-		this.agrees = agrees;
+	public void setTopicAgrees(HashMap<Integer, Boolean> topicAgrees) {
+		this.topicAgrees = topicAgrees;
+	}
+
+	/**
+	 * @return the HashMap of votes
+	 */
+	public HashMap<Integer, Boolean> getCommentLikes() {
+		return commentVotes;
+	}
+
+	/**
+	 * @param votes
+	 */
+	public void setCommentLikes(HashMap<Integer, Boolean> commentVotes) {
+		this.commentVotes = commentVotes;
+	}
+
+	/**
+	 * @return the HashMap of agrees
+	 */
+	public HashMap<Integer, Boolean> getCommentAgrees() {
+		return commentAgrees;
+	}
+
+	/**
+	 * @param agrees
+	 */
+	public void setCommentAgrees(HashMap<Integer, Boolean> commentAgrees) {
+		this.commentAgrees = commentAgrees;
 	}
 
 	/**
@@ -149,15 +177,21 @@ public class User extends Person {
 	 * @param object - the Likeable
 	 */
 	public void addUpvote(Likeable object) {
-		this.votes.put(object, true);
+		if (object instanceof DebateTopic)
+			this.topicVotes.put(object.getId(), true);
+		else
+			this.commentVotes.put(object.getId(), true);
 	}
-	
+
 	/**
 	 * Adds a downvote to a Likeable
 	 * @param object - the Likeable
 	 */
 	public void addDownvote(Likeable object) {
-		this.votes.put(object, false);
+		if (object instanceof DebateTopic)
+			this.topicVotes.put(object.getId(), false);
+		else
+			this.commentVotes.put(object.getId(), false);
 	}
 
 	/**
@@ -165,15 +199,21 @@ public class User extends Person {
 	 * @param object - the Likeable
 	 */
 	public void addAgree(Likeable object) {
-		this.agrees.put(object, true);
+		if (object instanceof DebateTopic)
+			this.topicAgrees.put(object.getId(), true);
+		else
+			this.commentAgrees.put(object.getId(), true);
 	}
-	
+
 	/**
 	 * Adds a disagreement to a Likeable
 	 * @param object - the Likeable
 	 */
 	public void addDisagree(Likeable object) {
-		this.agrees.put(object, false);
+		if (object instanceof DebateTopic)
+			this.topicAgrees.put(object.getId(), false);
+		else
+			this.commentAgrees.put(object.getId(), false);
 	}
 
 	/**
@@ -182,24 +222,12 @@ public class User extends Person {
 	 * @return true if like
 	 */
 	public boolean doesLike(Likeable object) {
-		if (object instanceof DebateTopic) {
-			for (Likeable l : this.votes.keySet()) {
-				if (l instanceof DebateTopic) {
-					DebateTopic dt = (DebateTopic) l;
-					if (dt.getId() == object.getId())
-						return this.votes.get(l);
-				}
-			}
-		} else if (object instanceof Comment) {
-			for (Likeable l : this.votes.keySet()) {
-				if (l instanceof Comment) {
-					Comment dt = (Comment) l;
-					if (dt.getId() == object.getId())
-						return this.votes.get(l);
-				}
-			}
-		}
-
+		if (object instanceof DebateTopic)
+			if (topicVotes.containsKey(object.getId()))
+				return topicVotes.get(object.getId());
+		else if (object instanceof Comment)
+			if (commentVotes.containsKey(object.getId()))
+				return commentVotes.get(object.getId());
 		return false;
 	}
 
@@ -209,24 +237,12 @@ public class User extends Person {
 	 * @return true if dislike
 	 */
 	public boolean doesDislike(Likeable object) {
-		if (object instanceof DebateTopic) {
-			for (Likeable l : this.votes.keySet()) {
-				if (l instanceof DebateTopic) {
-					DebateTopic dt = (DebateTopic) l;
-					if (dt.getId() == object.getId())
-						return !this.votes.get(l);
-				}
-			}
-		} else if (object instanceof Comment) {
-			for (Likeable l : this.votes.keySet()) {
-				if (l instanceof Comment) {
-					Comment dt = (Comment) l;
-					if (dt.getId() == object.getId())
-						return !this.votes.get(l);
-				}
-			}
-		}
-
+		if (object instanceof DebateTopic)
+			if (topicVotes.containsKey(object.getId()))
+				return !topicVotes.get(object.getId());
+		else if (object instanceof Comment)
+			if (commentVotes.containsKey(object.getId()))
+				return !commentVotes.get(object.getId());
 		return false;
 	}
 
@@ -236,24 +252,12 @@ public class User extends Person {
 	 * @return true if agree
 	 */
 	public boolean doesAgree(Likeable object) {
-		if (object instanceof DebateTopic) {
-			for (Likeable l : this.agrees.keySet()) {
-				if (l instanceof DebateTopic) {
-					DebateTopic dt = (DebateTopic) l;
-					if (dt.getId() == object.getId())
-						return this.agrees.get(l);
-				}
-			}
-		} else if (object instanceof Comment) {
-			for (Likeable l : this.agrees.keySet()) {
-				if (l instanceof Comment) {
-					Comment dt = (Comment) l;
-					if (dt.getId() == object.getId())
-						return this.agrees.get(l);
-				}
-			}
-		}
-
+		if (object instanceof DebateTopic)
+			if (topicAgrees.containsKey(object.getId()))
+				return topicAgrees.get(object.getId());
+		else if (object instanceof Comment)
+			if (commentAgrees.containsKey(object.getId()))
+				return commentAgrees.get(object.getId());
 		return false;
 	}
 
@@ -263,24 +267,12 @@ public class User extends Person {
 	 * @return true if disagree
 	 */
 	public boolean doesDisagree(Likeable object) {
-		if (object instanceof DebateTopic) {
-			for (Likeable l : this.agrees.keySet()) {
-				if (l instanceof DebateTopic) {
-					DebateTopic dt = (DebateTopic) l;
-					if (dt.getId() == object.getId())
-						return !this.agrees.get(l);
-				}
-			}
-		} else if (object instanceof Comment) {
-			for (Likeable l : this.agrees.keySet()) {
-				if (l instanceof Comment) {
-					Comment dt = (Comment) l;
-					if (dt.getId() == object.getId())
-						return !this.agrees.get(l);
-				}
-			}
-		}
-
+		if (object instanceof DebateTopic)
+			if (topicAgrees.containsKey(object.getId()))
+				return !topicAgrees.get(object.getId());
+		else if (object instanceof Comment)
+			if (commentAgrees.containsKey(object.getId()))
+				return !commentAgrees.get(object.getId());
 		return false;
 	}
 
@@ -289,8 +281,7 @@ public class User extends Person {
 	 */
 	@Override
 	public String toString() {
-		return super.toString() + " || User [isModerator=" + isModerator + ", karma=" + karma + ", "
-				+ (votes != null ? "votes=" + votes + ", " : "") + (agrees != null ? "agrees=" + agrees : "") + "]";
+		return super.toString() + " || User [isModerator=" + isModerator + ", karma=" + karma + "]";
 	}
 
 

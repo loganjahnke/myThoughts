@@ -8,7 +8,7 @@ import java.util.Date;
  * DebateTopic and Comment inherit. This contains
  * functionality to vote, agree, and disagree on
  * an object.
- * 
+ *
  * @author loganjahnke
  */
 public abstract class Likeable extends Persistent implements Comparable<Likeable>  {
@@ -28,8 +28,8 @@ public abstract class Likeable extends Persistent implements Comparable<Likeable
 		this.disagrees = -1;
 		this.created = new Date();
 	}
-	
-	/** 
+
+	/**
 	 * Creates a Likeable object with the given information
 	 * @param created - the date and time of creation
 	 */
@@ -181,7 +181,7 @@ public abstract class Likeable extends Persistent implements Comparable<Likeable
 	public void setCreatedDate(Date created) {
 		this.created = created;
 	}
-	
+
 	@Override
     public int compareTo(Likeable l) {
 		if (l.vote > this.vote)

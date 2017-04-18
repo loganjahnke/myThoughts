@@ -48,18 +48,14 @@ public class DbUpdateTests {
 				  "password",
 				  "rodgers@phillip.com",
 				  false,
-				  0,
-				  null,
-				  null);
+				  0);
 		User user2 = new User("Darth",
 				  "Vader",
 				  "vader",
 				  "password",
 				  "darth.vader@deathstar.com",
 				  true,
-				  82,
-				  null,
-				  null);
+				  82);
 		try {
 			user1 = (User) pm.restorePerson(user1);
 			user1.setPassword("indigo");
@@ -71,9 +67,7 @@ public class DbUpdateTests {
 								  "password",
 								  "simon@sayz.com",
 								  false,
-								  6,
-								  null,
-								  null);
+								  6);
 			user3 = (User) pm.restorePerson(user3);
 			user3.setPassword("indigo");
 			user1.setId(pm.savePerson(user1));

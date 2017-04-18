@@ -42,27 +42,21 @@ public class DbSaveTests {
 							  "password",
 							  "rodgers@phillip.com",
 							  false,
-							  0,
-							  null,
-							  null);
+							  0);
 		User user2 = new User("Darth",
 							  "Vader",
 							  "vader",
 							  "password",
 							  "darth.vader@deathstar.com",
 							  true,
-							  82,
-							  null,
-							  null);
+							  82);
 		User user3 = new User("Simon",
 							  "Sayz",
 							  "sayz",
 							  "password",
 							  "simon@sayz.com",
 							  false,
-							  6,
-							  null,
-							  null);
+							  6);
 		try {
 			user1.setId(pm.savePerson(user1));
 			user2.setId(pm.savePerson(user2));
