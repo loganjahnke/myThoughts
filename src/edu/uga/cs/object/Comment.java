@@ -7,7 +7,7 @@ import java.util.Date;
  * can be attached to a DebateTopic of another
  * Comment. Comments contain a vote count and a
  * agreement/disagreement count.
- * 
+ *
  * @author loganjahnke
  */
 public class Comment extends Likeable {
@@ -47,7 +47,7 @@ public class Comment extends Likeable {
 		this.topic = topic;
 		this.parent = parent;
 	}
-	
+
 	/**
 	 * Creates a Comment object from the given information
 	 * @param subject - the subject of the comment
@@ -150,6 +150,19 @@ public class Comment extends Likeable {
 	 */
 	public void setParentComment(Comment parent) {
 		this.parent = parent;
+	}
+
+	/**
+	 * @return
+	 */
+	public boolean doesAgreeWithTopic(int debateTopicId) {
+		for (Likeable l : this.user.agrees.keySet()) {
+				if (l instanceof DebateTopic) {
+					DebateTopic dt = (DebateTopic) l;
+					if (dt.getId() == debateTopicId)
+						return this.agrees.get(l);
+				}
+			}
 	}
 
 	/**
