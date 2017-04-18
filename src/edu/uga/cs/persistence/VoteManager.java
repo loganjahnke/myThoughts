@@ -341,41 +341,51 @@ public class VoteManager {
 	 * @throws MyThoughtsException
 	 */
 	public DebateTopic getTopicData(DebateTopic dt) throws MyThoughtsException {
-		String select = "SELECT COUNT(tv1.upvote), COUNT(tv2.downvote) " +
-						"FROM debate_topic dt " +
-						"LEFT OUTER JOIN topic_vote tv1 " +
-							"ON dt.id = tv1.topic_id AND tv1.upvote = true " +
-						"LEFT OUTER JOIN topic_vote tv2 " +
-							"ON dt.id = tv2.topic_id AND tv2.downvote = true " +
-						"WHERE dt.id = " + dt.getId();
+		String selectUpvotes = "SELECT COUNT(*) FROM topic_vote WHERE upvote = 1 AND topic_id = " + dt.getId();
+		String selectDownvotes = "SELECT COUNT(*) FROM topic_vote WHERE downvote = 1 AND topic_id = " + dt.getId();
 
 		try {
+			int upvotes = 0;
+			int downvotes = 0;
 			Statement stmt = con.createStatement();
-			stmt.execute(select);
+			stmt.execute(selectUpvotes);
 			ResultSet rs = stmt.getResultSet();
-			while (rs.next()) {
-				dt.setVote(rs.getInt(1) - rs.getInt(2));
+			if (rs.next()) {
+				upvotes = rs.getInt(1);
 			}
+			
+			stmt.execute(selectDownvotes);
+			rs = stmt.getResultSet();
+			if (rs.next()) {
+				downvotes = rs.getInt(1);
+			}
+			
+			dt.setVote(upvotes - downvotes);
 		} catch (SQLException e) {
 			throw new MyThoughtsException("PersonManager.restore: failed to restore Person: " + e.getMessage());
 		}
 
-		select = "SELECT COUNT(tv1.agrees), COUNT(tv2.disagrees) " +
-						"FROM debate_topic dt " +
-						"LEFT OUTER JOIN topic_vote tv1 " +
-							"ON dt.id = tv1.topic_id AND tv1.agrees = true " +
-						"LEFT OUTER JOIN topic_vote tv2 " +
-							"ON dt.id = tv2.topic_id AND tv2.disagrees = true " +
-						"WHERE dt.id = " + dt.getId();
+		String selectAgrees = "SELECT COUNT(*) FROM topic_vote WHERE agrees = 1 AND topic_id = " + dt.getId();
+		String selectDisagrees = "SELECT COUNT(*) FROM topic_vote WHERE disagrees = 1 AND topic_id = " + dt.getId();
 
 		try {
+			int agrees = 0;
+			int disagrees = 0;
 			Statement stmt = con.createStatement();
-			stmt.execute(select);
+			stmt.execute(selectAgrees);
 			ResultSet rs = stmt.getResultSet();
-			while (rs.next()) {
-				dt.setAgrees(rs.getInt(1));
-				dt.setDisagrees(rs.getInt(2));
+			if (rs.next()) {
+				agrees = rs.getInt(1);
 			}
+			
+			stmt.execute(selectDisagrees);
+			rs = stmt.getResultSet();
+			if (rs.next()) {
+				disagrees = rs.getInt(1);
+			}
+			
+			dt.setAgrees(agrees);
+			dt.setDisagrees(disagrees);
 		} catch (SQLException e) {
 			throw new MyThoughtsException("VoteManager.restore: failed to retreive vote information: " + e.getMessage());
 		}

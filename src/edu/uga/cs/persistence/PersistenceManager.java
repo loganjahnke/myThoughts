@@ -185,6 +185,15 @@ public class PersistenceManager {
 	}
 	
 	/**
+	 * SELECTs all DebateTopics
+	 * @return all DebateTopics in an ArrayList
+	 * @throws MyThoughtsException
+	 */
+	public ArrayList<DebateTopic> restoreAllDebateTopics() throws MyThoughtsException {
+		return dtm.restore();
+	}
+	
+	/**
 	 * DELETEs a DebateTopic from the database
 	 * @param debateTopic - the debateTopic to delete
 	 * @throws MyThoughtsException
