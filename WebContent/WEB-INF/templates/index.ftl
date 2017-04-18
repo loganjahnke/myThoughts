@@ -44,13 +44,13 @@
     </header>
     <div id="topicsMenu">
         <ul>
-            <li class="blue"><a href="categories?name=Politics">Politics</a></li>
-            <li class="green"><a href="categories?name=Environmental">Environmental</a></li>
-            <li class="red"><a href="categories?name=Religion">Religion</a></li>
+            <li class="blue"><a href="topics?category=Politics">Politics</a></li>
+            <li class="green"><a href="topics?category=Environmental">Environmental</a></li>
+            <li class="red"><a href="topics?category=Religion">Religion</a></li>
             <li class="grey"><a href="categories">Categories</a></li>
-            <li class="red"><a href="categories?name=Recent">Recent</a></li>
-            <li class="green"><a href="categories?name=Featured">Featured</a></li>
-            <li class="blue"><a href="categories?name=Trending">Trending</a></li>
+            <li class="red"><a href="topics?category=Recent">Recent</a></li>
+            <li class="green"><a href="topics?category=Featured">Featured</a></li>
+            <li class="blue"><a href="topics?category=Trending">Trending</a></li>
         </ul>
     </div>
     <div id="debate"></div>

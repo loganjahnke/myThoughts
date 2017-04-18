@@ -1,9 +1,16 @@
 <header id="header">
     <h1>
+            <#if visitor>
+            <a href="index.html">
+                <span class="thin blue no-background"><i class="fa fa-bars"></i> my<span class="bold">Thoughts</span>
+                </span>
+            </a>
+            <#else>
             <a href="home">
                 <span class="thin blue no-background"><i class="fa fa-bars"></i> my<span class="bold">Thoughts</span>
                 </span>
             </a>
+            </#if>
         </h1>
     <nav class="links">
         <ul>
