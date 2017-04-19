@@ -48,4 +48,8 @@ public class MyThoughtsController {
 	public ArrayList<DebateCategory> getUsableCategories() throws MyThoughtsException {
 		return pm.restoreAllUsableDebateCategories();
 	}
+	
+	public ArrayList<Comment> getCommentsForTopic(DebateTopic topic) throws MyThoughtsException {
+		return pm.restoreComment(topic);
+	}
 }
