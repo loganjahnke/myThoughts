@@ -249,6 +249,33 @@ public class DebateTopicManager {
 			throw new MyThoughtsException("DebateTopicManager.restore: failed to restore DebateTopic: " + e.getMessage());
 		}
 	}
+	
+	/**
+	 * Attempts to restore all DebateTopics from the database
+	 * @return the DebateTopic object
+	 * @throws MyThoughtsException
+	 */
+	public ArrayList<DebateTopic> restore() throws MyThoughtsException {
+		String select = "SELECT dt.id, dt.title, dt.description, dt.created, " +
+						"p.id, p.firstname, p.lastname, p.username, p.password, p.email, p.created, p.isModerator, p.karma, " +
+						"dc.id, dc.name, dc.description, dc.icon, dc.color " +
+						"FROM debate_topic dt " +
+						"JOIN person p " +
+							"ON dt.user_id = p.id " +
+						"JOIN topic_category tc " +
+							"ON dt.id = tc.topic_id " +
+						"JOIN debate_category dc " +
+							"ON tc.category_id = dc.id";
+
+		try {
+			Statement stmt = con.createStatement();
+			stmt.execute(select);
+			ResultSet rs = stmt.getResultSet();
+			return retrieve(rs);
+		} catch (SQLException e) {
+			throw new MyThoughtsException("DebateTopicManager.restore: failed to restore DebateTopic: " + e.getMessage());
+		}
+	}
 
 	/**
 	 * Attempts to restore DebateTopics by a certain Date from the database
