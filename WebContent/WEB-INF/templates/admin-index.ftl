@@ -7,8 +7,10 @@
     <!-- Styling -->
     <#include "include/style.ftl">
     <link rel="stylesheet" href="css/registered-index.css">
+    <link rel="stylesheet" href="css/modal.css">
     <!-- Scripts -->
     <#include "include/script.ftl">
+    <script type="text/javascript" src="js/changePassword.js"></script>
 </head>
 
 <body>
@@ -33,8 +35,23 @@
         <a class="mt-button gray" href="create-category">Create a Category</a>
         <a class="mt-button gray" href="categories">View Categories</a>
         <a class="mt-button gray" href="assign-moderator">Assign Moderator</a>
+        
+        <div>
+        <form action="user" method="post">
+	   		<button class="mt-button-tiny gray" type="submit" name="createdTopics">See topics you created</button>
+	   		<button class="mt-button-tiny gray" type="submit" name="changePswd">Change Your Password</button>
+	        <button class="mt-button-tiny gray" type="submit" name="commentedTopics">See topics you commented on</button>
+	    </form>
+	    </div>
     </div>
+	
+	
+	
+	 </div>
+    
     <#include "include/footer.ftl">
+    
+    
 </body>
 
 </html>
