@@ -32,6 +32,11 @@ public class TopicListController {
 	public ArrayList<DebateTopic> getTopics(User user) throws MyThoughtsException {
 		return pm.restoreDebateTopic(user);
 	}
+	
+	
+	public ArrayList<DebateTopic> getCommentedTopics(User user) throws MyThoughtsException{
+		return pm.restoreCommentedDebateTopic(user);
+	}
 
 	public ArrayList<DebateTopic> getRecentTopics() throws MyThoughtsException {
 		long DAY_IN_MS = 1000 * 60 * 60 * 24;

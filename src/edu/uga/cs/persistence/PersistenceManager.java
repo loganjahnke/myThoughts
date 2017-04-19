@@ -143,6 +143,11 @@ public class PersistenceManager {
 	public ArrayList<DebateTopic> restoreDebateTopic(Person person) throws MyThoughtsException {
 		return dtm.restore(person);
 	}
+	
+	
+	public ArrayList<DebateTopic> restoreCommentedDebateTopic(Person person) throws MyThoughtsException {
+		return dtm.restoreCommented(person);
+	}
 
 	/**
 	 * SELECTs all DebateTopics under a certain DebateCategory

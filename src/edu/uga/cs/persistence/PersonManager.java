@@ -24,6 +24,35 @@ public class PersonManager {
 	}
 
 	/**
+	 * @author Lucy Bradley
+	 * Used by the user to change their password
+	 * @param username 
+	 * @param oldPswd		the original password
+	 * @param newPswd		the password to set
+	 * @return 				true if successful, false if the statement somehow fails
+	 * @throws MyThoughtsException
+	 */
+	public boolean confirmChangePswd(String username, String oldPswd, String newPswd) throws MyThoughtsException{
+		String query = "SELECT password FROM person WHERE username = \"" + username.trim() + "\";";
+		try {
+			Statement stmt = con.createStatement();
+			stmt.execute(query);
+			ResultSet rs = stmt.getResultSet();
+			if (rs.next()){
+				if (rs.getString(1).equals(oldPswd)){
+					String update = "UPDATE person SET password = \"" + newPswd + "\" WHERE username = \"" + username +"\";";
+					Statement stmt2 = con.createStatement();
+					if(stmt2.executeUpdate(update) == 1)
+						return true;
+				}
+			}
+			return false;
+		} catch (Exception e) {
+			throw new MyThoughtsException("PersonManager.confirmChangePswd: error in something... " + e);
+		}
+	}
+	
+	/**
 	 * Checks the database for a specific email duplication
 	 * @param email - the email to check
 	 * @return true if duplicate, false otherwise

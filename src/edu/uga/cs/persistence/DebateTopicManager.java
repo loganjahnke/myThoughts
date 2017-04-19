@@ -250,6 +250,55 @@ public class DebateTopicManager {
 		}
 	}
 	
+	public ArrayList<DebateTopic> restoreCommented(Person person) throws MyThoughtsException {
+		String select = "SELECT dt.id, dt.title, dt.description, dt.created, " +
+			"pe.id, pe.firstname, pe.lastname, pe.username, pe.password, pe.email, pe.created, pe.isModerator, pe.karma, " +
+			"dc.id, dc.name, dc.description, dc.icon, dc.color " +
+			"FROM debate_topic dt JOIN person pe ON dt.user_id = pe.id JOIN debate_category dc ON ON tc.category_id = dc.id" +
+			"WHERE dt.id IN " +
+			"(SELECT c.topic_id FROM comment c JOIN person p ON c.user_id = p.id " +		
+			"WHERE";
+		int conditionLength = 0;
+		
+		if (person.isPersistent())
+			select += " p.id = " + person.getId() +")";
+		else if (person.getUsername() != null)
+			select += " p.username = \"" + person.getUsername() + "\")";
+		else if (person.getEmail() != null)
+			select += " p.email = \"" + person.getEmail() + "\")";
+		else {
+			if (person.getFirstname() != null) {
+				if (conditionLength > 0)
+					select += (" AND");
+				select += (" p.firstname = \"" + person.getFirstname() + "\")");
+				conditionLength++;
+			}
+		
+			if (person.getLastname() != null) {
+				if (conditionLength > 0)
+					select += (" AND");
+				select += (" p.lastname = \"" + person.getLastname() + "\")");
+				conditionLength++;
+			}
+		
+			if (person.getPassword() != null) {
+				if (conditionLength > 0)
+					select += (" AND");
+				select += (" p.password = \"" + person.getPassword() + "\")");
+				conditionLength++;
+			}
+		}
+	
+		try {
+			Statement stmt = con.createStatement();
+			stmt.execute(select);
+			ResultSet rs = stmt.getResultSet();
+			return retrieve(rs);
+		} catch (SQLException e) {
+			throw new MyThoughtsException("DebateTopicManager.restoreCommented: failed to restore DebateTopic: " + e.getMessage());
+		}
+	}
+	
 	/**
 	 * Attempts to restore all DebateTopics from the database
 	 * @return the DebateTopic object
