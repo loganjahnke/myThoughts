@@ -21,7 +21,7 @@
                  	<li><a href="create-topic">Create a Post</a></li>
                 </#if>
                 <li><a href="logout">Sign Out</a></li>
-
+				<li><a href="create-topic">Create a Post</a></li>
             <#else>
                 <ul>
                     <li><a id="login_trigger" href="index.html">Sign <span class="bold">in</span> | Sign <span class="bold">up</span></a></li>
