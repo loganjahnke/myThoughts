@@ -15,7 +15,7 @@
     <nav class="links">
         <ul>
             <#if visitor == false>
-                <li><a href="user.html">Welcome, ${user.getFirstname()}</a></li>
+                <li><a href="user-view">Welcome, ${user.getFirstname()}</a></li>
                 <#if nonadmin == true>
                     <li><a href="karma.html"><span class="green no-background">${user.getKarma()}<span class="bold">k</span></span></a></li>
                  	<li><a href="create-topic">Create a Post</a></li>

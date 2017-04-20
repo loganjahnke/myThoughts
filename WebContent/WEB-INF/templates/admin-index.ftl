@@ -31,7 +31,7 @@
         </ul>
     </div>
     <div id="debate">
-        <h1 class="thin" id="debate-title">Welcome back <a href ="user-view">${user.getFirstname()} ${user.getLastname()}</a></h1>
+        <h1 class="thin" id="debate-title">Welcome back ${user.getFirstname()} ${user.getLastname()}</h1>
         <a class="mt-button gray" href="create-category">Create a Category</a>
         <a class="mt-button gray" href="categories">View Categories</a>
         <a class="mt-button gray" href="assign-moderator">Assign Moderator</a>
