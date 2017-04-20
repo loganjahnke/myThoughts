@@ -1,31 +1,74 @@
-<#list categories as category>
-                <li class="${category.getColor()}"><a href="topics?category=${category.getName()}">${category.getName()}</a></li>
-            <#else>
-                <li class="blue"><a href="topics?category=Politics">Politics</a></li>
-                <li class="green"><a href="topics?category=Environmental">Environmental</a></li>
-                <li class="red"><a href="topics?category=Religion">Religion</a></li>
-                <li class="grey"><a href="categories?">Categories</a></li>
-                <li class="red"><a href="topics?category=Recent">Recent</a></li>
-                <li class="green"><a href="topics?category=Featured">Featured</a></li>
-                <li class="blue"><a href="topics?category=Trending">Trending</a></li>
-            </#list>
-        </ul>
-    </div>
-    <div id="debate">
-        <h1 class="thin" id="debate-title">Welcome back ${user.getFirstname()} ${user.getLastname()}</h1>
-       
-    <div>
-        <form action="user" method="post">
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>${user.getFirstname()} ${user.getLastname()}</title>
+    <!-- Styling -->
+    <#include "include/style.ftl">
+    <link rel="stylesheet" href="css/registered-index.css">
+    <link rel="stylesheet" href="css/modal.css">
+    <link rel="stylesheet" href="css/user.css">
+    <!-- Scripts -->
+    <#include "include/script.ftl">
+    <script type="text/javascript" src="js/changePassword.js"></script>
+</head>
+
+<body>
+    <#include "include/header.ftl">
+
+    
+   
+        <div id ="content">
+          <form action="user" method="post">
 	   		<button class="mt-button-tiny gray" type="submit" name="createdTopics">See topics you created</button>
 	   		<button class="mt-button-tiny gray" type="submit" name="changePswd">Change Your Password</button>
 	        <button class="mt-button-tiny gray" type="submit" name="commentedTopics">See topics you commented on</button>
 	    </form>
-	    </div>
-    </div>
+	    
+	    <table class="datatable">
+	
+					<!--Prints out the columns as table heads -->
+
+					<th >
+						First Name
+					</th>
+					<th >
+						Last Name
+					</th>
+					<th >
+						User Name
+					</th>
+					<th >
+						Email
+					</th>
+					<th >
+						Password
+					</th>
+					<th >
+						Created Date
+					</th>
+				<!--Prints out the movies table -->
+
+		
+					<tr>
+						
+						
+						<td > ${user.getFirstname()}</td>
+						<td > ${user.getLastname()}</td>
+						<td > ${user.getUsername()}</td>
+						<td > ${user.getEmail()}</td>
+						<td > ${user.getPassword()}</td>
+						<td > ${user.getCreatedDate()}</td>
+					</tr>
+		
+		
+			</table>
+      </div> 
+    
 	
 	
 	
-	 </div>
     
     <#include "include/footer.ftl">
     
@@ -33,5 +76,6 @@
 </body>
 
 </html>
+
 
         
