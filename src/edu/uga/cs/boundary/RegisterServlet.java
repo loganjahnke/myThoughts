@@ -44,6 +44,7 @@ public class RegisterServlet extends HttpServlet {
 			emailDuplicate = ac.precheckEmail(email);
 			usernameDuplicate = ac.precheckUsername(username);
 		} catch (Exception e) {
+			System.out.println(e);
 			emailDuplicate = true;
 			usernameDuplicate = true;
 		}
