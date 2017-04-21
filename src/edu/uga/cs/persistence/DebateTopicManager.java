@@ -254,7 +254,8 @@ public class DebateTopicManager {
 		String select = "SELECT dt.id, dt.title, dt.description, dt.created, " +
 			"pe.id, pe.firstname, pe.lastname, pe.username, pe.password, pe.email, pe.created, pe.isModerator, pe.karma, " +
 			"dc.id, dc.name, dc.description, dc.icon, dc.color " +
-			"FROM debate_topic dt JOIN person pe ON dt.user_id = pe.id JOIN debate_category dc ON ON tc.category_id = dc.id" +
+			"FROM debate_topic dt JOIN person pe ON dt.user_id = pe.id " +"JOIN topic_category tc " +
+							"ON dt.id = tc.topic_id " +"JOIN debate_category dc ON tc.category_id = dc.id " +
 			"WHERE dt.id IN " +
 			"(SELECT c.topic_id FROM comment c JOIN person p ON c.user_id = p.id " +		
 			"WHERE";

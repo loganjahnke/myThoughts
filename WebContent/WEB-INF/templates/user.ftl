@@ -23,16 +23,11 @@
           <form action="user" method="post">
           	<#if nonadmin>
 	   		<button class="mt-button-tiny gray" type="submit" name="createdTopics">See topics you created</button>
-	   		</#if>
-		</form>
-			
-	   		<button class="mt-button-tiny gray" onclick= "showPswdForm() ">Change Your Password</button>
-	   		
-	   	<form action="user" method="post">
-	   		<#if nonadmin>
 	        <button class="mt-button-tiny gray" type="submit" name="commentedTopics">See topics you commented on</button>
 	        </#if>
-	    </form>
+	      </form>
+	        <button class="mt-button-tiny gray" onclick= "showPswdForm() ">Change Your Password</button>
+	
 	    
 	    <#if wrongPassword??>
 	    <div id= "pswdMsg">
