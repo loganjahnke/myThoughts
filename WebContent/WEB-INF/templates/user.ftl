@@ -26,7 +26,7 @@
 	        <button class="mt-button-tiny gray" type="submit" name="commentedTopics">See topics you commented on</button>
 	        </#if>
 	      </form>
-	        <button class="mt-button-tiny gray" onclick= "showPswdForm() ">Change Your Password</button>
+	       
 	
 	    
 	    <#if wrongPassword??>
@@ -55,9 +55,14 @@
 					<th >
 						Email
 					</th>
-					<th >
+					<#if user.getCreatedDate()?? >
+						<th >
+					
 						Created Date
-					</th>
+						</th>
+						
+					</#if>
+					<th>Karma</th>
 
 		
 					<tr>
@@ -67,11 +72,16 @@
 						<td > ${user.getLastname()}</td>
 						<td > ${user.getUsername()}</td>
 						<td > ${user.getEmail()}</td>
-						<td > ${user.getCreatedDate()}</td>
+						<#if user.getCreatedDate()?? >
+							<td > ${user.getCreatedDate()}</td>
+						</#if>
+						<td > ${user.getKarma()}</td>
 					</tr>
 		
 		
 			</table>
+			
+			<button class="mt-button-tiny gray" onclick= "showPswdForm() ">Change Your Password</button>
 			
 			 <div id="changePassword">
 			 <p>
@@ -81,12 +91,14 @@
 		    		<input type="submit" name="changePswd" value="Change Password">
 		    	</form>
 	    	</p>
+	    	 
 	    	</div>
+	    	<#include "include/footer.ftl">
 	    
       </div> 
 
     
-    <#include "include/footer.ftl">
+    
     
     
 </body>
