@@ -36,13 +36,9 @@
         <a class="mt-button gray" href="categories">View Categories</a>
         <a class="mt-button gray" href="assign-moderator">Assign Moderator</a>
        
-        
-    </div>
-	
-	
-	
-	 </div>
-    
+     </div>
+
+	    
     <#include "include/footer.ftl">
     
     

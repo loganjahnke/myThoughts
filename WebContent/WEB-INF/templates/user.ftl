@@ -21,9 +21,15 @@
    
         <div id ="content">
           <form action="user" method="post">
+          	<#if nonadmin>
 	   		<button class="mt-button-tiny gray" type="submit" name="createdTopics">See topics you created</button>
+	   		</#if>
+
 	   		<button class="mt-button-tiny gray" type="submit" name="changePswd">Change Your Password</button>
+	   		
+	   		<#if nonadmin>
 	        <button class="mt-button-tiny gray" type="submit" name="commentedTopics">See topics you commented on</button>
+	        </#if>
 	    </form>
 	    
 	    <table class="datatable">
@@ -43,12 +49,8 @@
 						Email
 					</th>
 					<th >
-						Password
-					</th>
-					<th >
 						Created Date
 					</th>
-				<!--Prints out the movies table -->
 
 		
 					<tr>
@@ -58,7 +60,6 @@
 						<td > ${user.getLastname()}</td>
 						<td > ${user.getUsername()}</td>
 						<td > ${user.getEmail()}</td>
-						<td > ${user.getPassword()}</td>
 						<td > ${user.getCreatedDate()}</td>
 					</tr>
 		
