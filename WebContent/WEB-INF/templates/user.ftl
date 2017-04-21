@@ -62,7 +62,9 @@
 						</th>
 						
 					</#if>
-					<th>Karma</th>
+					<#if nonadmin>
+						<th>Karma</th>
+					</#if>
 
 		
 					<tr>
@@ -75,7 +77,9 @@
 						<#if user.getCreatedDate()?? >
 							<td > ${user.getCreatedDate()}</td>
 						</#if>
-						<td > ${user.getKarma()}</td>
+						<#if nonadmin>
+							<td > ${user.getKarma()}</td>
+						</#if>
 					</tr>
 		
 		
