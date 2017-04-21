@@ -1,3 +1,13 @@
+#changePassword{
+	width: 30%;
+	color: white;
+	margin: auto;
+}
+
+#pswdMsg{
+	color: red;
+}
+
 #content {
 	height: 100vh;
     background-size: 100% 100%;

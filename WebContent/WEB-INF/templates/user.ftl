@@ -24,13 +24,25 @@
           	<#if nonadmin>
 	   		<button class="mt-button-tiny gray" type="submit" name="createdTopics">See topics you created</button>
 	   		</#if>
-
-	   		<button class="mt-button-tiny gray" type="submit" name="changePswd">Change Your Password</button>
+		</form>
+			
+	   		<button class="mt-button-tiny gray" onclick= "showPswdForm() ">Change Your Password</button>
 	   		
+	   	<form action="user" method="post">
 	   		<#if nonadmin>
 	        <button class="mt-button-tiny gray" type="submit" name="commentedTopics">See topics you commented on</button>
 	        </#if>
 	    </form>
+	    
+	    <#if wrongPassword??>
+	    <div id= "pswdMsg">
+	    	<#if wrongPassword>
+	    		Incorrect current password, try again
+	    	<#else>
+	    		Password successfully changed
+	    	</#if>
+	    </div>
+	    </#if>
 	    
 	    <table class="datatable">
 	
@@ -65,11 +77,19 @@
 		
 		
 			</table>
+			
+			 <div id="changePassword">
+			 <p>
+		    	<form action="user" method="post">
+		    		Current Password: <input type="password" name="oldPassword">
+		    		New Password: <input type="password" name="newPassword">
+		    		<input type="submit" name="changePswd" value="Change Password">
+		    	</form>
+	    	</p>
+	    	</div>
+	    
       </div> 
-    
-	
-	
-	
+
     
     <#include "include/footer.ftl">
     

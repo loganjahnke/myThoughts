@@ -91,7 +91,7 @@ public class UserServlet extends HttpServlet {
 		
 		if(byComment){
 			root.put("topics", tlc.getCommentedTopics((User)session.getUser()));
-			tp.processTemplate("view-topics.ftl", root, response);
+			tp.processTemplate(templateName, root, response);
 		}else{
 			root.put("topics", tlc.getTopics((User)session.getUser()));
 			tp.processTemplate("view-topics.ftl", root, response);
@@ -100,18 +100,30 @@ public class UserServlet extends HttpServlet {
 	
 	public void changePassword(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException{
 		//called when user enters new password in popup window
+    
+       	TemplateProcessor tp = new TemplateProcessor(templateDir, cfg);
+		DefaultObjectWrapperBuilder db = new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_25);
+		SimpleHash root = new SimpleHash(db.build());
+		String templateName= "user.ftl";
         
         PersonManager pm = new PersonManager(DbAccessInterface.connect());
 		
         try{
-			if(pm.confirmChangePswd(session.getUser().getUsername(), request.getParameter("oldPassword"),
+			if(!pm.confirmChangePswd(session.getUser().getUsername(), request.getParameter("oldPassword"),
 					request.getParameter("newPassword"))){
-				//error message??
-			}
+				root.put("wrongPassword", true);
+			} else root.put("wrongPassword", false);
         } catch (MyThoughtsException mte) {
             MTError.error(processor, response, cfg, mte);
             return;
         }
+		
+		root.put("sender", "user");
+		root.put("user", session.getUser());
+        root.put("visitor", session.getUser() == null);
+        root.put("nonadmin", !session.getIsAdmin());
+			
+		tp.processTemplate(templateName, root, response);
 	}
   
 	/**

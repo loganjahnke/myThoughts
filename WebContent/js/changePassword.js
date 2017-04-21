@@ -1,12 +1,7 @@
 $(function() {
-	$("passwordPopup").hide();
-	$("changePswd").onclick(passwordPop);
+	$("#changePassword").hide();
 })
 
-function passwordPop(){
-	$("passwordPopup").show();
-}
-
-function changePassword(){
-
+function showPswdForm(){
+	$("#changePassword").show();
 }
