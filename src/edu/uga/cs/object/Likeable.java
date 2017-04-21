@@ -16,6 +16,7 @@ public abstract class Likeable extends Persistent implements Comparable<Likeable
 	private int vote;
 	private int agrees;
 	private int disagrees;
+	private User user;
 	private Date created;
 
 	/**
@@ -46,13 +47,15 @@ public abstract class Likeable extends Persistent implements Comparable<Likeable
 	 * @param vote - the vote count
 	 * @param agrees - the agreement count
 	 * @param disagrees - the disagreement count
+	 * @param user - the user who posted it
 	 * @param created - the date and time of creation
 	 */
-	public Likeable(int vote, int agrees, int disagrees, Date created) {
+	public Likeable(int vote, int agrees, int disagrees, User user, Date created) {
 		super();
 		this.vote = vote;
 		this.agrees = agrees;
 		this.disagrees = disagrees;
+		this.user = user;
 		this.created = created;
 	}
 
@@ -166,6 +169,20 @@ public abstract class Likeable extends Persistent implements Comparable<Likeable
 	 */
 	public void decrementDisagree() {
 		this.disagrees--;
+	}
+	
+	/**
+	 * @return the user
+	 */
+	public User getUser() {
+		return user;
+	}
+
+	/**
+	 * @param user the user to set
+	 */
+	public void setUser(User user) {
+		this.user = user;
 	}
 
 	/**
