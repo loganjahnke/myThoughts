@@ -33,13 +33,6 @@
         <a class="mt-button gray" href="topic?id=${featured.getId()}">Join the Debate</a>
         <a class="mt-button gray" href="categories?">View all Categories</a>
         
-        <div>
-        <form action="user" method="post">
-	   		<button class="mt-button-tiny gray" type="submit" name="createdTopics">See topics you created</button>
-	   		<button class="mt-button-tiny gray" type="submit" name="changePswd">Change Your Password</button>
-	        <button class="mt-button-tiny gray" type="submit" name="commentedTopics">See topics you commented on</button>
-	    </form>
-	    </div>
     </div>
     
     

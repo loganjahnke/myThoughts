@@ -59,7 +59,7 @@ public class PersonManager {
 	 * @throws MyThoughtsException
 	 */
 	public boolean isDuplicateEmail(String email) throws MyThoughtsException {
-		String query = "SELECT COUNT(*) FROM person WHERE email = " + email;
+		String query = "SELECT COUNT(*) FROM person WHERE email = \"" + email + "\"";
 		try {
 			Statement stmt = con.createStatement();
 			stmt.execute(query);
@@ -80,7 +80,7 @@ public class PersonManager {
 	 * @throws MyThoughtsException
 	 */
 	public boolean isDuplicateUsername(String username) throws MyThoughtsException {
-		String query = "SELECT COUNT(*) FROM person WHERE username = " + username;
+		String query = "SELECT COUNT(*) FROM person WHERE username = \"" + username + "\"";
 		try {
 			Statement stmt = con.createStatement();
 			stmt.execute(query);
@@ -142,7 +142,7 @@ public class PersonManager {
 					   	"(firstname, lastname, username, password, email, isAdmin, isModerator, karma) " +
 					   	"VALUES (?, ?, ?, ?, ?, ?, ?, ?)";
 		String update = "UPDATE person " +
-					   	"SET firstname = ?, lastname = ?, username = ?, password = ?, email = ?, isAdmin = ?, isModerator = ?, karma = ? " +
+					   	"SET firstname = ?, lastname = ?, username = ?, password = ?, email = \"?\", isAdmin = ?, isModerator = ?, karma = ? " +
 					   	"WHERE id = ?";
 		PreparedStatement pstmt;
 		int personID = person.getId();

@@ -13,7 +13,6 @@ public class DebateTopic extends Likeable {
 
 	private String title;
 	private String description;
-	private User user;
 	private ArrayList<DebateCategory> categories;
 
 	/**
@@ -23,7 +22,6 @@ public class DebateTopic extends Likeable {
 		super();
 		this.title = "";
 		this.description = "";
-		this.user = new User();
 		this.categories = new ArrayList<DebateCategory>();
 	}
 
@@ -35,7 +33,6 @@ public class DebateTopic extends Likeable {
 		super(id);
 		this.title = "";
 		this.description = "";
-		this.user = new User();
 		this.categories = new ArrayList<DebateCategory>();
 	}
 
@@ -51,10 +48,9 @@ public class DebateTopic extends Likeable {
 	 * @param categories - the categories assigned to the topic
 	 */
 	public DebateTopic(String title, String description, int vote, int agrees, int disagrees, User user, Date created, ArrayList<DebateCategory> categories) {
-		super(vote, agrees, disagrees, created);
+		super(vote, agrees, disagrees, user, created);
 		this.title = title;
 		this.description = description;
-		this.user = user;
 		this.categories = categories;
 	}
 
@@ -84,20 +80,6 @@ public class DebateTopic extends Likeable {
 	 */
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	/**
-	 * @return the user
-	 */
-	public User getUser() {
-		return user;
-	}
-
-	/**
-	 * @param user the user to set
-	 */
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 	/**
@@ -149,8 +131,6 @@ public class DebateTopic extends Likeable {
 	 */
 	public boolean passesNullTest() {
 		if (this.title == null)
-			return false;
-		if (this.user == null)
 			return false;
 		return true;
 	}

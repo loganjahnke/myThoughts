@@ -14,7 +14,6 @@ public class Comment extends Likeable {
 
 	private String subject;
 	private String argument;
-	private User user;
 	private DebateTopic topic;
 	private Comment parent;
 
@@ -25,7 +24,6 @@ public class Comment extends Likeable {
 		super();
 		this.subject = "";
 		this.argument = "";
-		this.user = null;
 		this.topic = null;
 		this.parent = null;
 	}
@@ -39,11 +37,10 @@ public class Comment extends Likeable {
 	 * @param parent - the parent Comment
 	 * @param topic - the parent DebateTopic
 	 */
-	public Comment(String subject, String argument, User user, Date created, Comment parent, DebateTopic topic) {
+	public Comment(String subject, String argument, Date created, Comment parent, DebateTopic topic) {
 		super(created);
 		this.subject = subject;
 		this.argument = argument;
-		this.user = user;
 		this.topic = topic;
 		this.parent = parent;
 	}
@@ -61,10 +58,9 @@ public class Comment extends Likeable {
 	 * @param disagrees - the disagreement count of the comment
 	 */
 	public Comment(String subject, String argument, User user, Date created, Comment parent, DebateTopic topic, int vote, int agrees, int disagrees) {
-		super(vote, agrees, disagrees, created);
+		super(vote, agrees, disagrees, user, created);
 		this.subject = subject;
 		this.argument = argument;
-		this.user = user;
 		this.topic = topic;
 		this.parent = parent;
 	}
@@ -77,7 +73,6 @@ public class Comment extends Likeable {
 		super(id);
 		this.subject = "";
 		this.argument = "";
-		this.user = null;
 		this.topic = null;
 		this.parent = null;
 	}
@@ -108,20 +103,6 @@ public class Comment extends Likeable {
 	 */
 	public void setArgument(String argument) {
 		this.argument = argument;
-	}
-
-	/**
-	 * @return the User who posted the Comment
-	 */
-	public User getUser() {
-		return user;
-	}
-
-	/**
-	 * @param user - the User to set
-	 */
-	public void setUser(User user) {
-		this.user = user;
 	}
 
 	/**
@@ -156,8 +137,8 @@ public class Comment extends Likeable {
 	 * @return
 	 */
 	public boolean doesAgreeWithTopic(int debateTopicId) {
-		if (this.user.getTopicAgrees().containsKey(debateTopicId))
-			return this.user.getTopicAgrees().get(debateTopicId);
+		if (this.getUser().getTopicAgrees().containsKey(debateTopicId))
+			return this.getUser().getTopicAgrees().get(debateTopicId);
 		return false;
 	}
 
@@ -168,8 +149,6 @@ public class Comment extends Likeable {
 		if (this.subject == null)
 			return false;
 		if (this.argument == null)
-			return false;
-		if (this.user == null)
 			return false;
 		if (this.topic == null)
 			return false;

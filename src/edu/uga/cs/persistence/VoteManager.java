@@ -18,6 +18,12 @@ public class VoteManager {
 
 	Connection con;
 
+	public static final int COMMENT_UPVOTE = 1;
+	public static final int COMMENT_DOWNVOTE = -3;
+	public static final int TOPIC_UPVOTE = 3;
+	public static final int TOPIC_DOWNVOTE = -5;
+	public static final int USER_DOWNVOTE_PENALTY = -1;
+
 	public VoteManager(Connection con) {
 		this.con = con;
 	}
@@ -94,6 +100,8 @@ public class VoteManager {
 				comment = pm.restoreComment(comment);
 
 			boolean isInDatabase = isInDatabase(person, comment);
+			if (person instanceof User)
+				modifyKarma(person, comment, upvote, isInDatabase);
 
 			// Check for UPDATE vs INSERT
 			if (isInDatabase) {
@@ -141,6 +149,8 @@ public class VoteManager {
 				topic = pm.restoreDebateTopic(topic);
 
 			boolean isInDatabase = isInDatabase(person, topic);
+			if (person instanceof User)
+				modifyKarma(person, topic, upvote, isInDatabase);
 
 			// Check for UPDATE vs INSERT
 			if (isInDatabase) {
@@ -353,13 +363,13 @@ public class VoteManager {
 			if (rs.next()) {
 				upvotes = rs.getInt(1);
 			}
-			
+
 			stmt.execute(selectDownvotes);
 			rs = stmt.getResultSet();
 			if (rs.next()) {
 				downvotes = rs.getInt(1);
 			}
-			
+
 			dt.setVote(upvotes - downvotes);
 		} catch (SQLException e) {
 			throw new MyThoughtsException("PersonManager.restore: failed to restore Person: " + e.getMessage());
@@ -377,13 +387,13 @@ public class VoteManager {
 			if (rs.next()) {
 				agrees = rs.getInt(1);
 			}
-			
+
 			stmt.execute(selectDisagrees);
 			rs = stmt.getResultSet();
 			if (rs.next()) {
 				disagrees = rs.getInt(1);
 			}
-			
+
 			dt.setAgrees(agrees);
 			dt.setDisagrees(disagrees);
 		} catch (SQLException e) {
@@ -439,6 +449,70 @@ public class VoteManager {
 			throw new MyThoughtsException("VoteManager.restore: failed to retreive vote information: " + e.getMessage());
 		}
 		return c;
+	}
+
+	/**
+	 * Modifies the karma of the both users for upvoting
+	 * or downvoting a topic or comment
+	 * @param person - the person voting
+	 * @param comment - the comment to vote on
+	 * @param upvote - if true, upvote - if false, downvote
+	 * @param change - if true, user is changing their vote
+	 * @throws MyThoughtsException
+	 */
+	public void modifyKarma(Person person, Likeable likeable, boolean upvote, boolean change) throws MyThoughtsException {
+		String update = "UPDATE person SET karma = ? WHERE id = ?";
+		PreparedStatement pstmt;
+
+		try {
+			// Update voter's karma
+			User user = (User) person;
+			int newKarma = user.getKarma();
+			if (change) {
+				if (upvote)
+					newKarma -= USER_DOWNVOTE_PENALTY;
+				else
+					newKarma += USER_DOWNVOTE_PENALTY;
+			} else {
+				if (!upvote)
+					newKarma += USER_DOWNVOTE_PENALTY;
+			}
+
+			pstmt = con.prepareStatement(update);
+			pstmt.setInt(1, newKarma);
+			pstmt.setInt(2, user.getId());
+
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new MyThoughtsException("VoteManager.modifyKarma: failed to update voter's karma: " + e.getMessage());
+		}
+
+		update = "UPDATE person SET karma = ? WHERE id = ?";
+
+		try {
+			// Update receiver's karma
+			User user = likeable.getUser();
+			int newKarma = user.getKarma();
+			if (change) {
+				if (upvote)
+					newKarma += COMMENT_UPVOTE - COMMENT_DOWNVOTE;
+				else
+					newKarma += COMMENT_DOWNVOTE - COMMENT_UPVOTE;
+			} else {
+				if (upvote)
+					newKarma += COMMENT_UPVOTE;
+				else
+					newKarma += COMMENT_DOWNVOTE;
+			}
+
+			pstmt = con.prepareStatement(update);
+			pstmt.setInt(1, newKarma);
+			pstmt.setInt(2, user.getId());
+
+			pstmt.executeUpdate();
+		} catch (SQLException e) {
+			throw new MyThoughtsException("VoteManager.modifyKarma: failed to update receiver's karma: " + e.getMessage());
+		}
 	}
 
 }
