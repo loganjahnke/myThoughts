@@ -95,13 +95,13 @@
 		    		<input type="submit" name="changePswd" value="Change Password">
 		    	</form>
 	    	</p>
-	    	 
 	    	</div>
-	    	<#include "include/footer.ftl">
+	    	
 	    
       </div> 
 
-    
+   	<#include "include/footer.ftl">
+
     
     
     
