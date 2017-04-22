@@ -58,9 +58,9 @@
 		    			<li id="category" class="${category.getColor()}">${category.getName()}</li>	
 		    		</#list>
 		    	</ul>
-		    	<a href="" onclick="agree(${topic.getId()})"><span class="button" id="agreebtn">Agree</span></a>
-		    	<a href="" onclick="disagree(${topic.getId()})"><span class="button" id="disagreebtn">Disagree</span></a>
-		    	<a class="no-decoration" href="user?username=${topic.getUser().getUsername()}">${topic.getUser().getUsername()}</a>
+		    	<span class="button" id="agreebtn"><a href="" onclick="agree(${topic.getId()})">Agree</a></span>
+		    	<span class="button" id="disagreebtn"><a href="" onclick="disagree(${topic.getId()})">Disagree</a></span>
+		    	<a class="no-decoration" id="user" href="user?username=${topic.getUser().getUsername()}">${topic.getUser().getUsername()}</a>
 	            |
 	            <span class="green no-background">${topic.getUser().getKarma()}<span class="bold">k</span></span>
 	    	</div>
@@ -134,8 +134,8 @@
     					<a class="no-decoration" href="user?username=${comment.getUser().getUsername()}">${comment.getUser().getUsername()}</a>
 			            |
 			            <span class="green no-background">${comment.getUser().getKarma()}<span class="bold">k</span></span>
-			            <a href="" onclick="agree(${comment.getId()})"><span class="button" id="agreebtn">Agree</span></a>
-	    				<a href="" onclick="disagree(${comment.getId()})"><span class="button" id="disagreebtn">Disagree</span></a>
+			            <span class="button" id="agreebtn"><a href="" onclick="agree(${comment.getId()})">Agree</a></span>
+	    				<span class="button" id="disagreebtn"><a href="" onclick="disagree(${comment.getId()})">Disagree</a></span>
     				</div>
     			</div>
     			

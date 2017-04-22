@@ -36,6 +36,11 @@
     background-color: #4CAF50;
 }
 
+#container {
+	padding-left: 30px;
+	padding-right: 30px;
+}
+
 #topic {
 	display: block;
 	height: 100vh;
@@ -43,11 +48,13 @@
 
 #topic-categories {
 	display: block;
+	position: relative;
+	float: left;
+	width: 100px;
 }
 
 #category {
 	display: block;
-	float: left;
 	width: 10%;
 	padding: 2px;
 	text-align: center;
@@ -56,4 +63,20 @@
 #category i {
 	font-size: 36px;
 	border-radius: 100%;
+}
+
+#agreebtn {
+	background-color: #99B770;
+	border-radius: 25px;
+	padding: 10px;
+	width: 50px;
+	font-size: 18px;
+}
+
+#disagreebtn {
+	background-color: #D64B4E;
+	border-radius: 25px;
+	padding: 10px;
+	width: 50px;
+	font-size: 18px;
 }
