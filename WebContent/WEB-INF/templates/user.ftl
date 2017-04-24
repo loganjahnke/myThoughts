@@ -75,7 +75,7 @@
 						<td > ${user.getUsername()}</td>
 						<td > ${user.getEmail()}</td>
 						<#if user.getCreatedDate()?? >
-							<td > ${user.getCreatedDate()}</td>
+							<td > ${user.getCreatedDate()?date}</td>
 						</#if>
 						<#if nonadmin>
 							<td > ${user.getKarma()}</td>
