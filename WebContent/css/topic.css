@@ -46,6 +46,17 @@
 	height: 100vh;
 }
 
+#voteCount {
+	float: right;
+}
+
+#topicFooter {
+	list-style-type: none;
+    display: inline;
+	justify-content: center;
+    text-decoration: none;
+}
+
 #topic-categories {
 	display: block;
 	position: relative;
@@ -53,9 +64,14 @@
 	width: 100px;
 }
 
+#decisionButtons {
+	align-items: center;
+    position: relative;
+    padding-right: 200px;
+}
+
 #category {
 	display: block;
-	width: 10%;
 	padding: 2px;
 	text-align: center;
 }
@@ -65,18 +81,39 @@
 	border-radius: 100%;
 }
 
+
+.button {
+	border-radius: 25px;
+	padding: 10px 50px;
+	font-size: 18px;
+}
+
+.button:hover {
+    cursor: pointer;
+}
+
+.button a {
+	text-decoration: none;
+}
+
+.button a:visited {
+    text-decoration: none;
+}
+
 #agreebtn {
 	background-color: #99B770;
-	border-radius: 25px;
-	padding: 10px;
-	width: 50px;
-	font-size: 18px;
 }
 
 #disagreebtn {
 	background-color: #D64B4E;
-	border-radius: 25px;
-	padding: 10px;
-	width: 50px;
-	font-size: 18px;
 }
+
+#userBlock {
+    float: right;
+}
+
+#addComment {
+    margin-top: 100px;
+}
+
+

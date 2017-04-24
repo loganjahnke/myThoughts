@@ -51,96 +51,108 @@
 	                <span class="no-background" id="downvote-${topic.getId()}"><a class="fake-link" onclick="requestLogin()"><i class="fa fa-caret-down"></i></a></span>
 	            </#if>
 	    	</div>
-	    	<h3 class="thin">${topic.getDescription()}</h3>
-	    	<div id="topicFooter">
-	    		<ul id="topic-categories">
+	    	<div id="topicMain"><h3 class="thin">${topic.getDescription()}</h3></div>
+	    	<ul id="topicFooter">
+	    		<li>
+                    <ul id="topic-categories">
 		    		<#list topic.getCategories() as category>
 		    			<li id="category" class="${category.getColor()}">${category.getName()}</li>	
 		    		</#list>
-		    	</ul>
-		    	<span class="button" id="agreebtn"><a href="" onclick="agree(${topic.getId()})">Agree</a></span>
-		    	<span class="button" id="disagreebtn"><a href="" onclick="disagree(${topic.getId()})">Disagree</a></span>
-		    	<a class="no-decoration" id="user" href="user?username=${topic.getUser().getUsername()}">${topic.getUser().getUsername()}</a>
-	            |
-	            <span class="green no-background">${topic.getUser().getKarma()}<span class="bold">k</span></span>
-	    	</div>
+                    </ul>
+                </li>
+		    	<li id="decisionButtons">
+		    		<span class="button" id="agreebtn"><a onclick="agree(${topic.getId()})">Agree</a></span>
+		    		<span class="button" id="disagreebtn"><a onclick="disagree(${topic.getId()})">Disagree</a></span>
+		    	</li>
+		    	<li id="userBlock">
+		    		<a class="no-decoration" id="user" href="user?username=${topic.getUser().getUsername()}">${topic.getUser().getUsername()}</a>
+	            	|
+	            	<span class="green no-background">${topic.getUser().getKarma()}<span class="bold">k</span></span>
+	            </li>
+	    	</ul>
+            <div id="addComment">
+                <textarea id="commentText" placeholder="Enter new comment here!"></textarea>
+                <a href="" onclick="submitComment">Submit!</a>
+            </div>
 	    </div>
     </div>
     <div id="comments">
-    	<#list comments as comment>
-    		<#if comment.doeAgreeWithTopic(topic.getId())>
-    			<div class="comment" id="agreeComment">
-    				<h5 class="bold">${comment.getSubject()}</h5>
-    				<p>${comment.getArgument()}</p>
-    				<div id="voteCount">
-			    		<#if !visitor && nonadmin && user.doesLike(comment)>
-			                <span class="bold green no-background" id="upvote-${comment.getId()}"><a class="fake-link" onclick="upvote(${comment.getId()})"><i class="fa fa-caret-up"></i></a></span>
-			                <span id="count-${comment.getId()}">${comment.getVote()}</span>
-			                <span class="no-background" id="downvote-${comment.getId()}"><a class="fake-link" onclick="downvote(${comment.getId()})"><i class="fa fa-caret-down"></i></a></span>
-			            <#elseif !visitor && nonadmin && user.doesDislike(comment)>
-			                <span class="no-background" id="upvote-${comment.getId()}"><a class="fake-link" onclick="upvote(${comment.getId()})"><i class="fa fa-caret-up"></i></a></span>
-			                <span id="count-${comment.getId()}">${comment.getVote()}</span>
-			                <span class="bold red no-background" id="downvote-${comment.getId()}"><a class="fake-link" onclick="downvote(${comment.getId()})"><i class="fa fa-caret-down"></i></a></span>
-			            <#elseif !visitor && !nonadmin>
-			                <span class="no-background" id="upvote-${comment.getId()}"><a><i class="fa fa-caret-up"></i></a></span>
-			                <span id="count-${comment.getId()}">${comment.getVote()}</span>
-			                <span class="no-background" id="downvote-${comment.getId()}"><a><i class="fa fa-caret-down"></i></a></span>
-			            <#elseif !visitor>
-			                <span class="no-background" id="upvote-${comment.getId()}"><a class="fake-link" onclick="upvote(${comment.getId()})"><i class="fa fa-caret-up"></i></a></span>
-			                <span id="count-${comment.getId()}">${comment.getVote()}</span>
-			                <span class="no-background" id="downvote-${comment.getId()}"><a class="fake-link" onclick="downvote(${topic.getId()})"><i class="fa fa-caret-down"></i></a></span>
-			            <#else>
-			                <span class="no-background" id="upvote-${comment.getId()}"><a class="fake-link" onclick="requestLogin()"><i class="fa fa-caret-up"></i></a></span>
-			                <span id="count-${comment.getId()}">${comment.getVote()}</span>
-			                <span class="no-background" id="downvote-${comment.getId()}"><a class="fake-link" onclick="requestLogin()"><i class="fa fa-caret-down"></i></a></span>
-			            </#if>
-    				</div>
-    				<div id="commentFooter">
-    					<a class="no-decoration" href="user?username=${comment.getUser().getUsername()}">${comment.getUser().getUsername()}</a>
-			            |
-			            <span class="green no-background">${comment.getUser().getKarma()}<span class="bold">k</span></span>
-			            <a href="" onclick="agree(${comment.getId()})"><span class="button" id="agreebtn">Agree</span></a>
-	    				<a href="" onclick="disagree(${comment.getId()})"><span class="button" id="disagreebtn">Disagree</span></a>
-    				</div>
-    			</div>
-    		<#else>
-    			<div class="comment" id="disagreeComment">
-    				<h5 class="bold">${comment.getSubject()}</h5>
-    				<p>${comment.getArgument()}</p>
-    				<div id="voteCount">
-			    		<#if !visitor && nonadmin && user.doesLike(comment)>
-			                <span class="bold green no-background" id="upvote-${comment.getId()}"><a class="fake-link" onclick="upvote(${comment.getId()})"><i class="fa fa-caret-up"></i></a></span>
-			                <span id="count-${comment.getId()}">${comment.getVote()}</span>
-			                <span class="no-background" id="downvote-${comment.getId()}"><a class="fake-link" onclick="downvote(${comment.getId()})"><i class="fa fa-caret-down"></i></a></span>
-			            <#elseif !visitor && nonadmin && user.doesDislike(comment)>
-			                <span class="no-background" id="upvote-${comment.getId()}"><a class="fake-link" onclick="upvote(${comment.getId()})"><i class="fa fa-caret-up"></i></a></span>
-			                <span id="count-${comment.getId()}">${comment.getVote()}</span>
-			                <span class="bold red no-background" id="downvote-${comment.getId()}"><a class="fake-link" onclick="downvote(${comment.getId()})"><i class="fa fa-caret-down"></i></a></span>
-			            <#elseif !visitor && !nonadmin>
-			                <span class="no-background" id="upvote-${comment.getId()}"><a><i class="fa fa-caret-up"></i></a></span>
-			                <span id="count-${comment.getId()}">${comment.getVote()}</span>
-			                <span class="no-background" id="downvote-${comment.getId()}"><a><i class="fa fa-caret-down"></i></a></span>
-			            <#elseif !visitor>
-			                <span class="no-background" id="upvote-${comment.getId()}"><a class="fake-link" onclick="upvote(${comment.getId()})"><i class="fa fa-caret-up"></i></a></span>
-			                <span id="count-${comment.getId()}">${comment.getVote()}</span>
-			                <span class="no-background" id="downvote-${comment.getId()}"><a class="fake-link" onclick="downvote(${topic.getId()})"><i class="fa fa-caret-down"></i></a></span>
-			            <#else>
-			                <span class="no-background" id="upvote-${comment.getId()}"><a class="fake-link" onclick="requestLogin()"><i class="fa fa-caret-up"></i></a></span>
-			                <span id="count-${comment.getId()}">${comment.getVote()}</span>
-			                <span class="no-background" id="downvote-${comment.getId()}"><a class="fake-link" onclick="requestLogin()"><i class="fa fa-caret-down"></i></a></span>
-			            </#if>
-    				</div>
-    				<div id="commentFooter">
-    					<a class="no-decoration" href="user?username=${comment.getUser().getUsername()}">${comment.getUser().getUsername()}</a>
-			            |
-			            <span class="green no-background">${comment.getUser().getKarma()}<span class="bold">k</span></span>
-			            <span class="button" id="agreebtn"><a href="" onclick="agree(${comment.getId()})">Agree</a></span>
-	    				<span class="button" id="disagreebtn"><a href="" onclick="disagree(${comment.getId()})">Disagree</a></span>
-    				</div>
-    			</div>
-    			
-    		</#if>
-    	</#list>
+        <div id="agreeComments">
+            <#list agreeComments as comment>
+                <div class="comment" id="agreeComment">
+                    <h5 class="bold">${comment.getSubject()}</h5>
+                    <p>${comment.getArgument()}</p>
+                    <div id="voteCount">
+                        <#if !visitor && nonadmin && user.doesLike(comment)>
+                            <span class="bold green no-background" id="upvote-${comment.getId()}"><a class="fake-link" onclick="upvote(${comment.getId()})"><i class="fa fa-caret-up"></i></a></span>
+                            <span id="count-${comment.getId()}">${comment.getVote()}</span>
+                            <span class="no-background" id="downvote-${comment.getId()}"><a class="fake-link" onclick="downvote(${comment.getId()})"><i class="fa fa-caret-down"></i></a></span>
+                        <#elseif !visitor && nonadmin && user.doesDislike(comment)>
+                            <span class="no-background" id="upvote-${comment.getId()}"><a class="fake-link" onclick="upvote(${comment.getId()})"><i class="fa fa-caret-up"></i></a></span>
+                            <span id="count-${comment.getId()}">${comment.getVote()}</span>
+                            <span class="bold red no-background" id="downvote-${comment.getId()}"><a class="fake-link" onclick="downvote(${comment.getId()})"><i class="fa fa-caret-down"></i></a></span>
+                        <#elseif !visitor && !nonadmin>
+                            <span class="no-background" id="upvote-${comment.getId()}"><a><i class="fa fa-caret-up"></i></a></span>
+                            <span id="count-${comment.getId()}">${comment.getVote()}</span>
+                            <span class="no-background" id="downvote-${comment.getId()}"><a><i class="fa fa-caret-down"></i></a></span>
+                        <#elseif !visitor>
+                            <span class="no-background" id="upvote-${comment.getId()}"><a class="fake-link" onclick="upvote(${comment.getId()})"><i class="fa fa-caret-up"></i></a></span>
+                            <span id="count-${comment.getId()}">${comment.getVote()}</span>
+                            <span class="no-background" id="downvote-${comment.getId()}"><a class="fake-link" onclick="downvote(${topic.getId()})"><i class="fa fa-caret-down"></i></a></span>
+                        <#else>
+                            <span class="no-background" id="upvote-${comment.getId()}"><a class="fake-link" onclick="requestLogin()"><i class="fa fa-caret-up"></i></a></span>
+                            <span id="count-${comment.getId()}">${comment.getVote()}</span>
+                            <span class="no-background" id="downvote-${comment.getId()}"><a class="fake-link" onclick="requestLogin()"><i class="fa fa-caret-down"></i></a></span>
+                        </#if>
+                    </div>
+                    <div id="commentFooter">
+                        <a class="no-decoration" href="user?username=${comment.getUser().getUsername()}">${comment.getUser().getUsername()}</a>
+                        |
+                        <span class="green no-background">${comment.getUser().getKarma()}<span class="bold">k</span></span>
+                        <a href="" onclick="agree(${comment.getId()})"><span class="button" id="agreebtn">Agree</span></a>
+                        <a href="" onclick="disagree(${comment.getId()})"><span class="button" id="disagreebtn">Disagree</span></a>
+                    </div>
+                </div>
+            </#list>
+        </div>
+        <div id="disagreeComments">
+            <#list disagreeComments as comment>
+                <div class="comment" id="disagreeComment">
+                    <h5 class="bold">${comment.getSubject()}</h5>
+                    <p>${comment.getArgument()}</p>
+                    <div id="voteCount">
+                        <#if !visitor && nonadmin && user.doesLike(comment)>
+                            <span class="bold green no-background" id="upvote-${comment.getId()}"><a class="fake-link" onclick="upvote(${comment.getId()})"><i class="fa fa-caret-up"></i></a></span>
+                            <span id="count-${comment.getId()}">${comment.getVote()}</span>
+                            <span class="no-background" id="downvote-${comment.getId()}"><a class="fake-link" onclick="downvote(${comment.getId()})"><i class="fa fa-caret-down"></i></a></span>
+                        <#elseif !visitor && nonadmin && user.doesDislike(comment)>
+                            <span class="no-background" id="upvote-${comment.getId()}"><a class="fake-link" onclick="upvote(${comment.getId()})"><i class="fa fa-caret-up"></i></a></span>
+                            <span id="count-${comment.getId()}">${comment.getVote()}</span>
+                            <span class="bold red no-background" id="downvote-${comment.getId()}"><a class="fake-link" onclick="downvote(${comment.getId()})"><i class="fa fa-caret-down"></i></a></span>
+                        <#elseif !visitor && !nonadmin>
+                            <span class="no-background" id="upvote-${comment.getId()}"><a><i class="fa fa-caret-up"></i></a></span>
+                            <span id="count-${comment.getId()}">${comment.getVote()}</span>
+                            <span class="no-background" id="downvote-${comment.getId()}"><a><i class="fa fa-caret-down"></i></a></span>
+                        <#elseif !visitor>
+                            <span class="no-background" id="upvote-${comment.getId()}"><a class="fake-link" onclick="upvote(${comment.getId()})"><i class="fa fa-caret-up"></i></a></span>
+                            <span id="count-${comment.getId()}">${comment.getVote()}</span>
+                            <span class="no-background" id="downvote-${comment.getId()}"><a class="fake-link" onclick="downvote(${topic.getId()})"><i class="fa fa-caret-down"></i></a></span>
+                        <#else>
+                            <span class="no-background" id="upvote-${comment.getId()}"><a class="fake-link" onclick="requestLogin()"><i class="fa fa-caret-up"></i></a></span>
+                            <span id="count-${comment.getId()}">${comment.getVote()}</span>
+                            <span class="no-background" id="downvote-${comment.getId()}"><a class="fake-link" onclick="requestLogin()"><i class="fa fa-caret-down"></i></a></span>
+                        </#if>
+                    </div>
+                    <div id="commentFooter">
+                        <a class="no-decoration" href="user?username=${comment.getUser().getUsername()}">${comment.getUser().getUsername()}</a>
+                        |
+                        <span class="green no-background">${comment.getUser().getKarma()}<span class="bold">k</span></span>
+                        <a href="" onclick="agree(${comment.getId()})"><span class="button" id="agreebtn">Agree</span></a>
+                        <a href="" onclick="disagree(${comment.getId()})"><span class="button" id="disagreebtn">Disagree</span></a>
+                    </div>
+                </div>
+            </#list>
+        </div>
     </div>
     <#include "include/footer.ftl">
 </body>

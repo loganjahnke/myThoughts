@@ -52,4 +52,24 @@ public class MyThoughtsController {
 	public ArrayList<Comment> getCommentsForTopic(DebateTopic topic) throws MyThoughtsException {
 		return pm.restoreComment(topic);
 	}
+	
+	public ArrayList<Comment> sortAgreeComment(ArrayList<Comment> comments) {
+		ArrayList<Comment> arrlist = new ArrayList<Comment>();
+		for(Comment c : comments) {
+			if(c.doesAgreeWithTopic(c.getDebateTopic().getId())) {
+				arrlist.add(c);
+			}
+		}
+		return arrlist;
+	}
+	
+	public ArrayList<Comment> sortDisagreeComment(ArrayList<Comment> comments) {
+		ArrayList<Comment> arrlist = new ArrayList<Comment>();
+		for(Comment c : comments) {
+			if(!c.doesAgreeWithTopic(c.getDebateTopic().getId())) {
+				arrlist.add(c);
+			}
+		}
+		return arrlist;
+	}
 }

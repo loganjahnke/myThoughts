@@ -81,9 +81,12 @@ public class ViewTopicServlet extends HttpServlet {
     			templateName = "topic.ftl";
     			DebateTopic topic = tlc.getTopic(topId);
     			comments = mtc.getCommentsForTopic(topic);
+    			ArrayList<Comment> agreeComments = mtc.sortAgreeComment(comments);
+    			ArrayList<Comment> disagreeComments = mtc.sortDisagreeComment(comments);
     			
     			root.put("topic", topic);
-    			root.put("comments", comments);
+    			root.put("agreeComments", agreeComments);
+    			root.put("disagreeComments", disagreeComments);
     			root.put("user", session.getUser());
     			root.put("visitor", session.getUser() == null);
     			root.put("nonadmin", !session.getIsAdmin());
