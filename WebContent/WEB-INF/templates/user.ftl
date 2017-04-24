@@ -3,7 +3,7 @@
 
 <head>
     <meta charset="utf-8">
-    <title>${user.getFirstname()} ${user.getLastname()}</title>
+    <title>${viewing.getFirstname()} ${viewing.getLastname()}</title>
     <!-- Styling -->
     <#include "include/style.ftl">
     <link rel="stylesheet" href="css/registered-index.css">
@@ -17,18 +17,19 @@
 <body>
     <#include "include/header.ftl">
 
-    
-   
+
+
         <div id ="content">
           <form action="user" method="post">
           	<#if nonadmin>
-	   		<button class="mt-button-tiny gray" type="submit" name="createdTopics">See topics you created</button>
-	        <button class="mt-button-tiny gray" type="submit" name="commentedTopics">See topics you commented on</button>
+          	<input id="username" name="username" value="${viewing.getUsername()}" hidden />
+	   		<button class="mt-button gray" type="submit" name="createdTopics">${viewing.getFirstname()}'s<br/>topics</button>
+	        <button class="mt-button gray" type="submit" name="commentedTopics">${viewing.getFirstname()}'s<br/>comments</button>
 	        </#if>
 	      </form>
-	       
-	
-	    
+
+
+
 	    <#if wrongPassword??>
 	    <div id= "pswdMsg">
 	    	<#if wrongPassword>
@@ -38,9 +39,9 @@
 	    	</#if>
 	    </div>
 	    </#if>
-	    
+
 	    <table class="datatable">
-	
+
 					<!--Prints out the columns as table heads -->
 
 					<th >
@@ -55,38 +56,37 @@
 					<th >
 						Email
 					</th>
-					<#if user.getCreatedDate()?? >
+					<#if viewing.getCreatedDate()?? >
 						<th >
-					
+
 						Created Date
 						</th>
-						
+
 					</#if>
 					<#if nonadmin>
 						<th>Karma</th>
 					</#if>
 
-		
+
 					<tr>
-						
-						
-						<td > ${user.getFirstname()}</td>
-						<td > ${user.getLastname()}</td>
-						<td > ${user.getUsername()}</td>
-						<td > ${user.getEmail()}</td>
-						<#if user.getCreatedDate()?? >
-							<td > ${user.getCreatedDate()}</td>
+						<td > ${viewing.getFirstname()}</td>
+						<td > ${viewing.getLastname()}</td>
+						<td > ${viewing.getUsername()}</td>
+						<td > ${viewing.getEmail()}</td>
+						<#if viewing.getCreatedDate()?? >
+							<td > ${viewing.getCreatedDate()}</td>
 						</#if>
 						<#if nonadmin>
-							<td > ${user.getKarma()}</td>
+							<td > ${viewing.getKarma()}</td>
 						</#if>
 					</tr>
-		
-		
+
+
 			</table>
-			
+
+			<#if mypage>
 			<button class="mt-button-tiny gray" onclick= "showPswdForm() ">Change Your Password</button>
-			
+
 			 <div id="changePassword">
 			 <p>
 		    	<form action="user" method="post">
@@ -95,19 +95,19 @@
 		    		<input type="submit" name="changePswd" value="Change Password">
 		    	</form>
 	    	</p>
+	    	</#if>
 	    	</div>
-	    	
-	    
-      </div> 
+
+
+      </div>
 
    	<#include "include/footer.ftl">
 
-    
-    
-    
+
+
+
 </body>
 
 </html>
 
 
-        

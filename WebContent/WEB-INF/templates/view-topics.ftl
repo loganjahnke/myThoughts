@@ -41,7 +41,7 @@
                     <div class="user-links">
                         <ul>
                             <li>
-                                <a class="no-decoration" href="user?username=${topic.getUser().getUsername()}">${topic.getUser().getUsername()}</a>
+                                <a class="no-decoration" href="user-view?username=${topic.getUser().getUsername()}">${topic.getUser().getUsername()}</a>
                                 |
                                 <span class="green no-background">${topic.getUser().getKarma()}<span class="bold">k</span></span>
                             </li>

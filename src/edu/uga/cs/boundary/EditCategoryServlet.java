@@ -50,6 +50,8 @@ public class EditCategoryServlet extends HttpServlet {
         HttpSession httpSession = null;
         String ssid = null;
         Session session = null;
+        
+        MyThoughtsController mtc = new MyThoughtsController();
 
         // Get Session
         try {
@@ -67,14 +69,13 @@ public class EditCategoryServlet extends HttpServlet {
         	return;
         }
 
-        String name = request.getParameter("name");
-        String description = request.getParameter("description");
-        String icon = request.getParameter("icon");
-        String color = request.getParameter("color");
-
-        DebateCategory dc = new DebateCategory(name, description, icon, color);
-        if (request.getParameter("id") != null)
-            dc.setId(Integer.parseInt(request.getParameter("id")));
+        DebateCategory dc = new DebateCategory();
+        
+        try {
+        	dc = mtc.getCategory(request.getParameter("name"));
+        } catch (MyThoughtsException mte) {
+        	MTError.error(processor, response, cfg, mte);
+        }
 
         root.put("user", session.getUser());
         root.put("visitor", session.getUser() == null);
