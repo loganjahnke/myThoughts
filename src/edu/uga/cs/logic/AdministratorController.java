@@ -45,8 +45,7 @@ public class AdministratorController {
 
 	public boolean toggleModerator(int userId) throws MyThoughtsException {
 		User user = new User();
-		user.setId(userId);
-		user = (User) pm.restorePerson(user);
+		user = (User) pm.restorePerson(userId);
 		user.setModerator(!user.isModerator());
 		pm.savePersonWithoutPassword(user);
 		return user.isModerator();

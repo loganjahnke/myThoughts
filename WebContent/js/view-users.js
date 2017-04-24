@@ -12,9 +12,9 @@ function toggle(id) {
         userid: id
     }).done(function(responseText) {
         if (responseText == "moderator") {
-            document.getElementById("toggle-" + id).innerHTML = "<button onclick='toggle(" + id + ")' class='mt-button-tiny'><i class='fa fa-times'></i> Remove Moderator</button></li>";
+            document.getElementById("toggle-" + id).innerHTML = "<a onclick='toggle(" + id + ")' class='mt-button-tiny'><i class='fa fa-times'></i> Remove Moderator</a></li>";
         } else {
-            document.getElementById("toggle-" + id).innerHTML = "<button onclick='toggle(" + id + ")' class='mt-button-tiny'><i class='fa fa-male'></i> Assign Moderator</button></li>";
+            document.getElementById("toggle-" + id).innerHTML = "<a onclick='toggle(" + id + ")' class='mt-button-tiny'><i class='fa fa-male'></i> Assign Moderator</a></li>";
         }
     });
 }
