@@ -47,6 +47,8 @@ function agree(id) {
 function addComment(id) {
     $.post("feature", {
         id: id,
+        subj: document.getElementById("commentSubject");
+        arg: document.getElementById("commentArgument");
         do: "addComment"
     }).done(function(responseText) {
 

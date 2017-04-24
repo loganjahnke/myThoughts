@@ -71,8 +71,9 @@
 	            </li>
 	    	</ul>
             <div id="addComment">
-                <textarea id="commentText" placeholder="Enter new comment here!"></textarea>
-                <a href="" onclick="submitComment">Submit!</a>
+                <textarea id="commentSubject" placeholder="Enter comment subject!" cols="50"></textarea>
+                <textarea id="commentArgument" placeholder="Enter new comment here!" rows="4" cols="50"></textarea>
+                <a href="" onclick="addComment(${topic.getId()})" >Submit!</a>
             </div>
 	    </div>
     </div>

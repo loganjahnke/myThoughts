@@ -72,4 +72,8 @@ public class MyThoughtsController {
 		}
 		return arrlist;
 	}
+	
+	public int saveComment(Comment c) throws MyThoughtsException {
+		return pm.saveComment(c);
+	}
 }

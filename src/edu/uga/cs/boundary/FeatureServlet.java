@@ -42,6 +42,7 @@ public class FeatureServlet extends HttpServlet {
 	protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 		AdministratorController ac = new AdministratorController();
 		UserController uc = new UserController();
+		MyThoughtsController mtc = new MyThoughtsController();
 
 		int id = Integer.parseInt(request.getParameter("id"));
 		String whattodo = request.getParameter("do");
@@ -72,6 +73,10 @@ public class FeatureServlet extends HttpServlet {
 				session.setUser(uc.upvoteTopic((User) session.getUser(), id));
 			else if (whattodo.equals("downvote") && !session.getIsAdmin())
 				session.setUser(uc.downvoteTopic((User) session.getUser(), id));
+			else if (whattodo.equals("addComment")) {
+				String subject = request.getParameter("subj");
+				String argument = request.getParameter("arg");
+			}
 		} catch (Exception e) {
 			System.out.println("not featured");
 		}
