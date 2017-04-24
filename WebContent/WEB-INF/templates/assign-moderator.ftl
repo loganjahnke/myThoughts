@@ -24,7 +24,7 @@
                     <div class="user-links">
                         <ul>
                             <li>
-                                <a class="no-decoration" href="user?username=${u.getUsername()}">${u.getUsername()}</a>
+                                <a class="no-decoration" href="user-view?username=${u.getUsername()}">${u.getUsername()}</a>
                                 |
                                 <span class="green no-background">${u.getKarma()}<span class="bold">k</span></span>
                             </li>
