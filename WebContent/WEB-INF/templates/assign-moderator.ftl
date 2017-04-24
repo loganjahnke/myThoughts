@@ -24,19 +24,19 @@
                     <div class="user-links">
                         <ul>
                             <li>
-                                <a class="no-decoration" href="user?username=${u.getUsername()}">${u.getUsername()}</a>
+                                <a class="no-decoration" href="user-view?username=${u.getUsername()}">${u.getUsername()}</a>
                                 |
                                 <span class="green no-background">${u.getKarma()}<span class="bold">k</span></span>
                             </li>
                             <li>${u.getEmail()}</li>
                             <li>${u.getCreatedDate()}</li>
-                            <li id="toggle-${u.getId()}"><button onclick="toggle(${u.getId()})" class="mt-button-tiny">
+                            <li id="toggle-${u.getId()}"><a onclick="toggle(${u.getId()})" class="mt-button-tiny">
                             <#if u.isModerator() == false>
                                 <i class="fa fa-male"></i> Assign Moderator
                             <#else>
                                 <i class="fa fa-times"></i> Remove Moderator
                             </#if>
-                            </button></li>
+                            </a></li>
                         </ul>
                     </div>
                 </li>

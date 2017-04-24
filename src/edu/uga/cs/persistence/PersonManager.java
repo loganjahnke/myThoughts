@@ -225,7 +225,7 @@ public class PersonManager {
 				}
 
 				if (person.isPersistent())
-					pstmt.setInt(9, personID);
+					pstmt.setInt(8, personID);
 
 				pstmt.executeUpdate();
 
@@ -301,6 +301,50 @@ public class PersonManager {
 					u.setModerator(rs.getBoolean(8));
 					u.setKarma(rs.getInt(9));
 					u = vm.restoreVotes(u);
+					return u;
+				}
+			} else
+				return null;
+		} catch (SQLException e) {
+			throw new MyThoughtsException("PersonManager.restore: failed to restore Person: " + e.getMessage());
+		}
+	}
+	
+	/**
+	 * Attempts to restore a Person object from the database
+	 * @param person - the person to SELECT
+	 * @return the Person object (Administrator or User)
+	 * @throws MyThoughtsException
+	 */
+	public Person restore(int id) throws MyThoughtsException {
+		String select = "SELECT id, firstname, lastname, username, email, created, isAdmin, isModerator, karma " +
+						"FROM person " +
+						"WHERE id = " + id;
+
+		try {
+			Statement stmt = con.createStatement();
+			stmt.execute(select);
+			ResultSet rs = stmt.getResultSet();
+			if (rs.next()) {
+				if (rs.getBoolean(7)) {
+					Administrator a = new Administrator();
+					a.setId(rs.getInt(1));
+					a.setFirstname(rs.getString(2));
+					a.setLastname(rs.getString(3));
+					a.setUsername(rs.getString(4));
+					a.setEmail(rs.getString(5));
+					a.setCreatedDate(rs.getDate(6));
+					return a;
+				} else {
+					User u = new User();
+					u.setId(rs.getInt(1));
+					u.setFirstname(rs.getString(2));
+					u.setLastname(rs.getString(3));
+					u.setUsername(rs.getString(4));
+					u.setEmail(rs.getString(5));
+					u.setCreatedDate(rs.getDate(6));
+					u.setModerator(rs.getBoolean(8));
+					u.setKarma(rs.getInt(9));
 					return u;
 				}
 			} else

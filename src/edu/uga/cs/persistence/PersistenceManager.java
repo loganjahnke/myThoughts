@@ -83,6 +83,16 @@ public class PersistenceManager {
 	public Person restorePerson(Person person) throws MyThoughtsException {
 		return pm.restore(person);
 	}
+	
+	/**
+	 * SELECTs a Person from the database
+	 * @param person - the person to SELECT
+	 * @return the Person object
+	 * @throws MyThoughtsException
+	 */
+	public Person restorePerson(int id) throws MyThoughtsException {
+		return pm.restore(id);
+	}
 
 	/**
 	 * SELECTs a Person from the database
