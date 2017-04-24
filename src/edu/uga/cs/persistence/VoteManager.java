@@ -299,14 +299,16 @@ public class VoteManager {
 			while (rs.next()) {
 				// Get Comment object and insert into Person's like/upvote
 				Comment c = pm.restoreComment(new Comment(rs.getInt(5)));
-				if (rs.getObject(1, Boolean.class) == true)
-					user.addUpvote(c);
-				else if (rs.getObject(2, Boolean.class) == true)
-					user.addDownvote(c);
-				if (rs.getObject(3, Boolean.class) == true)
-					user.addAgree(c);
-				else if (rs.getObject(4, Boolean.class) == true)
-					user.addDisagree(c);
+				if (c != null) {
+					if (rs.getObject(1, Boolean.class) == true)
+						user.addUpvote(c);
+					else if (rs.getObject(2, Boolean.class) == true)
+						user.addDownvote(c);
+					if (rs.getObject(3, Boolean.class) == true)
+						user.addAgree(c);
+					else if (rs.getObject(4, Boolean.class) == true)
+						user.addDisagree(c);
+				}
 			}
 		} catch (SQLException e) {
 			throw new MyThoughtsException("PersonManager.restore: failed to restore Person: " + e.getMessage());
@@ -328,14 +330,16 @@ public class VoteManager {
 			while (rs.next()) {
 				// Get DebateTopic object and insert into Person's like/upvote
 				DebateTopic dt = pm.restoreDebateTopic(new DebateTopic(rs.getInt(5)));
-				if (rs.getObject(1, Boolean.class) == true)
-					user.addUpvote(dt);
-				else if (rs.getObject(2, Boolean.class) == true)
-					user.addDownvote(dt);
-				if (rs.getObject(3, Boolean.class) == true)
-					user.addAgree(dt);
-				else if (rs.getObject(4, Boolean.class) == true)
-					user.addDisagree(dt);
+				if (dt != null) {
+					if (rs.getObject(1, Boolean.class) == true)
+						user.addUpvote(dt);
+					else if (rs.getObject(2, Boolean.class) == true)
+						user.addDownvote(dt);
+					if (rs.getObject(3, Boolean.class) == true)
+						user.addAgree(dt);
+					else if (rs.getObject(4, Boolean.class) == true)
+						user.addDisagree(dt);
+				}
 			}
 		} catch (SQLException e) {
 			throw new MyThoughtsException("PersonManager.restore: failed to restore Person: " + e.getMessage());
@@ -413,9 +417,9 @@ public class VoteManager {
 		String select = "SELECT COUNT(cv1.upvote), COUNT(cv2.downvote) " +
 						"FROM comment c " +
 						"LEFT OUTER JOIN comment_vote cv1 " +
-							"ON c.id = cv1.topic_id AND cv1.upvote = true " +
+							"ON c.id = cv1.comment_id AND cv1.upvote = true " +
 						"LEFT OUTER JOIN comment_vote cv2 " +
-							"ON c.id = cv2.topic_id AND cv2.downvote = true " +
+							"ON c.id = cv2.comment_id AND cv2.downvote = true " +
 						"WHERE c.id = " + c.getId();
 
 		try {
@@ -432,9 +436,9 @@ public class VoteManager {
 		select = "SELECT COUNT(cv1.agrees), COUNT(cv2.disagrees) " +
 						"FROM comment c " +
 						"LEFT OUTER JOIN comment_vote cv1 " +
-							"ON c.id = cv1.topic_id AND cv1.agrees = true " +
+							"ON c.id = cv1.comment_id AND cv1.agrees = true " +
 						"LEFT OUTER JOIN comment_vote cv2 " +
-							"ON c.id = cv2.topic_id AND cv2.disagrees = true " +
+							"ON c.id = cv2.comment_id AND cv2.disagrees = true " +
 						"WHERE c.id = " + c.getId();
 
 		try {

@@ -96,7 +96,7 @@ public class AuthenticateServlet extends HttpServlet {
             		categories.remove(ran);
             }
 
-        	dt = tlc.getMostRecentFeatured();
+        	dt = tlc.getFeatured();
 		} catch (MyThoughtsException mte) {
 			MTError.error(processor, response, cfg, mte);
 			return;

@@ -1,7 +1,6 @@
 package edu.uga.cs.boundary;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -13,9 +12,6 @@ import javax.servlet.http.HttpSession;
 import edu.uga.cs.MyThoughtsException;
 import edu.uga.cs.logic.MyThoughtsController;
 import edu.uga.cs.logic.TopicListController;
-import edu.uga.cs.logic.UserController;
-import edu.uga.cs.object.DebateCategory;
-import edu.uga.cs.object.Person;
 import edu.uga.cs.object.User;
 import edu.uga.cs.persistence.DbAccessInterface;
 import edu.uga.cs.persistence.PersonManager;
@@ -25,7 +21,6 @@ import freemarker.template.Configuration;
 import freemarker.template.DefaultObjectWrapperBuilder;
 import freemarker.template.SimpleHash;
 import freemarker.template.TemplateExceptionHandler;
-import java.sql.Connection;
 
 /**
  * Class to deal with user options: viewing their personal topics and changing their password
@@ -65,18 +60,22 @@ public class UserServlet extends HttpServlet {
             MTError.error(processor, response, cfg, mte);
             return;
         }
+        
+        MyThoughtsController mtc = new MyThoughtsController();
 		
         try{
+        	User user = new User();
+        	user = mtc.getUser(request.getParameter("username"));
 			if(request.getParameter("newPassword") != null) changePassword(request, response);
-			else if(request.getParameter("createdTopics") != null) showTopics(false, response);
-			else if(request.getParameter("commentedTopics") != null) showTopics(true,response);
+			else if(request.getParameter("createdTopics") != null) showTopics(false, response, user);
+			else if(request.getParameter("commentedTopics") != null) showTopics(true,response, user);
         } catch(MyThoughtsException mte){
         	MTError.error(processor, response, cfg, mte);
 			return;
         }
 	}
 	
-	public void showTopics(boolean byComment, HttpServletResponse response) throws MyThoughtsException, ServletException, IOException{
+	public void showTopics(boolean byComment, HttpServletResponse response, User user) throws MyThoughtsException, ServletException, IOException{
 		TemplateProcessor tp = new TemplateProcessor(templateDir, cfg);
 		DefaultObjectWrapperBuilder db = new DefaultObjectWrapperBuilder(Configuration.VERSION_2_3_25);
 		SimpleHash root = new SimpleHash(db.build());
@@ -90,10 +89,10 @@ public class UserServlet extends HttpServlet {
 		TopicListController tlc = new TopicListController();
 		
 		if(byComment){
-			root.put("topics", tlc.getCommentedTopics((User)session.getUser()));
+			root.put("topics", tlc.getCommentedTopics(user));
 			tp.processTemplate(templateName, root, response);
 		}else{
-			root.put("topics", tlc.getTopics((User)session.getUser()));
+			root.put("topics", tlc.getTopics(user));
 			tp.processTemplate("view-topics.ftl", root, response);
 		}
 	}

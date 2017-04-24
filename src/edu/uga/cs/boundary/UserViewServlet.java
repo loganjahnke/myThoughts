@@ -15,7 +15,8 @@
 	import edu.uga.cs.MyThoughtsException;
 	import edu.uga.cs.logic.*;
 	import edu.uga.cs.object.DebateCategory;
-	import edu.uga.cs.session.Session;
+import edu.uga.cs.object.User;
+import edu.uga.cs.session.Session;
 	import edu.uga.cs.session.SessionManager;
 	import freemarker.template.Configuration;
 	import freemarker.template.DefaultObjectWrapperBuilder;
@@ -74,11 +75,27 @@
 
 	        templateName = "user.ftl";
 	        
-
+	        boolean mypage = true;
+	        String username = "";
+	        User user = new User();
+	        
+	        try {
+		        if (request.getParameter("username") != null) {
+		        	mypage = false;
+		        	username = request.getParameter("username");
+		        	user = mtc.getUser(username);
+		        }
+	        } catch (MyThoughtsException e) {
+	        	MTError.error(processor, response, cfg, e);
+	        	return;
+	        }
+	        
+	        root.put("viewing", mypage ? session.getUser() : user);
 	        root.put("user", session.getUser());
 	        root.put("visitor", session.getUser() == null);
 	        root.put("nonadmin", !session.getIsAdmin());
 	        root.put("categories", categories);
+	        root.put("mypage", mypage);
 
 	        processor.processTemplate(templateName, root, response);
 		}

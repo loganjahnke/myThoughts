@@ -3,6 +3,7 @@ package edu.uga.cs.logic;
 import java.sql.Connection;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.concurrent.ThreadLocalRandom;
 
 import edu.uga.cs.MyThoughtsException;
 import edu.uga.cs.object.*;
@@ -44,10 +45,10 @@ public class TopicListController {
 		return pm.restoreDebateTopic(date);
 	}
 
-	public DebateTopic getMostRecentFeatured() throws MyThoughtsException {
+	public DebateTopic getFeatured() throws MyThoughtsException {
 		ArrayList<DebateTopic> dtList = getTopics(new DebateCategory("Featured", "", "", ""));
 		if (dtList.size() > 0)
-			return dtList.get(0);
+			return dtList.get(ThreadLocalRandom.current().nextInt(0, dtList.size()));
 		else
 			return new DebateTopic();
 	}
