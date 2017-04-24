@@ -41,7 +41,24 @@ function downvote(id) {
 }
 
 function agree(id) {
-
+    var name = "topic";
+    if (!document.getElementById(name).classList.contains('red')) {
+        animate(name);
+        $.post("feature", {
+            id: id,
+            do: "downvote"
+        }).done(function(responseText) {
+            if (document.getElementById("upvote-" + id).classList.contains('green')) {
+                document.getElementById("count-" + id).innerHTML -= 2;
+            } else {
+                document.getElementById("count-" + id).innerHTML -= 1;
+            }
+            document.getElementById("upvote-" + id).classList.remove('green');
+            document.getElementById("upvote-" + id).classList.remove('bold');
+            document.getElementById(name).classList.add('red');
+            document.getElementById(name).classList.add('bold');
+        });
+    }
 }
 
 function addComment(id) {
