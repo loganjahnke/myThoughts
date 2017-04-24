@@ -29,6 +29,12 @@ body {
     color: #FFFFFF;
 }
 
+.light-gray,
+.light-grey {
+    background-color: rgba(180, 180, 180, 0.7);
+    color: #000000;
+}
+
 .blue > a:hover {
     color: #0082B9;
 }
@@ -43,6 +49,10 @@ body {
 
 .no-background {
 	background: none;
+}
+
+.black-font {
+    color: #000000 !important;
 }
 
 /*=====================
