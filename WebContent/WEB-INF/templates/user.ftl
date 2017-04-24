@@ -73,7 +73,7 @@
 						<td > ${viewing.getLastname()}</td>
 						<td > ${viewing.getUsername()}</td>
 						<td > ${viewing.getEmail()}</td>
-						<#if viewing.getCreatedDate()?date>
+						<#if viewing.getCreatedDate()??>
 							<td > ${viewing.getCreatedDate()}</td>
 						</#if>
 						<#if nonadmin>
