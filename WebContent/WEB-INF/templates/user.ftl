@@ -74,7 +74,7 @@
 						<td > ${viewing.getUsername()}</td>
 						<td > ${viewing.getEmail()}</td>
 						<#if viewing.getCreatedDate()??>
-							<td > ${viewing.getCreatedDate()}</td>
+							<td > ${viewing.getCreatedDate()?date}</td>
 						</#if>
 						<#if nonadmin>
 							<td > ${viewing.getKarma()}</td>
