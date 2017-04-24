@@ -13,6 +13,7 @@ import javax.servlet.http.HttpSession;
 import edu.uga.cs.MyThoughtsException;
 import edu.uga.cs.logic.*;
 import edu.uga.cs.object.User;
+import edu.uga.cs.object.*;
 import edu.uga.cs.session.Session;
 import edu.uga.cs.session.SessionManager;
 import freemarker.template.Configuration;
@@ -43,6 +44,7 @@ public class FeatureServlet extends HttpServlet {
 		AdministratorController ac = new AdministratorController();
 		UserController uc = new UserController();
 		MyThoughtsController mtc = new MyThoughtsController();
+		TopicListController tlc = new TopicListController();
 
 		int id = Integer.parseInt(request.getParameter("id"));
 		String whattodo = request.getParameter("do");
@@ -76,6 +78,15 @@ public class FeatureServlet extends HttpServlet {
 			else if (whattodo.equals("addComment")) {
 				String subject = request.getParameter("subj");
 				String argument = request.getParameter("arg");
+				DebateTopic topic = tlc.getTopic(id);
+				
+				Comment c = new Comment();
+				c.setSubject(subject);
+				c.setArgument(argument);
+				c.setUser((User) session.getUser());
+				c.setDebateTopic(topic);
+				
+				mtc.saveComment(c);
 			}
 		} catch (Exception e) {
 			System.out.println("not featured");

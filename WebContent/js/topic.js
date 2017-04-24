@@ -51,6 +51,5 @@ function addComment(id) {
         arg: document.getElementById("commentArgument");
         do: "addComment"
     }).done(function(responseText) {
-
     });
 }
