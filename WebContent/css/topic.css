@@ -36,14 +36,6 @@
     background-color: #4CAF50;
 }
 
-#container {
-    width: 95%;
-	padding-left: 30px;
-	padding-right: 30px;
-	height: 450px;
-	border-bottom: 1px solid black;
-}
-
 #topic {
 	display: block;
     width: 100%;

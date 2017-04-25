@@ -70,6 +70,7 @@
 	    	</ul>
 	    </div>
     </div>
+    <#if !visitor>
     <div id="comments">
         <div id="addComment">
             <textarea id="commentSubject" placeholder="Enter comment subject!" cols="50"></textarea>
@@ -108,7 +109,7 @@
                         <a class="no-decoration" href="user?username=${comment.getUser().getUsername()}">${comment.getUser().getUsername()}</a>
                         |
                         <span class="green no-background">${comment.getUser().getKarma()}<span class="bold">k</span></span>
-                        
+
                     </div>
                 </div>
             </#list>
@@ -145,11 +146,13 @@
                         <a class="no-decoration" href="user?username=${comment.getUser().getUsername()}">${comment.getUser().getUsername()}</a>
                         |
                         <span class="green no-background">${comment.getUser().getKarma()}<span class="bold">k</span></span>
-                      
                     </div>
                 </div>
             </#list>
         </div>
     </div>
+    <#else>
+    <h2>Login to see comments!</h2>
+    </#if>
 </body>
 </html>
