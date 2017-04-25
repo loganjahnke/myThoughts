@@ -153,6 +153,5 @@
             </#list>
         </div>
     </div>
-    <#include "include/footer.ftl">
 </body>
 </html>

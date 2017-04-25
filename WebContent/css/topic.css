@@ -38,6 +38,10 @@
 
 #container {
     width: 95%;
+	padding-left: 30px;
+	padding-right: 30px;
+	height: 450px;
+	border-bottom: 1px solid black;
 }
 
 #topic {
@@ -111,4 +115,16 @@
     margin-top: 100px;
 }
 
+#comments{
+	padding: 5%;
+}
 
+#agreeComments{
+	float: left;
+	width: 50%;
+}
+
+#disagreeComments{
+	float: right;
+	width: 50%;
+}
