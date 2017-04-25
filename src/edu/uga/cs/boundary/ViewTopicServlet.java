@@ -85,6 +85,7 @@ public class ViewTopicServlet extends HttpServlet {
     			ArrayList<Comment> disagreeComments = mtc.sortDisagreeComment(comments);
     			
     			root.put("topic", topic);
+    			root.put("debateTopicId", topicId);
     			root.put("agreeComments", agreeComments);
     			root.put("disagreeComments", disagreeComments);
     			root.put("user", session.getUser());

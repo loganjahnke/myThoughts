@@ -86,7 +86,14 @@ public class FeatureServlet extends HttpServlet {
 				c.setUser((User) session.getUser());
 				c.setDebateTopic(topic);
 				
-				mtc.saveComment(c);
+				int result = mtc.saveComment(c);
+				
+				if (result != -1) {
+					System.out.println("Saved");
+				}
+				else {
+					System.out.println("Failed!");
+				}
 			}
 		} catch (Exception e) {
 			System.out.println("not featured");
