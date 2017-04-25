@@ -108,8 +108,7 @@
                         <a class="no-decoration" href="user?username=${comment.getUser().getUsername()}">${comment.getUser().getUsername()}</a>
                         |
                         <span class="green no-background">${comment.getUser().getKarma()}<span class="bold">k</span></span>
-                        <a href="" onclick="agree(${comment.getId()})"><span class="button" id="agreebtn">Agree</span></a>
-                        <a href="" onclick="disagree(${comment.getId()})"><span class="button" id="disagreebtn">Disagree</span></a>
+                        
                     </div>
                 </div>
             </#list>
@@ -146,8 +145,7 @@
                         <a class="no-decoration" href="user?username=${comment.getUser().getUsername()}">${comment.getUser().getUsername()}</a>
                         |
                         <span class="green no-background">${comment.getUser().getKarma()}<span class="bold">k</span></span>
-                        <a href="" onclick="agree(${comment.getId()})"><span class="button" id="agreebtn">Agree</span></a>
-                        <a href="" onclick="disagree(${comment.getId()})"><span class="button" id="disagreebtn">Disagree</span></a>
+                      
                     </div>
                 </div>
             </#list>
