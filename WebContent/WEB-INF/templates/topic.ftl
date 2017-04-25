@@ -59,7 +59,7 @@
 	    	</div>
 	    	<div id="topicMain"><h3 class="thin">${topic.getDescription()}</h3></div>
 	    	<ul id="topicFooter">
-	    		<li id="category" class="${category.getColor()}">${category.getName()}</li>
+	    		<li id="category" class="${category.getColor()} black-font">${category.getName()}</li>
 		    	<li><a class="green mt-button-round" onclick="agree(${topic.getId()})">Agree</a></li>
                 <li><a class="red mt-button-round" onclick="disagree(${topic.getId()})">Disagree</a></li>
                 <li>
