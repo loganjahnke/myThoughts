@@ -45,45 +45,37 @@
     width: 100%;
     padding-left: 30px;
     padding-right: 30px;
-    padding-bottom: 30px;
+    padding-bottom: 50px;
     border-bottom: 1px solid black;
 }
 
 #voteCount {
 	float: right;
+    font-size: 24px;
 }
 
 #topicFooter {
-	list-style-type: none;
-    display: inline;
-	justify-content: center;
-    text-decoration: none;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+#topicFooter li {
+    color: #999;
+    float: left;
+    margin-right: 8%;
 }
 
 #topic-categories {
 	display: block;
-	position: relative;
-	float: left;
 	width: 100px;
 }
 
-#decisionButtons {
-	align-items: center;
-    position: relative;
-    padding-right: 200px;
-}
-
 #category {
-	display: block;
+    width: 100px;
 	padding: 2px;
 	text-align: center;
 }
-
-#category i {
-	font-size: 36px;
-	border-radius: 100%;
-}
-
 
 .button {
 	border-radius: 25px;
