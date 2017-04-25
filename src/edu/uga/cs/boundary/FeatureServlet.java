@@ -95,7 +95,6 @@ public class FeatureServlet extends HttpServlet {
 					System.out.println("Failed!");
 				}
 
-				mtc.saveComment(c);
 			} else if (whattodo.equals("agreeTopic")) {
 				uc.agreeWithTopic((User) session.getUser(), id);
 			} else if (whattodo.equals("disagreeTopic")) {
