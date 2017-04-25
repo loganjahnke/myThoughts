@@ -84,6 +84,8 @@ public class UserServlet extends HttpServlet {
 		root.put("sender", "user");
 		root.put("user", session.getUser());
         root.put("visitor", session.getUser() == null);
+        root.put("viewing", session.getUser());
+        root.put("mypage", true);
         root.put("nonadmin", !session.getIsAdmin());
 	
 		TopicListController tlc = new TopicListController();
@@ -119,7 +121,9 @@ public class UserServlet extends HttpServlet {
 		
 		root.put("sender", "user");
 		root.put("user", session.getUser());
+		root.put("viewing", session.getUser());
         root.put("visitor", session.getUser() == null);
+        root.put("mypage", true);
         root.put("nonadmin", !session.getIsAdmin());
 			
 		tp.processTemplate(templateName, root, response);
