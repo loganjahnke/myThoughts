@@ -89,6 +89,7 @@ public class ViewTopicServlet extends HttpServlet {
     			root.put("disagreeComments", disagreeComments);
     			root.put("user", session.getUser());
     			root.put("visitor", session.getUser() == null);
+    			root.put("category", topic.getCategories().get(0));
     			root.put("nonadmin", !session.getIsAdmin());
     			
     			processor.processTemplate(templateName, root, response);

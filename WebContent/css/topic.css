@@ -45,7 +45,7 @@
     width: 100%;
     padding-left: 30px;
     padding-right: 30px;
-    padding-bottom: 30px;
+    padding-bottom: 10px;
     border-bottom: 1px solid black;
 }
 
@@ -54,23 +54,27 @@
 }
 
 #topicFooter {
+    width: 100%;
+    margin-top: 15px;
 	list-style-type: none;
     display: inline;
 	justify-content: center;
     text-decoration: none;
 }
 
-#topic-categories {
-	display: block;
-	position: relative;
-	float: left;
-	width: 100px;
+#topicFooter > li {
+    float: left;
+    margin-left: 75px;
 }
 
-#decisionButtons {
-	align-items: center;
-    position: relative;
-    padding-right: 200px;
+#topicFooter > li > a {
+    width: 100%;
+    height: 100%;
+}
+
+#topic-categories {
+	display: block;
+	width: 100px;
 }
 
 #category {

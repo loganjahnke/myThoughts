@@ -1,7 +1,6 @@
 function upvote(id) {
     var name = "upvote-" + id;
     if (!document.getElementById(name).classList.contains('green')) {
-        animate(name);
         $.post("feature", {
             id: id,
             do: "upvote"
@@ -22,7 +21,6 @@ function upvote(id) {
 function downvote(id) {
     var name = "downvote-" + id;
     if (!document.getElementById(name).classList.contains('red')) {
-        animate(name);
         $.post("feature", {
             id: id,
             do: "downvote"
@@ -41,22 +39,29 @@ function downvote(id) {
 }
 
 function agree(id) {
-    var name = "topic";
-    if (!document.getElementById(name).classList.contains('red')) {
-        animate(name);
+    if (!document.getElementById("topic").classList.contains('green')) {
         $.post("feature", {
             id: id,
-            do: "downvote"
+            do: "agreeTopic"
         }).done(function(responseText) {
-            if (document.getElementById("upvote-" + id).classList.contains('green')) {
-                document.getElementById("count-" + id).innerHTML -= 2;
-            } else {
-                document.getElementById("count-" + id).innerHTML -= 1;
-            }
-            document.getElementById("upvote-" + id).classList.remove('green');
-            document.getElementById("upvote-" + id).classList.remove('bold');
-            document.getElementById(name).classList.add('red');
-            document.getElementById(name).classList.add('bold');
+            document.getElementById("topic").classList.remove('red');
+            document.getElementById("topic").classList.remove('grey');
+            document.getElementById("topic").classList.remove('gray');
+            document.getElementById("topic").classList.add('green');
+        });
+    }
+}
+
+function disagree(id) {
+    if (!document.getElementById("topic").classList.contains('red')) {
+        $.post("feature", {
+            id: id,
+            do: "disagreeTopic"
+        }).done(function(responseText) {
+            document.getElementById("topic").classList.remove('green');
+            document.getElementById("topic").classList.remove('grey');
+            document.getElementById("topic").classList.remove('gray');
+            document.getElementById("topic").classList.add('red');
         });
     }
 }
@@ -64,8 +69,8 @@ function agree(id) {
 function addComment(id) {
     $.post("feature", {
         id: id,
-        subj: document.getElementById("commentSubject");
-        arg: document.getElementById("commentArgument");
+        subj: document.getElementById("commentSubject"),
+        arg: document.getElementById("commentArgument"),
         do: "addComment"
     }).done(function(responseText) {
     });

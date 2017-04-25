@@ -78,6 +78,7 @@ public class FeatureServlet extends HttpServlet {
 			else if (whattodo.equals("addComment")) {
 				String subject = request.getParameter("subj");
 				String argument = request.getParameter("arg");
+<<<<<<< Updated upstream
 				DebateTopic topic = tlc.getTopic(id);
 				
 				Comment c = new Comment();
@@ -87,6 +88,12 @@ public class FeatureServlet extends HttpServlet {
 				c.setDebateTopic(topic);
 				
 				mtc.saveComment(c);
+=======
+			} else if (whattodo.equals("agreeTopic")) {
+				uc.agreeWithTopic((User) session.getUser(), id);
+			} else if (whattodo.equals("disagreeTopic")) {
+				uc.disagreeWithTopic((User) session.getUser(), id);
+>>>>>>> Stashed changes
 			}
 		} catch (Exception e) {
 			System.out.println("not featured");

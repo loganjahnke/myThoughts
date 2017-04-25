@@ -26,7 +26,13 @@
         </ul>
     </div>
     <div id="container">
-	    <div id="topic">
+        <#if !visitor && nonadmin && user.doesAgree(topic)>
+	    <div id="topic" class="green black-font">
+        <#elseif !visitor && nonadmin && user.doesDisagree(topic)>
+        <div id="topic" class="red black-font">
+        <#else>
+        <div id="topic" class="light-grey black-font">
+        </#if>
 	    	<h1 class="bold">${topic.getTitle()}</h1>
 	    	<div id="voteCount">
 	    		<#if !visitor && nonadmin && user.doesLike(topic)>
@@ -53,31 +59,23 @@
 	    	</div>
 	    	<div id="topicMain"><h3 class="thin">${topic.getDescription()}</h3></div>
 	    	<ul id="topicFooter">
-	    		<li>
-                    <ul id="topic-categories">
-		    		<#list topic.getCategories() as category>
-		    			<li id="category" class="${category.getColor()}">${category.getName()}</li>	
-		    		</#list>
-                    </ul>
+	    		<li id="category" class="${category.getColor()}">${category.getName()}</li>
+		    	<li><a class="green mt-button-round" onclick="agree(${topic.getId()})">Agree</a></li>
+                <li><a class="red mt-button-round" onclick="disagree(${topic.getId()})">Disagree</a></li>
+                <li>
+                    <a class="no-decoration" id="user" href="user-view?username=${topic.getUser().getUsername()}">${topic.getUser().getUsername()}</a>
+                    |
+                    <span class="green no-background">${topic.getUser().getKarma()}<span class="bold">k</span></span>
                 </li>
-		    	<li id="decisionButtons">
-		    		<span class="button" id="agreebtn"><a onclick="agree(${topic.getId()})">Agree</a></span>
-		    		<span class="button" id="disagreebtn"><a onclick="disagree(${topic.getId()})">Disagree</a></span>
-		    	</li>
-		    	<li id="userBlock">
-		    		<a class="no-decoration" id="user" href="user?username=${topic.getUser().getUsername()}">${topic.getUser().getUsername()}</a>
-	            	|
-	            	<span class="green no-background">${topic.getUser().getKarma()}<span class="bold">k</span></span>
-	            </li>
 	    	</ul>
-            <div id="addComment">
-                <textarea id="commentSubject" placeholder="Enter comment subject!" cols="50"></textarea>
-                <textarea id="commentArgument" placeholder="Enter new comment here!" rows="4" cols="50"></textarea>
-                <a href="" onclick="addComment(${topic.getId()})" >Submit!</a>
-            </div>
 	    </div>
     </div>
     <div id="comments">
+        <div id="addComment">
+            <textarea id="commentSubject" placeholder="Enter comment subject!" cols="50"></textarea>
+            <textarea id="commentArgument" placeholder="Enter new comment here!" rows="4" cols="50"></textarea>
+            <a href="" onclick="addComment(${topic.getId()})" >Submit!</a>
+        </div>
         <div id="agreeComments">
             <#list agreeComments as comment>
                 <div class="comment" id="agreeComment">
