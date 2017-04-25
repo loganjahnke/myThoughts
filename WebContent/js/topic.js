@@ -71,14 +71,15 @@ function disagree(id) {
 function addComment(id, agree) {
     $.post("feature", {
         id: id,
-        subj: document.getElementById("commentSubject").text(),
-        arg: document.getElementById("commentArgument").text(),
+        subj: document.getElementById("commentSubject").value,
+        arg: document.getElementById("commentArgument").value,
         agree: agree,
         do: "addComment"
     }).done(function(responseText) {
+        location.reload();
         if(agree == true) {
-            var $newDiv = document.getElementById("agreeComment");
-            $newDiv.innerHTML = ""
+            var newDiv = document.getElementById("agreeComment");
+            newDiv.innerHTML = "";
             var subject = "<h5 class = 'bold'>" + document.getElementById("commentSubject") + "</h5>";
             var argument = "<p>" + document.getElementById("commentArgument") + "</p>";
             var vote = document.getElementById("voteCount");
@@ -88,7 +89,7 @@ function addComment(id, agree) {
         }
         else {
         	var $newDiv = document.getElementById("disagreeComment");
-        	
+
         }
     });
 }
